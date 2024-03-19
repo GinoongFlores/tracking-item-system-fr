@@ -2,4 +2,4 @@ const Navabr = () => {
   return <div>Navbar</div>;
 };
 
-export default Navabr;
+export default Navbar;
