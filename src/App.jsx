@@ -19,18 +19,28 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+const routerSuperAdmin = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<SuperAdminLayout />}>
+        <Route path="home" index element={<Home />} />
+        <Route path="items" element={<Items />} />
+        <Route path="users" element={<Users />} />
+        <Route path="admin" element={<Admin />} />
+      </Route>
+
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </>
+
+    // public routes
+  )
+);
+
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SuperAdminLayout />}>
-          <Route path="/items" element={<Items />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/admin" element={<Admin />} />
-        </Route>
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/register" element={<Register />} />  */}
-      </Routes>
+      <RouterProvider router={routerSuperAdmin} />
     </>
   );
 }
