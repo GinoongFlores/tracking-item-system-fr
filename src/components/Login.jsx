@@ -1,10 +1,12 @@
-// import Box from "@mui/material/Box";
-
-// import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthContext from "../context/AuthContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Login = () => {
+  const { login } = useAuthContext();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -16,11 +18,11 @@ const Login = () => {
         .required("Email Required"),
       password: Yup.string()
         .max(10, "Must be 10 characters only")
-        .min(6, "Minimum of 6 characters only")
+        .min(6, "Minimum of 8 characters only")
         .required("password required"),
     }),
     onSubmit: (values) => {
-      //   login(values);
+      login(values);
     },
   });
 
@@ -97,12 +99,12 @@ const Login = () => {
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don't have an account? {""}
-                  {/* <Link
+                  <Link
                     to={"/register"}
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Sign up
-                  </Link> */}
+                  </Link>
                 </p>
               </form>
             </div>
