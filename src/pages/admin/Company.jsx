@@ -93,7 +93,7 @@ export const CompanyTabs = () => {
   );
 };
 
-const Company = () => {
+export const Company = () => {
   return (
     <>
       <div className="py-10 flex flex-col">
@@ -102,5 +102,3 @@ const Company = () => {
     </>
   );
 };
-
-export default Company;

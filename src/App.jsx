@@ -6,16 +6,15 @@ import { Routes, Route, RouterProvider } from "react-router-dom";
 import useAuthContext from "./context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
 
-import SuperAdminLayout from "./layouts/SuperAdminLayout";
-import Items from "./pages/admin/Items";
-import Users from "./pages/admin/Users";
-import Admin from "./pages/admin/Admin";
-import Home from "./pages/admin/Home";
-import Company from "./pages/admin/Company";
-import AddCompanyPage from "./pages/company/AddCompanyPage";
-import CompanyLayout from "./layouts/CompanyLayout";
-import ViewCompanyPage from "./pages/company/ViewCompanyPage";
-import EditCompanyPage from "./pages/company/EditCompanyPage";
+import { SuperAdminLayout, CompanyLayout } from "./layouts";
+
+import { Admin, Users, Home, Items } from "./pages/admin";
+
+import {
+  AddCompanyPage,
+  ViewCompanyPage,
+  EditCompanyPage,
+} from "./pages/company";
 
 function App() {
   const { user, loading } = useAuthContext();

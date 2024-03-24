@@ -1,6 +1,6 @@
 import CountCard from "../../components/CountCard";
 
-const Home = () => {
+export const Home = () => {
   const cards = [
     {
       count: 1,
@@ -25,5 +25,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;

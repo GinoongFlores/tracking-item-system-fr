@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Company from "../pages/admin/Company";
-import ViewCompanyPage from "../pages/company/ViewCompanyPage";
+import { Company } from "../pages/admin";
 
-const CompanyLayout = () => {
+export const CompanyLayout = () => {
   return (
     <>
       <div>
@@ -15,5 +14,3 @@ const CompanyLayout = () => {
     </>
   );
 };
-
-export default CompanyLayout;

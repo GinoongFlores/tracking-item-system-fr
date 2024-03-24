@@ -50,7 +50,7 @@ export const CompanyCards = ({ company_name }) => {
   );
 };
 
-const ViewCompanyPage = () => {
+export const ViewCompanyPage = () => {
   const { token, user } = useAuthContext();
   const [companies, setCompanies] = useState([]);
   const userRole = user.data?.role; // get user role
@@ -93,5 +93,3 @@ const ViewCompanyPage = () => {
     </>
   );
 };
-
-export default ViewCompanyPage;

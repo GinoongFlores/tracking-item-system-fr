@@ -34,7 +34,7 @@ export const UserAuthProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
       setToken(token);
-      const response = await AxiosInstance.get("/user", {
+      const response = await AxiosInstance.get("/current-user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

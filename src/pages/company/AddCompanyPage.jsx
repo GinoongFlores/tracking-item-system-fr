@@ -8,7 +8,7 @@ import AxiosInstance from "../../api/Axios";
 import { toast } from "react-hot-toast";
 import { UserRole } from "../../hooks/UserRole";
 
-const AddCompanyPage = () => {
+export const AddCompanyPage = () => {
   const { token } = useAuthContext();
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
@@ -114,5 +114,3 @@ const AddCompanyPage = () => {
     </>
   );
 };
-
-export default AddCompanyPage;

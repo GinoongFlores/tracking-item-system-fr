@@ -1,10 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { FaUsers } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
-import CountCard from "../components/CountCard";
-import Home from "../pages/admin/Home";
 
-const SuperAdminLayout = () => {
+export const SuperAdminLayout = () => {
   return (
     <>
       <Sidebar />
@@ -16,5 +13,3 @@ const SuperAdminLayout = () => {
     </>
   );
 };
-
-export default SuperAdminLayout;

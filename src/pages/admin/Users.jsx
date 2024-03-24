@@ -1,7 +1,7 @@
 import AxiosInstance from "../../api/Axios";
 import { useEffect } from "react";
 
-export function UsersCards() {
+export const UsersCards = () => {
   return (
     <>
       <div className="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -36,14 +36,12 @@ export function UsersCards() {
       </div>
     </>
   );
-}
+};
 
-const Users = () => {
+export const Users = () => {
   return (
     <div>
       <UsersCards />
     </div>
   );
 };
-
-export default Users;
