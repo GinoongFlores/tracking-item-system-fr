@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
-import { MdFullscreenExit } from "react-icons/md";
-import { MdAdminPanelSettings } from "react-icons/md";
+import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 
 import { useAuthContext } from "../context/AuthContext";
+import { UserRole } from "../hooks/UserRole";
 
 const Sidebar = () => {
   const { logout } = useAuthContext();
+  const userRole = UserRole();
+  const superAdmin = userRole === "super_admin";
+  const admin = userRole === "admin";
+  const user = userRole === "user";
+
+  useEffect(() => {
+    console.log(userRole);
+  }, [userRole]);
 
   const sidebarLinks = [
     {
@@ -16,21 +24,29 @@ const Sidebar = () => {
       icon: <FaHome size={20} />,
       link: "/",
     },
-    {
-      name: "Users",
-      icon: <FaUsers />,
-      link: "/users",
-    },
-    {
-      name: "Admin",
-      icon: <MdAdminPanelSettings size={20} />,
-      link: "/admin",
-    },
-    {
-      name: "Company",
-      icon: <FaBuilding />,
-      link: "/company",
-    },
+    ...(!user
+      ? [
+          {
+            name: "Users",
+            icon: <FaUsers />,
+            link: "/users",
+          },
+        ]
+      : []),
+    ...(superAdmin
+      ? [
+          {
+            name: "Admin",
+            icon: <MdAdminPanelSettings size={20} />,
+            link: "/admin",
+          },
+          {
+            name: "Company",
+            icon: <FaBuilding />,
+            link: "/company",
+          },
+        ]
+      : []),
     {
       name: "Items",
       icon: (
@@ -51,7 +67,7 @@ const Sidebar = () => {
       icon: <BiLogOut />,
       // link: "#",
     },
-  ];
+  ].filter(Boolean);
 
   const [isOpen, setIsOpen] = useState(false);
 
