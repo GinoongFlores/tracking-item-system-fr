@@ -6,17 +6,21 @@ import { BiLogOut } from "react-icons/bi";
 
 import { useAuthContext } from "../context/AuthContext";
 import { UserRole } from "../hooks/UserRole";
+import { Navbar } from "./Navbar";
 
-const Sidebar = () => {
-  const { logout } = useAuthContext();
+export const Sidebar = () => {
+  const { logout, user } = useAuthContext();
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
   const admin = userRole === "admin";
-  const user = userRole === "user";
+  const users = userRole === "user";
 
-  useEffect(() => {
-    console.log(userRole);
-  }, [userRole]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+    // console.log(isOpen);
+  };
 
   const sidebarLinks = [
     {
@@ -24,7 +28,7 @@ const Sidebar = () => {
       icon: <FaHome size={20} />,
       link: "/",
     },
-    ...(!user
+    ...(!users
       ? [
           {
             name: "Users",
@@ -69,92 +73,49 @@ const Sidebar = () => {
     },
   ].filter(Boolean);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-    // console.log(isOpen);
-  };
-
   return (
     <>
       <header>
-        <div className=" flex items-center gap-4 border-b border-gray-400">
-          <button
-            // data-drawer-target="sidebar-multi-level-sidebar"
-            // data-drawer-toggle="sidebar-multi-level-sidebar"
-            // aria-controls="sidebar-multi-level-sidebar"
-            onClick={toggleOpen}
-            type="button"
-            className="inline-flex items-center p-2 mt-2 mb-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          >
-            <span className="sr-only">Open sidebar</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clipRule="evenodd"
-                fillRule="evenodd"
-                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-              />
-            </svg>
-          </button>
-
-          <div className="flex gap-4">
-            <div className="rounded-full w-8 h-8 bg-slate-600" />
-            <h2>Tracker</h2>
-          </div>
-        </div>
+        <Navbar toggleOpen={toggleOpen} />
       </header>
-
       <aside
-        id="sidebar-multi-level-sidebar"
-        className={`fixed top-0 left-0 z-40 w-36 sm:w-64 h-screen transition-transform
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0`}
+        id="logo-sidebar"
+        className={`fixed top-0 left-0 z-40 w-36 md:w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 ${
+          isOpen ? "" : "-translate-x-full"
+        }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          {/* Sidebar Links */}
-          <div className="flex flex-col">
-            <div
-              className="relative self-end items-end pe-2 pb-4 cursor-pointer visible sm:invisible"
-              onClick={toggleOpen}
-            >
-              <MdFullscreenExit size={20} className="dark:text-gray-400" />
-            </div>
-
-            <ul className="space-y-2 font-medium">
-              {sidebarLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    to={link.link}
-                    onClick={(e) => {
-                      if (link.name === "logout") {
-                        e.preventDefault(); // prevent default link behavior
-                        logout();
-                      } else {
-                        toggleOpen();
-                      }
-                    }}
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                  >
-                    {link.icon}
-                    <span className="ms-3">{link.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+          <ul className="pb-4 mb-4 space-y-2 font-medium border-b border-gray-200 dark:border-gray-700">
+            <li>
+              <h2 className="text-sm md:text-lg dark:text-gray-400 text-center">
+                Welcome {userRole === "super_admin" ? "super admin" : userRole}!
+              </h2>
+            </li>
+          </ul>
+          <ul className="space-y-2 font-medium">
+            {sidebarLinks.map((link, index) => (
+              <li key={index}>
+                <Link
+                  to={link.link}
+                  onClick={(e) => {
+                    link.name === "logout"
+                      ? (e.preventDefault(), logout())
+                      : toggleOpen();
+                  }}
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  {link.icon}
+                  <span className="ms-3">{link.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </aside>
-
-      {/* mobile  */}
+      <div className="p-4 sm:ml-64 mt-8">
+        {/* <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"></div> */}
+      </div>
     </>
   );
 };
-
-export default Sidebar;
