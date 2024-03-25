@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Routes, Route, RouterProvider } from "react-router-dom";
-import useAuthContext from "./context/AuthContext";
+import { useAuthContext } from "./context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { SuperAdminLayout, CompanyLayout } from "./layouts";
