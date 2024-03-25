@@ -34,11 +34,23 @@ export const UserAuthProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
       setToken(token);
+
+      // check if the user data is in local storage
+      const cachedUser = localStorage.getItem("user");
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser));
+        return JSON.parse(cachedUser);
+      }
+
       const response = await AxiosInstance.get("/current-user", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      // store user data in local storage
+      localStorage.setItem("user", JSON.stringify(response.data));
+
       // console.log(response);
       setUser(response.data);
       return response;
@@ -134,7 +146,8 @@ export const UserAuthProvider = ({ children }) => {
         }
       );
 
-      localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setUser(null);
       navigate("/login", { replace: true });
       toast.success("Logged out successfully");
@@ -163,6 +176,8 @@ export const UserAuthProvider = ({ children }) => {
   );
 };
 
-export default function useAuthContext() {
-  return useContext(authContext);
-}
+// export default function useAuthContext() {
+//   return useContext(authContext);
+// }
+
+export const useAuthContext = () => useContext(authContext);
