@@ -15,14 +15,15 @@ import {
   ViewCompanyPage,
   EditCompanyPage,
 } from "./pages/company";
+import { useEffect } from "react";
 
 function App() {
-  const { user, loading } = useAuthContext();
-  // console.log(user);
-  let location = useLocation();
+  const { currentUser, loading, isActivated } = useAuthContext();
+  const userStatus = currentUser?.is_activated;
+  const location = useLocation();
 
   const RequireAuth = ({ children }) => {
-    return user ? children : <Navigate to={"/login"} replace={true} />;
+    return currentUser ? children : <Navigate to={"/login"} replace={true} />;
   };
 
   if (loading) {

@@ -14,6 +14,7 @@ export const UserAuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isActivated, setIsActivated] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,6 +27,8 @@ export const UserAuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
+
+    console.log("running first useEffect");
   }, [getToken]);
 
   // prevent user from accessing the login page if already logged in
@@ -33,6 +36,7 @@ export const UserAuthProvider = ({ children }) => {
     if (location.pathname === "/login" && currentUser) {
       navigate("/", { replace: true });
     }
+    console.log("running second useEffect");
   }, [currentUser, location.pathname, navigate]);
 
   const getUser = async () => {
@@ -74,13 +78,16 @@ export const UserAuthProvider = ({ children }) => {
       // console.log(response);
       const userToken = response.data.token;
       localStorage.setItem("token", userToken);
-      if (userToken) {
-        await navigate("/", { replace: true });
+
+      const userData = await getUser();
+      if (userData.data.is_activated === 1) {
+        navigate("/", { replace: true });
         toast.success("Logged in successfully", {
           position: "top-center",
         });
       } else {
         localStorage.removeItem("token");
+        toast.error("Account not activated");
         navigate("/login");
       }
     } catch (error) {
@@ -161,6 +168,8 @@ export const UserAuthProvider = ({ children }) => {
         register,
         getUser,
         token,
+
+        isActivated,
       }}
     >
       {children}
