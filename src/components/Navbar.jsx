@@ -6,7 +6,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 export const Navbar = ({ toggleOpen }) => {
   const userRole = UserRole();
-  const { user } = useAuthContext();
+  const { currentUser } = useAuthContext();
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
@@ -74,13 +74,10 @@ export const Navbar = ({ toggleOpen }) => {
               >
                 <div className="px-4 py-3">
                   <span className="block text-sm text-gray-900 dark:text-white">
-                    Welcome {user?.data?.first_name}!
+                    Welcome {currentUser?.data?.first_name}!
                   </span>
                   <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    Role {userRole}
-                  </span>
-                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    {user?.data?.email}
+                    {currentUser?.data?.email}
                   </span>
                 </div>
                 <ul className="py-1" role="none">

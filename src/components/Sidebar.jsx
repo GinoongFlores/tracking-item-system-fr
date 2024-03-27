@@ -9,7 +9,7 @@ import { UserRole } from "../hooks/UserRole";
 import { Navbar } from "./Navbar";
 
 export const Sidebar = () => {
-  const { logout, user } = useAuthContext();
+  const { logout } = useAuthContext();
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
   const admin = userRole === "admin";
@@ -113,7 +113,7 @@ export const Sidebar = () => {
           </ul>
         </div>
       </aside>
-      <div className="p-4 sm:ml-64 mt-8">
+      <div className="p-4 sm:ml-64 ">
         {/* <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"></div> */}
       </div>
     </>

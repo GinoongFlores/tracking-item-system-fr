@@ -1,25 +1,23 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import AxiosInstance from "../api/Axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-
 const authContext = createContext({});
 
 export const UserAuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
   const getToken = localStorage.getItem("token");
-
-  // prevent user from accessing the login page if already logged in
-  useEffect(() => {
-    if (location.pathname === "/login" && user) {
-      navigate("/", { replace: true });
-    }
-  });
 
   // show loading screen while fetching user data
   useEffect(() => {
@@ -30,17 +28,24 @@ export const UserAuthProvider = ({ children }) => {
     }
   }, [getToken]);
 
+  // prevent user from accessing the login page if already logged in
+  useEffect(() => {
+    if (location.pathname === "/login" && currentUser) {
+      navigate("/", { replace: true });
+    }
+  }, [currentUser, location.pathname, navigate]);
+
   const getUser = async () => {
     try {
       const token = localStorage.getItem("token");
       setToken(token);
 
       // check if the user data is in local storage
-      const cachedUser = localStorage.getItem("user");
-      if (cachedUser) {
-        setUser(JSON.parse(cachedUser));
-        return JSON.parse(cachedUser);
-      }
+      // const cachedUser = localStorage.getItem("currentUser");
+      // if (cachedUser) {
+      //   setCurrentUser(JSON.parse(cachedUser));
+      //   return JSON.parse(cachedUser);
+      // }
 
       const response = await AxiosInstance.get("/current-user", {
         headers: {
@@ -49,11 +54,12 @@ export const UserAuthProvider = ({ children }) => {
       });
 
       // store user data in local storage
-      localStorage.setItem("user", JSON.stringify(response.data));
+      // localStorage.setItem("currentUser", JSON.stringify(response.data));
 
       // console.log(response);
-      setUser(response.data);
-      return response;
+      setCurrentUser(response.data.data);
+      // console.log(response.data.data);
+      return response.data;
     } catch (error) {
       console.log("get user error: ", error.response);
       // throw error;
@@ -69,32 +75,18 @@ export const UserAuthProvider = ({ children }) => {
       const userToken = response.data.token;
       localStorage.setItem("token", userToken);
       if (userToken) {
-        await getUser();
-        navigate("/", { replace: true });
+        await navigate("/", { replace: true });
         toast.success("Logged in successfully", {
           position: "top-center",
         });
       } else {
-        localStorage.clear();
+        localStorage.removeItem("token");
         navigate("/login");
       }
     } catch (error) {
-      // console.log(error.response);
+      console.log(error);
       // console.log(error.response.data.message);
-      toast.error(error.response.data.message);
-    }
-  };
-
-  const addCompany = async (data) => {
-    try {
-      const response = await AxiosInstance.post("/company", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error.response);
+      // toast.error(error.response.data.message);
     }
   };
 
@@ -146,9 +138,10 @@ export const UserAuthProvider = ({ children }) => {
         }
       );
 
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setUser(null);
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("user");
+      localStorage.clear();
+      setCurrentUser(null);
       navigate("/login", { replace: true });
       toast.success("Logged out successfully");
 
@@ -162,13 +155,12 @@ export const UserAuthProvider = ({ children }) => {
     <authContext.Provider
       value={{
         loading,
-        user,
+        currentUser,
         login,
         logout,
         register,
         getUser,
         token,
-        addCompany,
       }}
     >
       {children}

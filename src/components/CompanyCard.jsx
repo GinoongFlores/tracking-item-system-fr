@@ -3,7 +3,7 @@ import { FaBuilding } from "react-icons/fa";
 export const CompanyCard = ({ company_name }) => {
   return (
     <>
-      <div className="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+      <div className="md:w-full max-w-sm px-8 py-4 mt-16 bg-white rounded-lg shadow-xl dark:bg-gray-800">
         <div className="flex justify-center -mt-16 md:justify-end">
           {/* <img
                 className="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-400"
