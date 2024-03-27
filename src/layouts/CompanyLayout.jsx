@@ -4,10 +4,10 @@ import { Company } from "../pages/admin";
 export const CompanyLayout = () => {
   return (
     <>
-      <div>
+      <div className="">
         <Company />
         {/* <ViewCompanyPage /> */}
-        <main>
+        <main className="container mx-auto">
           <Outlet />
         </main>
       </div>
