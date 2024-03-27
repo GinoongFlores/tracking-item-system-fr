@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useContext, createContext } from "react";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
@@ -17,16 +17,30 @@ export const CompanyProvider = ({ children }) => {
   const userRole = UserRole();
   // console.log(userRole);
 
-  const fetchCompany = async () => {
+  const fetchCompany = useCallback(async () => {
+    let response;
     try {
-      const response = await AxiosInstance.get("/company", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // check if the data is in local storage
+      const cacheData = localStorage.getItem("companies");
+      if (cacheData) {
+        // if the data is in local storage, use it
+        setCompanies(JSON.parse(cacheData));
+      } else {
+        response = await AxiosInstance.get("/company", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        localStorage.setItem("companies", JSON.stringify(response.data.data));
+        setCompanies(response.data.data);
+      }
+
+      if (response) {
+        return response;
+      }
+
       // console.log(response.data.data);
-      setCompanies(response.data.data);
-      return response;
+      // return response;
     } catch (error) {
       const errorMessage = error.response.data.message.error;
       toast.error(
@@ -36,7 +50,7 @@ export const CompanyProvider = ({ children }) => {
       );
       // console.log(error);
     }
-  };
+  }, [token]);
 
   const addCompany = async (values) => {
     try {

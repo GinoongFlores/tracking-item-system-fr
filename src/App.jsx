@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { Routes, Route, RouterProvider } from "react-router-dom";
 import { useAuthContext } from "./context/AuthContext";
-import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { SuperAdminLayout, CompanyLayout } from "./layouts";
 
@@ -21,9 +21,24 @@ function App() {
   const { currentUser, loading, isActivated } = useAuthContext();
   const userStatus = currentUser?.is_activated;
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // prevent user from accessing the login page if already logged in
+    if (location.pathname === "/login" && userStatus) {
+      navigate("/");
+    }
+  });
 
   const RequireAuth = ({ children }) => {
-    return currentUser ? children : <Navigate to={"/login"} replace={true} />;
+    // return userStatus ? children : navigate("/");
+    useEffect(() => {
+      if (!userStatus) {
+        navigate("/login");
+      }
+    }, [userStatus]); // add `userStatus` to the dependency array if
+
+    return userStatus ? children : null;
   };
 
   if (loading) {
