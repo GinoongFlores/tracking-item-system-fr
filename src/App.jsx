@@ -10,6 +10,8 @@ import { SuperAdminLayout, CompanyLayout } from "./layouts";
 
 import { Admin, Users, Home, Items } from "./pages/admin";
 
+import { TestZustand } from "./pages/user/TestZustand";
+
 import {
   AddCompanyPage,
   ViewCompanyPage,
@@ -66,6 +68,7 @@ function App() {
             <Route path="/items" element={<Items />} />
             <Route path="/users" element={<Users />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/test-zustand" element={<TestZustand />} />
             <Route path="/company" element={<CompanyLayout />}>
               <Route path="/company" element={<ViewCompanyPage />} />
               <Route path="add" element={<AddCompanyPage />} />

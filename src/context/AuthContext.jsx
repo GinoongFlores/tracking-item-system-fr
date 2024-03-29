@@ -25,8 +25,6 @@ export const UserAuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
-
-    console.log("running first useEffect");
   }, [getToken]);
 
   const getUser = async () => {
@@ -34,7 +32,7 @@ export const UserAuthProvider = ({ children }) => {
       const token = localStorage.getItem("token");
       setToken(token);
 
-      const response = await AxiosInstance.get("/current-user", {
+      const response = await AxiosInstance.get("user/current", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +58,7 @@ export const UserAuthProvider = ({ children }) => {
       setToken(userToken);
 
       const userData = await getUser();
-      if (userData && userData.data.is_activated) {
+      if (userData && userData.data.is_activated && userData.data.role) {
         navigate("/", { replace: true });
         toast.success("Logged in successfully", {
           position: "top-center",
@@ -68,12 +66,15 @@ export const UserAuthProvider = ({ children }) => {
       } else {
         localStorage.removeItem("token");
         toast.error("Account activation is pending");
+        // if (!userData.data.role) {
+        //   toast.error("no role assigned");
+        // }
         // navigate("/login");
       }
       return response;
     } catch (error) {
       console.log(error);
-      // toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 

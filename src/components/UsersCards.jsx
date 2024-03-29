@@ -1,6 +1,12 @@
 import { FaUser } from "react-icons/fa";
 
-export const UsersCards = ({ name, onToggleActivation, user, isActivated }) => {
+export const UsersCards = ({
+  name,
+  email,
+  onToggleActivation,
+  user,
+  isActivated,
+}) => {
   // const { fetchUsers, usersStatus } = useAuthContext();
   // const [userStats, setUserStats] = useState([]);
 
@@ -59,6 +65,9 @@ export const UsersCards = ({ name, onToggleActivation, user, isActivated }) => {
                 <h2 className="mt-2 text-lg md:text-xl font-semibold text-gray-800 dark:text-white md:mt-0">
                   {name}
                 </h2>
+                <h2 className="mt-2 text-sm md:text-xl font-semibold text-gray-800 dark:text-white md:mt-0">
+                  {email}
+                </h2>
 
                 <p className="mt-2 text-sm text-gray-600 dark:text-gray-200">
                   Role: User
@@ -71,7 +80,7 @@ export const UsersCards = ({ name, onToggleActivation, user, isActivated }) => {
                   onClick={enable_disable}
                   className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                 >
-                  {isActivated === 0 ? "Disable" : "Enable"}
+                  {isActivated ? "Enable" : "Disable"}
                 </button>
               </div>
             </div>

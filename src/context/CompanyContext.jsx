@@ -26,7 +26,7 @@ export const CompanyProvider = ({ children }) => {
         // if the data is in local storage, use it
         setCompanies(JSON.parse(cacheData));
       } else {
-        response = await AxiosInstance.get("/company", {
+        response = await AxiosInstance.get("/company/list", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

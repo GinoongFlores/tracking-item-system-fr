@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useFormik, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
-import {useAuthContext} from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import AxiosInstance from "../../api/Axios";
 import { toast } from "react-hot-toast";
 import { UserRole } from "../../hooks/UserRole";
@@ -31,7 +31,7 @@ export const AddCompanyPage = () => {
   const addCompany = async (values) => {
     try {
       const response = await AxiosInstance.post(
-        "/company",
+        "/company/add",
         {
           ...values,
         },
