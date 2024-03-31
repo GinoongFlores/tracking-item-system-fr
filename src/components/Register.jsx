@@ -42,7 +42,7 @@ const Register = () => {
       <section className="bg-gray-50 dark:bg-gray-900 relative">
         {/* create an div with rounded corners */}
         <div className="w-full h-[400px] md:h-[250px] mb-10 bg-gray-800 rounded-b-[50px] absolute"></div>
-        <div className="flex flex-col justify-center items-center mx-auto px-6 py-8 h-screen lg:py-0">
+        <div className="flex flex-col justify-center items-center mx-auto px-6 py-8 h-full lg:py-0">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border dark:border-gray-700 z-20">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">

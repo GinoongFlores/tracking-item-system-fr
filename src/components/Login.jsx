@@ -1,29 +1,24 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { useFormik } from "formik";
+import { useFormik, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useAuth } from "../store/StoreAuth";
 
 const Login = () => {
-  const { login } = useAuthContext();
+  const navigate = useNavigate();
+  const login = useAuth((state) => state.login);
+  const token = useAuth((state) => state.token);
+  // console.log(token);
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email Required"),
-      password: Yup.string()
-        .max(10, "Must be 10 characters only")
-        .min(6, "Minimum of 8 characters only")
-        .required("password required"),
-    }),
-    onSubmit: (values) => {
-      login(values);
-    },
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email Required"),
+    password: Yup.string()
+      .max(10, "Must be 10 characters only")
+      .min(8, "Minimum of 8 characters only")
+      .required("password required"),
   });
 
   return (
@@ -37,76 +32,79 @@ const Login = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form
-                className="space-y-4 md:space-y-6"
-                action="#"
-                onSubmit={formik.handleSubmit}
+              <Formik
+                initialValues={{
+                  email: "",
+                  password: "",
+                }}
+                validationSchema={LoginSchema}
+                onSubmit={(values) => {
+                  login(values);
+                  navigate("/", { replace: true });
+                }}
               >
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="email"
-                    required=""
-                  />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="dark:text-red-400 text-sm">
-                      {formik.errors.email}
+                {({ errors, touched, isSubmitting }) => (
+                  <Form action="#" className="space-y-4 md:space-y-6">
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Your email
+                      </label>
+                      <Field
+                        type="email"
+                        name="email"
+                        id="email"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="email"
+                        required=""
+                      />
+                      {errors.email && touched.email ? (
+                        <div className="dark:text-red-400"> {errors.email}</div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                    placeholder="•••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                  />
-                  {formik.touched.password && formik.errors.password ? (
-                    <div className="dark:text-red-400 text-sm">
-                      {formik.errors.password}
+                    <div>
+                      <label
+                        htmlFor="password"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Password
+                      </label>
+                      <Field
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="•••••••••"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required=""
+                      />
+                      {errors.password && touched.password ? (
+                        <div className="dark:text-red-400 text-sm">
+                          {errors.password}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
 
-                <button
-                  type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Sign in
-                </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don't have an account? {""}
-                  <Link
-                    to={"/register"}
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Sign up
-                  </Link>
-                </p>
-              </form>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    >
+                      Sign in
+                    </button>
+                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                      Don't have an account? {""}
+                      <Link
+                        to={"/register"}
+                        className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      >
+                        Sign up
+                      </Link>
+                    </p>
+                  </Form>
+                )}
+              </Formik>
             </div>
           </div>
           {/* create an div with rounded corners */}
