@@ -49,7 +49,6 @@ export const useAuth = create((set, get) => ({
       });
       const userToken = response.data.token;
       localStorage.setItem("token", userToken);
-      set({ token: userToken });
 
       // get user data through the getUser method
       const userData = await get().getUser();
@@ -67,11 +66,12 @@ export const useAuth = create((set, get) => ({
 
       return response;
     } catch (error) {
-      console.log(error.response.data.message);
-      const unauthorized = error.response.data.message;
+      // console.log(error.response.data.message);
+      const unauthorized = error.response.data.message === "Unauthorized";
       const generalError = "An error occurred while logging in";
       toast.error(unauthorized ? unauthorized : generalError);
-      set({ loading: false });
+      localStorage.removeItem("token");
+      set({ token: null, loading: false });
     }
   },
 
@@ -83,7 +83,7 @@ export const useAuth = create((set, get) => ({
         {},
         {
           headers: {
-            Authorization: `Bearer ${get().token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
