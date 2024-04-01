@@ -73,8 +73,13 @@ export const UserAuthProvider = ({ children }) => {
       }
       return response;
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage} `);
+        });
+      }
+      // toast.error(error.response.data.message);
     }
   };
 
@@ -105,19 +110,13 @@ export const UserAuthProvider = ({ children }) => {
           toast.error(`${errorMessage}`);
         });
       }
-      // toast.error(error.response.data.message);
-      // toast.error(
-      //   typeof errorMessage === "object"
-      //     ? JSON.stringify(errorMessage)
-      //     : errorMessage
-      // );
     }
   };
 
   const logout = async () => {
     try {
       const response = await AxiosInstance.post(
-        "/logout",
+        "/user/logout",
         {},
         {
           headers: {
