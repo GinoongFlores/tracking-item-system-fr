@@ -8,6 +8,7 @@ export const useAuth = create((set, get) => ({
   userStatus: null,
   userRole: null,
   loading: false,
+  isActive: false,
 
   getUser: async () => {
     set({ loading: true });
@@ -57,12 +58,13 @@ export const useAuth = create((set, get) => ({
           position: "top-center",
           id: "login-toast",
         });
+        set({ isActive: true });
       } else {
         localStorage.removeItem("token");
-        set({ token: null });
         toast.error("Account activation is pending");
+        set({ token: null });
       }
-      set({ loading: false });
+      set({ loading: false, isActive: false });
 
       return response;
     } catch (error) {
