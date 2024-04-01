@@ -26,9 +26,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !token && location.pathname !== "/login") {
-      navigate("/login", { replace: true });
-    } else if (!loading && location.pathname === "/login" && token) {
+    if (!loading && location.pathname === "/login" && token) {
       navigate("/", { replace: true });
     }
   }, [location.pathname, navigate, loading, token]); //
