@@ -23,6 +23,7 @@ const usersLists = [
 export const Users = () => {
   // destructure
   const {
+    users,
     fetchUsers,
     currentPage,
     setCurrentPage,
@@ -30,6 +31,7 @@ export const Users = () => {
     search,
     filterUsers,
     handleSearch,
+
     handleToggleActivation,
   } = useUser();
 
@@ -37,7 +39,11 @@ export const Users = () => {
     fetchUsers(currentPage);
   }, [fetchUsers, currentPage]);
 
-  const filteredUsers = filterUsers(search);
+  useEffect(() => {
+    filterUsers(search);
+  }, [filterUsers, search]);
+
+  // const filteredUsers = filterUsers(search);
 
   return (
     <>
@@ -46,7 +52,7 @@ export const Users = () => {
         <Tabs tabsList={usersLists} />
       </div>
       <div className="flex flex-wrap gap-4">
-        {filteredUsers.map((user) => (
+        {users.map((user) => (
           <UsersCards
             key={user.id}
             user={user}
@@ -56,7 +62,6 @@ export const Users = () => {
             name={`${user.first_name} ${user.last_name}`}
           />
         ))}
-        setCurrentPage
       </div>
       <div className="py-4 flex flex-col items-center">
         <Paginate
