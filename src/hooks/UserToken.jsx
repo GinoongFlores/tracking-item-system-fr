@@ -1,6 +1,7 @@
-import { useAuthContext } from "../context/AuthContext";
+import { useAuth } from "../store/StoreAuth";
 
 export const UserToken = () => {
-  const { token } = useAuthContext();
-  return token;
+  const userToken = useAuth.getState().token;
+  // cosnt userToken = localStorage.getItem("token")
+  return userToken;
 };
