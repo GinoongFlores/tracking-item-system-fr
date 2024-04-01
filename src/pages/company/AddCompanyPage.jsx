@@ -1,57 +1,22 @@
-import { Link } from "react-router-dom";
-// import useAuthContext from "../context/AuthContext";
 import { useFormik, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
-import AxiosInstance from "../../api/Axios";
-import { toast } from "react-hot-toast";
 import { UserRole } from "../../hooks/UserRole";
+import { UserToken } from "../../hooks/UserToken";
+import { useCompany } from "../../store/StoreCompany";
+import { useNavigate } from "react-router-dom";
 
 export const AddCompanyPage = () => {
-  const { token } = useAuthContext();
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
+  const navigate = useNavigate();
+  const token = UserToken();
   // console.log(userRole);
 
   const registerCompany = Yup.object().shape({
     company_name: Yup.string().required("Company name is required"),
   });
 
-  useEffect(() => {
-    if (userRole !== "super_admin") {
-      toast.error("You are not authorized to add a company.", {
-        position: "top-center",
-        id: "add-company",
-      });
-      return;
-    }
-  });
-
-  const addCompany = async (values) => {
-    try {
-      const response = await AxiosInstance.post(
-        "/company/add",
-        {
-          ...values,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Company added successfully");
-      return response;
-    } catch (error) {
-      // console.log("add company error: ", error.response.data.message.error);
-      toast.error(error.response.data.message.error, {
-        position: "top-center",
-      });
-    }
-  };
-
-  // useEffect(() => {});
+  const addCompany = useCompany((state) => state.addCompany);
 
   return (
     <>
@@ -70,7 +35,8 @@ export const AddCompanyPage = () => {
                   }}
                   validationSchema={registerCompany}
                   onSubmit={(values) => {
-                    addCompany(values);
+                    addCompany(values, token);
+                    navigate("/company");
                   }}
                 >
                   {({ errors, touched }) => (

@@ -1,23 +1,20 @@
-import { useCompanyContext } from "../../context/CompanyContext";
-import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { CompanyCard } from "../../components/CompanyCard";
+// import { UserToken } from "../../hooks/UserToken";
+import { UserToken } from "../../hooks/UserToken";
+import { useCompany } from "../../store/StoreCompany";
 
 export const ViewCompanyPage = () => {
-  const { companies, fetchCompany } = useCompanyContext();
+  const token = UserToken();
 
-  // const [companies, setCompanies] = useState([]);
+  // prevent destructuring to avoid performance issues
+  // const { companies, fetchCompany } = useCompany();
+  const companies = useCompany((state) => state.companies);
+  const fetchCompany = useCompany((state) => state.fetchCompany);
 
   useEffect(() => {
-    // if (userRole !== "super_admin") {
-    //   toast.error("You are not authorized to access this page.", {
-    //     id: "unauthorizedAccess",
-    //   });
-    //   return;
-    // }
-
-    fetchCompany();
-  }, [fetchCompany]);
+    fetchCompany(token);
+  }, [fetchCompany, token]);
 
   return (
     <>
