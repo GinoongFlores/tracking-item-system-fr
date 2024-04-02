@@ -9,32 +9,37 @@ const UsersDataContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const { token } = useAuthContext();
+  const [totalPages, setTotalPages] = useState(0);
   const [users, setUsers] = useState([]);
 
-  const fetchUsers = useCallback(async () => {
-    let response;
-    try {
-      // check if the data is in local storage
-      response = await AxiosInstance.get("/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  const fetchUsers = useCallback(
+    async (page = 1) => {
+      let response;
+      try {
+        // check if the data is in local storage
+        response = await AxiosInstance.get(`/user/list?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      // console.log("all users ", response.data);
-      setUsers(response.data.data);
-      return response;
-    } catch (error) {
-      const errorMessage = error;
-      console.log(errorMessage);
-      // toast.error(
-      //   typeof errorMessage === "object"
-      //     ? JSON.stringify(errorMessage)
-      //     : errorMessage
-      // );
-      // console.log(error);
-    }
-  }, [token]);
+        // console.log("all users ", response.data);
+        setUsers(response.data.data);
+        setTotalPages(response.data.last_page);
+        return response;
+      } catch (error) {
+        const errorMessage = error;
+        console.log(errorMessage);
+        // toast.error(
+        //   typeof errorMessage === "object"
+        //     ? JSON.stringify(errorMessage)
+        //     : errorMessage
+        // );
+        // console.log(error);
+      }
+    },
+    [token]
+  );
 
   const toggleActivation = async (userId) => {
     try {
@@ -66,7 +71,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UsersDataContext.Provider
-      value={{ fetchUsers, users, toggleActivation, setUsers }}
+      value={{ fetchUsers, users, toggleActivation, setUsers, totalPages }}
     >
       {children}
     </UsersDataContext.Provider>

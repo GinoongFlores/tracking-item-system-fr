@@ -1,44 +1,48 @@
 import { Toaster } from "react-hot-toast";
-
-import Login from "./components/Login";
-import Register from "./components/Register";
-import { Routes, Route, RouterProvider } from "react-router-dom";
-import { useAuthContext } from "./context/AuthContext";
+import { toast } from "react-hot-toast";
+import { useEffect } from "react";
+import { useAuth } from "./store/StoreAuth";
+import { Routes, Route } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 
+// components
 import { SuperAdminLayout, CompanyLayout } from "./layouts";
-
-import { Admin, Users, Home, Items } from "./pages/admin";
-
+import { Admin, Users, Home, Items } from "./pages/super_admin";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import {
   AddCompanyPage,
   ViewCompanyPage,
   EditCompanyPage,
 } from "./pages/company";
-import { useEffect } from "react";
 
 function App() {
-  const { currentUser, loading, isActivated } = useAuthContext();
-  const userStatus = currentUser?.is_activated;
+  const token = localStorage.getItem("token");
+  const loading = useAuth((state) => state.loading);
+  // const userStatus = useAuth.getState().userStatus;
+  const userStatus = useAuth((state) => state.userStatus);
+  // const userStatus = localStorage.getItem("userStatus");
+  console.log("userStatus", userStatus);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // prevent user from accessing the login page if already logged in
-    if (location.pathname === "/login" && userStatus) {
-      navigate("/");
+    if (!loading && location.pathname === "/login" && token) {
+      navigate("/", { replace: true });
     }
-  });
+  }, [location.pathname, navigate, loading, token]); //\
 
   const RequireAuth = ({ children }) => {
-    // return userStatus ? children : navigate("/");
-    useEffect(() => {
-      if (!userStatus) {
-        navigate("/login");
-      }
-    }, [userStatus]); // add `userStatus` to the dependency array if
+    if (!userStatus) {
+      navigate("/login", { replace: true });
+      return <div>Loading....</div>;
+    }
 
-    return userStatus ? children : null;
+    // if (!userStatus) {
+    //   return <div>Loading....</div>;
+    // }
+
+    return children;
   };
 
   if (loading) {
@@ -66,6 +70,7 @@ function App() {
             <Route path="/items" element={<Items />} />
             <Route path="/users" element={<Users />} />
             <Route path="/admin" element={<Admin />} />
+            {/* <Route path="/test-zustand" element={<TestZustand />} /> */}
             <Route path="/company" element={<CompanyLayout />}>
               <Route path="/company" element={<ViewCompanyPage />} />
               <Route path="add" element={<AddCompanyPage />} />

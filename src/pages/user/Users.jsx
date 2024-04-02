@@ -1,6 +1,6 @@
-import AxiosInstance from "../../api/Axios";
 import { useEffect, useState } from "react";
 import { UsersCards } from "../../components/UsersCards";
+// import { useUserContext } from "../../context/UsersContext";
 import { useUserContext } from "../../context/UsersContext";
 import { Tabs } from "../../components/Tabs";
 
@@ -115,20 +115,24 @@ export const Users = () => {
 
   return (
     <>
-      <div className="mb-4">
-        <SearchBar onSearch={handleSearch} />
-        <Tabs tabsList={usersLists} />
-      </div>
-      <div className="flex flex-wrap gap-4">
-        {filteredUsers.map((user) => (
-          <UsersCards
-            key={user.id}
-            user={user}
-            isActivated={user.is_activated}
-            onToggleActivation={handleToggleActivation}
-            name={`${user.first_name} ${user.last_name}`}
-          />
-        ))}
+      <div className="container">
+        <div className="mb-4">
+          <SearchBar onSearch={handleSearch} />
+          <Tabs tabsList={usersLists} />
+        </div>
+        <div className="flex flex-wrap gap-4">
+          {filteredUsers.map((user) => (
+            <UsersCards
+              key={user.id}
+              user={user}
+              isActivated={user.is_activated}
+              onToggleActivation={handleToggleActivation}
+              name={`${user.first_name} ${user.last_name}`}
+              email={user.email}
+            />
+          ))}
+        </div>
+        {/* <Paginate /> */}
       </div>
     </>
   );

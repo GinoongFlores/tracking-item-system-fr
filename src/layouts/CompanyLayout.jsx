@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Company } from "../pages/admin";
+import { Company } from "../pages/super_admin";
 
 export const CompanyLayout = () => {
   return (

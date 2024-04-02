@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
@@ -7,10 +7,13 @@ import { BiLogOut } from "react-icons/bi";
 import { useAuthContext } from "../context/AuthContext";
 import { UserRole } from "../hooks/UserRole";
 import { Navbar } from "./Navbar";
+import { useAuth } from "../store/StoreAuth";
 
 export const Sidebar = () => {
-  const { logout } = useAuthContext();
+  // const { logout } = useAuthContext();
   const userRole = UserRole();
+  const navigate = useNavigate();
+  const logout = useAuth((state) => state.logout);
   const superAdmin = userRole === "super_admin";
   const admin = userRole === "admin";
   const users = userRole === "user";
@@ -99,9 +102,13 @@ export const Sidebar = () => {
                 <Link
                   to={link.link}
                   onClick={(e) => {
-                    link.name === "logout"
-                      ? (e.preventDefault(), logout())
-                      : toggleOpen();
+                    if (link.name === "logout") {
+                      e.preventDefault();
+                      logout();
+                      navigate("/login", { replace: true });
+                    } else {
+                      toggleOpen();
+                    }
                   }}
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >

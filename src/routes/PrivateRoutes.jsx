@@ -1,7 +1,7 @@
-import Home from "../pages/admin/Home";
-import Items from "../pages/admin/Items";
-import Users from "../pages/admin/Users";
-import Admin from "../pages/admin/Admin";
+import Home from "../pages/super_admin/Home";
+import Items from "../pages/super_admin/Items";
+import Users from "../pages/super_admin/Users";
+import Admin from "../pages/super_admin/Admin";
 import SuperAdminLayout from "../layouts/SuperAdminLayout";
 
 export const PrivateRoutes = [

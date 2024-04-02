@@ -1,6 +1,6 @@
-import { useAuthContext } from "../context/AuthContext";
+import { useAuth } from "../store/StoreAuth";
 
 export const UserRole = () => {
-  const { currentUser } = useAuthContext();
-  return currentUser?.role;
+  const userRole = useAuth((state) => state.userRole);
+  return userRole;
 };
