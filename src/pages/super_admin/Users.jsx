@@ -56,7 +56,6 @@ export const Users = () => {
             name={`${user.first_name} ${user.last_name}`}
           />
         ))}
-        setCurrentPage
       </div>
       <div className="py-4 flex flex-col items-center">
         <Paginate

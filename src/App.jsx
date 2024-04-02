@@ -19,9 +19,10 @@ import {
 function App() {
   const token = localStorage.getItem("token");
   const loading = useAuth((state) => state.loading);
-  const isActive = useAuth((state) => state.isActive);
-  const userStatus = useAuth.getState().userStatus;
-  // console.log("userStatus", userStatus);
+  // const userStatus = useAuth.getState().userStatus;
+  const userStatus = useAuth((state) => state.userStatus);
+  // const userStatus = localStorage.getItem("userStatus");
+  console.log("userStatus", userStatus);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,13 +30,18 @@ function App() {
     if (!loading && location.pathname === "/login" && token) {
       navigate("/", { replace: true });
     }
-  }, [location.pathname, navigate, loading, token]); //
+  }, [location.pathname, navigate, loading, token]); //\
 
   const RequireAuth = ({ children }) => {
     if (!userStatus) {
       navigate("/login", { replace: true });
       return <div>Loading....</div>;
     }
+
+    // if (!userStatus) {
+    //   return <div>Loading....</div>;
+    // }
+
     return children;
   };
 
