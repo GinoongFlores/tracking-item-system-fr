@@ -78,11 +78,30 @@ export const useUser = create((set, get) => ({
     set({ currentPage: page });
   },
 
-  filterUsers: (search) => {
-    return get().users.filter(
-      (user) =>
-        user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.last_name.toLowerCase().includes(search.toLowerCase())
-    );
+  filterUsers: async (search) => {
+    const token = UserToken();
+    try {
+      const response = await AxiosInstance.get(
+        `/user/list?search=${encodeURIComponent(search)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+      });
+      return response;
+    } catch (error) {
+      console.log(error.response);
+      set({ loading: false });
+    }
+    // return get().users.filter(
+    //   (user) =>
+    //     user.first_name.toLowerCase().includes(search.toLowerCase()) ||
+    //     user.last_name.toLowerCase().includes(search.toLowerCase())
+    // );
   },
 }));
