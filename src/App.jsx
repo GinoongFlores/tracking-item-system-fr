@@ -1,10 +1,6 @@
 import { Toaster } from "react-hot-toast";
-import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
-import { useAuth } from "./store/StoreAuth";
 import { Routes, Route } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
-import PulseLoader from "react-spinners/PulseLoader";
+import { useAuthRedirect } from "./hooks/UseAuthRedirect";
 
 // components
 import { SuperAdminLayout, CompanyLayout } from "./layouts";
@@ -16,64 +12,10 @@ import {
   ViewCompanyPage,
   EditCompanyPage,
 } from "./pages/company";
+import { AuthWrapper } from "./utils/AuthWrapper";
 
 function App() {
-  // const [loadingSpinner, setLoadingSpinner] = useState(false);
-
-  const token = localStorage.getItem("token");
-  const loading = useAuth((state) => state.loading);
-  // const userStatus = useAuth.getState().userStatus;
-  const userStatus = useAuth((state) => state.userStatus);
-  const getUser = useAuth((state) => state.getUser);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && location.pathname === "/login" && token) {
-      navigate("/", { replace: true });
-    }
-  }, [location.pathname, navigate, loading, token]);
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
-
-  const RequireAuth = ({ children }) => {
-    // useEffect(() => {
-    //   if (!userStatus) {
-    //     navigate("/login", { replace: true });
-    //   }
-    // }, [userStatus, navigate]);
-
-    if (!userStatus) {
-      return (
-        <div>
-          <PulseLoader
-            color="#2563EB"
-            loading={true}
-            size={15}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      );
-    }
-    return children;
-  };
-
-  if (loading) {
-    return (
-      <div className="h-screen bg:dark-gray-9000 dar:text-white flex justify-center items-center">
-        <PulseLoader
-          color="#2563EB"
-          loading={true}
-          size={15}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      </div>
-    );
-  }
+  useAuthRedirect();
 
   return (
     <>
@@ -83,9 +25,9 @@ function App() {
           <Route
             path="/"
             element={
-              <RequireAuth>
+              <AuthWrapper>
                 <SuperAdminLayout />
-              </RequireAuth>
+              </AuthWrapper>
             }
           >
             <Route path="/" element={<Home />} />
