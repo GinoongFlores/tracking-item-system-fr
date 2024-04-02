@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
 
@@ -11,7 +11,6 @@ export const useAuth = create(
       userStatus: null,
       userRole: null,
       loading: false,
-      isActive: false,
 
       getUser: async () => {
         set({ loading: true });
@@ -58,13 +57,12 @@ export const useAuth = create(
               position: "top-center",
               id: "login-toast",
             });
-            set({ isActive: true });
           } else {
             localStorage.removeItem("token");
             toast.error("Account activation is pending");
             set({ token: null });
           }
-          set({ loading: false, isActive: false });
+          set({ loading: false });
 
           return response;
         } catch (error) {
@@ -91,6 +89,7 @@ export const useAuth = create(
           );
           // console.log(get().token);
           localStorage.removeItem("token");
+          localStorage.removeItem("auth-storage");
           set({
             token: null,
             currentUser: null,
@@ -105,7 +104,11 @@ export const useAuth = create(
     }),
     {
       name: "auth-storage",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        userStatus: state.userStatus,
+        userRole: state.userRole,
+      }),
     }
   )
 );
