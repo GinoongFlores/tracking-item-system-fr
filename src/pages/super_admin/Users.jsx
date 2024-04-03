@@ -4,6 +4,7 @@ import { Tabs } from "../../components/Tabs";
 import { useUser } from "../../store/StoreUser";
 import { SearchBar } from "../../components/SearchBar";
 import { Paginate } from "../../components/Paginate";
+import { UsersToggleModal } from "../../components/modal/UsersToggleModal";
 
 const usersLists = [
   {
@@ -41,6 +42,8 @@ export const Users = () => {
     filterUsers(search);
   }, [filterUsers, search]);
 
+  const [selectedUser, setSelectedUser] = useState(null);
+
   // const filteredUsers = filterUsers(search);
 
   return (
@@ -54,7 +57,7 @@ export const Users = () => {
           <UsersCards
             key={user.id}
             id={user.id}
-            user={user}
+            // user={user}
             email={user.email}
             isActivated={user.is_activated}
             name={`${user.first_name} ${user.last_name}`}
