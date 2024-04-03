@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
-import { UserRole } from "../hooks/UserRole";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuth } from "../store/StoreAuth";
 
 export const Navbar = ({ toggleOpen }) => {
-  const userRole = UserRole();
-  const { currentUser } = useAuthContext();
+  const userFirstName = useAuth((state) => state.userFirstName);
+  const userEmail = useAuth((state) => state.userEmail);
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
@@ -74,10 +73,10 @@ export const Navbar = ({ toggleOpen }) => {
               >
                 <div className="px-4 py-3">
                   <span className="block text-sm text-gray-900 dark:text-white">
-                    Welcome {currentUser?.data?.first_name}!
+                    Welcome {userFirstName}!
                   </span>
                   <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    {currentUser?.data?.email}
+                    {userEmail}
                   </span>
                 </div>
                 <ul className="py-1" role="none">

@@ -4,10 +4,10 @@ import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 
-import { useAuthContext } from "../context/AuthContext";
 import { UserRole } from "../hooks/UserRole";
 import { Navbar } from "./Navbar";
 import { useAuth } from "../store/StoreAuth";
+import { useUtils } from "../store/StoreUtils";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();
@@ -18,12 +18,8 @@ export const Sidebar = () => {
   const admin = userRole === "admin";
   const users = userRole === "user";
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-    // console.log(isOpen);
-  };
+  const isOpen = useUtils((state) => state.isOpen);
+  const toggleOpen = useUtils((state) => state.toggleOpen);
 
   const sidebarLinks = [
     {
