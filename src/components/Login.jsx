@@ -2,24 +2,23 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useFormik, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
 import { useAuth } from "../store/StoreAuth";
+import { useUtils } from "../store/StoreUtils";
+import { UserToken } from "../hooks/UserToken";
+import { LoginSchema } from "../utils/LoginSchema";
 
 const Login = () => {
   const navigate = useNavigate();
+  const token = UserToken();
   const login = useAuth((state) => state.login);
-  const token = useAuth((state) => state.token);
-  // console.log(token);
+  const closeSidebar = useUtils((state) => state.closeSidebar);
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email Required"),
-    password: Yup.string()
-      .max(10, "Must be 10 characters only")
-      .min(8, "Minimum of 8 characters only")
-      .required("password required"),
-  });
+  // console.log(token);
+  useEffect(() => {
+    if (token) {
+      closeSidebar();
+    }
+  }, [closeSidebar, token]);
 
   return (
     <>
