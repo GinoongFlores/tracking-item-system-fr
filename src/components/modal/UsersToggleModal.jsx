@@ -1,10 +1,28 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useUser } from "../../store/StoreUser";
+import { SelectRole } from "../select/SelectRole";
 
-export const UsersToggleModal = ({ fullName, email, number, company }) => {
+export const UsersToggleModal = ({
+  fullName,
+  email,
+  number,
+  company,
+  userRole,
+  id,
+}) => {
   const [open, setOpen] = useState(false);
-  const users = useUser((state) => state.users);
+  const [role, setRole] = useState("user");
+  const { attachRole } = useUser();
+
+  const handleSubmit = async () => {
+    try {
+      const response = await attachRole(id, role);
+      console.log(response);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   return (
     <>
@@ -114,57 +132,59 @@ export const UsersToggleModal = ({ fullName, email, number, company }) => {
                 <FaUser className="object-cover w-20 h-20 mb-2 border-2 dark:text-gray-500 border-gray-400 rounded-full dark:gray-blue-800" />
                 <div className="py-3 grid grid-cols-2 gap-4">
                   <dt className="text-sm font-medium text-gray-300">Role</dt>
-                  <dd className="text-sm text-gray-200 sm:mt-0">User</dd>
+                  <dd className="text-sm text-gray-200 sm:mt-0">
+                    {userRole ? userRole : "no role yet"}
+                  </dd>
                 </div>
+                {!userRole && (
+                  <div className="my-4 ">
+                    <SelectRole onChange={setRole} />
+                  </div>
+                )}
 
-                {users.map((user) => (
-                  <>
-                    <div className="font-medium">
-                      <div className="border-t border-gray-400 px-4 sm:p-0">
-                        <dl className="sm:divide-y divide-gray-400">
-                          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-300">
-                              Full Name
-                            </dt>
-                            <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2 text-gray-200">
-                              {fullName ? fullName : "John Doe"}
-                            </dd>
-                          </div>
-                          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-300">
-                              Email
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
-                              {email ? email : "test@.com"}
-                            </dd>
-                          </div>
-                          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-300">
-                              Phone number
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
-                              {number ? number : "+234 123 456 7890"}
-                            </dd>
-                          </div>
-                          <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt className="text-sm font-medium text-gray-300">
-                              Company
-                            </dt>
-                            <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
-                              {company ? company : "Company Name"}
-                            </dd>
-                          </div>
-                        </dl>
-                      </div>
+                <>
+                  <div className="font-medium">
+                    <div className="border-t border-gray-400 px-4 sm:p-0">
+                      <dl className="sm:divide-y divide-gray-400">
+                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-300">
+                            Full Name
+                          </dt>
+                          <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2 text-gray-200">
+                            {fullName ? fullName : "John Doe"}
+                          </dd>
+                        </div>
+                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-300">
+                            Email
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
+                            {email ? email : "test@.com"}
+                          </dd>
+                        </div>
+                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-300">
+                            Phone number
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
+                            {number ? number : "No number provided"}
+                          </dd>
+                        </div>
+                        <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt className="text-sm font-medium text-gray-300">
+                            Company
+                          </dt>
+                          <dd className="mt-1 text-sm text-gray-200 sm:mt-0 sm:col-span-2">
+                            {company ? company : "No company"}
+                          </dd>
+                        </div>
+                      </dl>
                     </div>
-                  </>
-                ))}
+                  </div>
+                </>
                 {/*
                   <div className="flex mt-4 md:mt-6">
                     <button
-                      href="#"
-                      className="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    >
                       Message
                     </button>
                   </div> */}
@@ -172,13 +192,17 @@ export const UsersToggleModal = ({ fullName, email, number, company }) => {
             </div>
             {/* Modal footer */}
             <div className="flex justify-center items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-              {/* <button
+              {!userRole && (
+                <button
                   data-modal-hide="medium-modal"
                   type="button"
+                  onClick={handleSubmit}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  I accept
-                </button> */}
+                  Submit
+                </button>
+              )}
+
               <button
                 data-modal-hide="medium-modal"
                 type="button"

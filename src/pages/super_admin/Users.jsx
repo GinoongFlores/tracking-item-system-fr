@@ -34,6 +34,13 @@ export const Users = () => {
     handleSearch,
   } = useUser();
 
+  // const mapUsers = users.map((user) => {
+  //   console.log(user.roles.map((role) => role.role_name));
+  // });
+  // useEffect(() => {
+  //   mapUsers;
+  // });
+
   useEffect(() => {
     fetchUsers(currentPage);
   }, [fetchUsers, currentPage]);
@@ -41,9 +48,6 @@ export const Users = () => {
   useEffect(() => {
     filterUsers(search);
   }, [filterUsers, search]);
-
-  const [selectedUser, setSelectedUser] = useState(null);
-
   // const filteredUsers = filterUsers(search);
 
   return (
@@ -57,8 +61,19 @@ export const Users = () => {
           <UsersCards
             key={user.id}
             id={user.id}
-            // user={user}
+            // user={
             email={user.email}
+            viewUser={
+              <UsersToggleModal
+                key={user.id}
+                id={user.id}
+                userRole={user.role_name}
+                fullName={`${user.first_name} ${user.last_name}`}
+                email={user.email}
+                number={user.phone_number}
+                company={user.company_name}
+              />
+            }
             isActivated={user.is_activated}
             name={`${user.first_name} ${user.last_name}`}
           />
