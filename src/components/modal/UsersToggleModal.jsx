@@ -12,13 +12,17 @@ export const UsersToggleModal = ({
   id,
 }) => {
   const [open, setOpen] = useState(false);
-  const [role, setRole] = useState("user");
-  const { attachRole } = useUser();
 
+  const { submitRole, selectedRole } = useUser();
   const handleSubmit = async () => {
     try {
-      const response = await attachRole(id, role);
-      console.log(response);
+      const response = await submitRole(id, selectedRole);
+      console.log("userId", id);
+      console.log("role", selectedRole);
+
+      if (response.status !== 200) {
+        console.log("Role assignment failed");
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -138,7 +142,7 @@ export const UsersToggleModal = ({
                 </div>
                 {!userRole && (
                   <div className="my-4 ">
-                    <SelectRole onChange={setRole} />
+                    <SelectRole />
                   </div>
                 )}
 

@@ -8,6 +8,27 @@ export const useUser = create((set, get) => ({
   totalPages: 0,
   search: "",
   currentPage: 1,
+  // attach role to user
+  selectedRole: "",
+  setSelectedRole: (selectedRole) => set({ selectedRole }),
+  handleRoleChange: (event) => {
+    set({ selectedRole: event.target.value });
+  },
+  submitRole: async (userId, role) => {
+    if (!role) {
+      console.log("User id or role is not defined");
+      return;
+    }
+
+    const response = await get().attachRole(userId, role);
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success("Role assigned successfully");
+    } else {
+      toast.error("Role assignment failed");
+    }
+  },
 
   fetchUsers: async (page = 1) => {
     const token = UserToken();
@@ -28,6 +49,26 @@ export const useUser = create((set, get) => ({
           ? JSON.stringify(errorMessage)
           : errorMessage
       );
+    }
+  },
+
+  attachRole: async (userId, role) => {
+    const token = UserToken();
+    try {
+      const response = await AxiosInstance.post(
+        `/user/${userId}/assign-role`,
+        {
+          role,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 

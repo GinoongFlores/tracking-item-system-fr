@@ -34,13 +34,6 @@ export const Users = () => {
     handleSearch,
   } = useUser();
 
-  // const mapUsers = users.map((user) => {
-  //   console.log(user.roles.map((role) => role.role_name));
-  // });
-  // useEffect(() => {
-  //   mapUsers;
-  // });
-
   useEffect(() => {
     fetchUsers(currentPage);
   }, [fetchUsers, currentPage]);
