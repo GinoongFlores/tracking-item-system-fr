@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useUser } from "../../store/StoreUser";
 
 export const SelectRole = () => {

@@ -10,16 +10,10 @@ export const useUser = create((set, get) => ({
   currentPage: 1,
   // attach role to user
   selectedRole: "",
-  setSelectedRole: (selectedRole) => set({ selectedRole }),
   handleRoleChange: (event) => {
     set({ selectedRole: event.target.value });
   },
   submitRole: async (userId, role) => {
-    if (!role) {
-      console.log("User id or role is not defined");
-      return;
-    }
-
     const response = await get().attachRole(userId, role);
     console.log(response);
 
