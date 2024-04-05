@@ -4,6 +4,7 @@ import { Tabs } from "../../components/Tabs";
 import { useUser } from "../../store/StoreUser";
 import { SearchBar } from "../../components/SearchBar";
 import { Paginate } from "../../components/Paginate";
+import { UsersToggleModal } from "../../components/modal/UsersToggleModal";
 
 const usersLists = [
   {
@@ -23,6 +24,7 @@ const usersLists = [
 export const Users = () => {
   // destructure
   const {
+    users,
     fetchUsers,
     currentPage,
     setCurrentPage,
@@ -30,14 +32,16 @@ export const Users = () => {
     search,
     filterUsers,
     handleSearch,
-    handleToggleActivation,
   } = useUser();
 
   useEffect(() => {
     fetchUsers(currentPage);
   }, [fetchUsers, currentPage]);
 
-  const filteredUsers = filterUsers(search);
+  useEffect(() => {
+    filterUsers(search);
+  }, [filterUsers, search]);
+  // const filteredUsers = filterUsers(search);
 
   return (
     <>
@@ -46,13 +50,24 @@ export const Users = () => {
         <Tabs tabsList={usersLists} />
       </div>
       <div className="flex flex-wrap gap-4">
-        {filteredUsers.map((user) => (
+        {users.map((user) => (
           <UsersCards
             key={user.id}
-            user={user}
+            id={user.id}
+            // user={
             email={user.email}
+            viewUser={
+              <UsersToggleModal
+                key={user.id}
+                id={user.id}
+                userRole={user.role_name}
+                fullName={`${user.first_name} ${user.last_name}`}
+                email={user.email}
+                number={user.phone_number}
+                company={user.company_name}
+              />
+            }
             isActivated={user.is_activated}
-            onToggleActivation={handleToggleActivation}
             name={`${user.first_name} ${user.last_name}`}
           />
         ))}

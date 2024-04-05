@@ -8,6 +8,21 @@ export const useUser = create((set, get) => ({
   totalPages: 0,
   search: "",
   currentPage: 1,
+  // attach role to user
+  selectedRole: "",
+  handleRoleChange: (event) => {
+    set({ selectedRole: event.target.value });
+  },
+  submitRole: async (userId, role) => {
+    const response = await get().attachRole(userId, role);
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success("Role assigned successfully");
+    } else {
+      toast.error("Role assignment failed");
+    }
+  },
 
   fetchUsers: async (page = 1) => {
     const token = UserToken();
@@ -28,6 +43,26 @@ export const useUser = create((set, get) => ({
           ? JSON.stringify(errorMessage)
           : errorMessage
       );
+    }
+  },
+
+  attachRole: async (userId, role) => {
+    const token = UserToken();
+    try {
+      const response = await AxiosInstance.post(
+        `/user/${userId}/assign-role`,
+        {
+          role,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 
@@ -78,11 +113,30 @@ export const useUser = create((set, get) => ({
     set({ currentPage: page });
   },
 
-  filterUsers: (search) => {
-    return get().users.filter(
-      (user) =>
-        user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-        user.last_name.toLowerCase().includes(search.toLowerCase())
-    );
+  filterUsers: async (search) => {
+    const token = UserToken();
+    try {
+      const response = await AxiosInstance.get(
+        `/user/list?search=${encodeURIComponent(search)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+      });
+      return response;
+    } catch (error) {
+      console.log(error.response);
+      set({ loading: false });
+    }
+    // return get().users.filter(
+    //   (user) =>
+    //     user.first_name.toLowerCase().includes(search.toLowerCase()) ||
+    //     user.last_name.toLowerCase().includes(search.toLowerCase())
+    // );
   },
 }));
