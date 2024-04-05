@@ -5,7 +5,6 @@ import { UserToken } from "../hooks/UserToken";
 export const AuthWrapper = ({ children }) => {
   // const { getUser, userStatus, loading } = useAuth();
   const token = UserToken();
-  const userStatus = useAuth((state) => state.userStatus);
   const loading = useAuth((state) => state.loading);
   // const token = localStorage.getItem("token");
 
