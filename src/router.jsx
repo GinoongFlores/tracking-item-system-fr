@@ -1,22 +1,45 @@
-import { Route, Routes } from "react-router-dom";
-import { PublicRoutes, PrivateRoutes } from "./routes/PublicRoutes";
+import {
+  Route,
+  Routes,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import {
+  SuperAdminRoutes,
+  AdminRoutes,
+  UserRoutes,
+  PublicRoutes,
+} from "./routes";
+import { UserRole } from "./hooks/UserRole";
+import { AuthWrapper } from "./utils/AuthWrapper";
 
-const router = () => {
+export const AppRouter = () => {
+  const userRole = UserRole();
+
+  let routes;
+  switch (userRole) {
+    case "super_admin":
+      routes = SuperAdminRoutes;
+      break;
+    case "admin":
+      routes = AdminRoutes;
+      break;
+    case "user":
+      routes = UserRoutes;
+      break;
+    default:
+      routes = PublicRoutes;
+  }
+
+  const router = createBrowserRouter(routes);
+
   return (
-    <>
-      {PublicRoutes.map((route, key) =>
-        route.children ? (
-          <Route key={key} element={route.element}>
-            {route.children.map((child, key) => (
-              <Route key={key} path={child.path} element={child.element} />
-            ))}
-          </Route>
-        ) : (
-          <Route key={key} path={route.path} element={route.element} />
-        )
-      )}
-    </>
+    <RouterProvider router={router}>
+      <Routes>
+        {routes.map((route, index) => (
+          <Route key={index} path={route.path} exact={route.exact} />
+        ))}
+      </Routes>
+    </RouterProvider>
   );
 };
-
-export default router;
