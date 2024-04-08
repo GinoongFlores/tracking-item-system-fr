@@ -11,12 +11,19 @@ import {
   PublicRoutes,
 } from "./routes";
 import { UserRole } from "./hooks/UserRole";
-import { AuthWrapper } from "./utils/AuthWrapper";
+import { useState, useEffect } from "react";
 
-export const AppRouter = () => {
+export const useRouter = () => {
+  // const [routes, setRoutes] = useState([]);
   const userRole = UserRole();
 
+  // useEffect(() => {
+  //   setRoutes(newRoutes);
+  //   setRoutesInitialized(true);
+  // }, [userRole]);
+
   let routes;
+
   switch (userRole) {
     case "super_admin":
       routes = SuperAdminRoutes;
@@ -30,16 +37,32 @@ export const AppRouter = () => {
     default:
       routes = PublicRoutes;
   }
-
-  const router = createBrowserRouter(routes);
-
   return (
-    <RouterProvider router={router}>
-      <Routes>
-        {routes.map((route, index) => (
-          <Route key={index} path={route.path} exact={route.exact} />
-        ))}
-      </Routes>
-    </RouterProvider>
+    <Routes>
+      {PublicRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((childRoute, childIndex) => (
+              <Route
+                key={childIndex}
+                path={childRoute.path}
+                element={childRoute.element}
+              />
+            ))}
+        </Route>
+      ))}
+      {routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children &&
+            route.children.map((childRoute, childIndex) => (
+              <Route
+                key={childIndex}
+                path={childRoute.path}
+                element={childRoute.element}
+              />
+            ))}
+        </Route>
+      ))}
+    </Routes>
   );
 };
