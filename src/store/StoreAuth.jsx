@@ -62,13 +62,13 @@ export const useAuth = create((set, get) => ({
       } else {
         localStorage.removeItem("token");
         toast.error("Account activation is pending");
-        set({ token: null });
+        set({ token: null, loading: false });
+        return;
       }
       set({ loading: false });
 
       return response;
     } catch (error) {
-      set({ loading: true });
       localStorage.removeItem("token");
       const unauthorized = error.response.data.message;
       const generalError = "An error occurred while logging in";
@@ -101,6 +101,7 @@ export const useAuth = create((set, get) => ({
       toast.success("Logged out successfully");
     } catch (error) {
       console.log(error.response);
+      set({ loading: false });
     }
   },
 }));
