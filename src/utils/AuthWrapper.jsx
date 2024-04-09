@@ -6,9 +6,10 @@ export const AuthWrapper = ({ children }) => {
   // const { getUser, userStatus, loading } = useAuth();
   const token = UserToken();
   const loading = useAuth((state) => state.loading);
+  // console.log(loading);
   // const token = localStorage.getItem("token");
 
-  if (loading || !token) {
+  if (loading) {
     return (
       <div className="h-screen bg:dark-gray-9000 dar:text-white flex justify-center items-center">
         <PulseLoader
