@@ -1,5 +1,6 @@
 import { Admin, Company, Home, Items, Users } from "../pages/super_admin";
 import { SuperAdminLayout } from "../layouts";
+import { createBrowserRouter } from "react-router-dom";
 
 import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
@@ -8,6 +9,7 @@ import { BiLogOut } from "react-icons/bi";
 export const SuperAdminRoutes = [
   {
     element: <SuperAdminLayout />,
+    path: "/",
     children: [
       {
         name: "Home",
