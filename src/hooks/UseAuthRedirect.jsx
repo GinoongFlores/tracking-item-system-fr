@@ -14,9 +14,18 @@ export const UseAuthRedirect = () => {
   useEffect(() => {
     if (token) {
       getUser();
-      navigate("/");
-    } else if (!token && location.pathname !== "/register") {
+    }
+  }, [getUser, token]);
+
+  useEffect(() => {
+    if (!token && location.pathname !== "/register") {
       navigate("/login");
     }
-  }, [getUser, token, location.pathname, navigate]);
+  }, [location.pathname, navigate, loading, token]);
+
+  useEffect(() => {
+    if (token && location.pathname === "/login") {
+      navigate("/");
+    }
+  });
 };
