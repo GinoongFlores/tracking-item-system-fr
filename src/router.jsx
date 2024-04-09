@@ -11,16 +11,15 @@ import {
   PublicRoutes,
 } from "./routes";
 import { UserRole } from "./hooks/UserRole";
-import { useState, useEffect } from "react";
 
-export const useRouter = () => {
+export const Router = () => {
   // const [routes, setRoutes] = useState([]);
   const userRole = UserRole();
 
   // useEffect(() => {
   //   setRoutes(newRoutes);
   //   setRoutesInitialized(true);
-  // }, [userRole]);
+  // }, [userRole]);...
 
   let routes;
 
@@ -51,6 +50,7 @@ export const useRouter = () => {
             ))}
         </Route>
       ))}
+
       {routes.map((route, index) => (
         <Route key={index} path={route.path} element={route.element}>
           {route.children &&
