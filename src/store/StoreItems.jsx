@@ -5,30 +5,36 @@ import AxiosInstance from "../api/Axios";
 export const useItems = create((set, get) => ({
   itemData: [],
   itemTrashedData: [],
-  isEmptyItem: false,
+  itemAdded: false,
 
   addItem: async (values) => {
     try {
       const response = await AxiosInstance.post("item/add", {
         ...values,
       });
-      set({ itemData: [...get().itemData, response.data.data] });
+      set({
+        itemData: [...get().itemData, response.data.data],
+        itemAdded: true,
+      });
       toast.success("Item added successfully");
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message.error, {
-        position: "top-center",
-      });
+      console.log(error.response);
+      // toast.error(error.response.data.message.error, {
+      //   position: "top-center",
+      // });
     }
   },
 
   fetchUserItem: async () => {
     try {
       const response = await AxiosInstance.get(`item/user`);
-      set({ itemData: response.data.data, isEmptyItem: false });
+      set({
+        itemData: response.data.data,
+        itemAdded: true,
+      });
     } catch (error) {
       if (error.response.status) {
-        set({ isEmptyItem: true });
+        set({ itemAdded: false });
         toast.error("No items yet on this user.", {
           id: "no-item",
         });
@@ -39,10 +45,10 @@ export const useItems = create((set, get) => ({
   fetchTrashedItem: async () => {
     try {
       const response = await AxiosInstance.get(`item/user/trashed`);
-      set({ itemTrashedData: response.data.data, isEmptyItem: false });
+      set({ itemTrashedData: response.data.data, itemAdded: true });
     } catch (error) {
       console.log(error.response);
-      set({ isEmpty: true });
+      set({ itemAdded: false });
     }
   },
 
