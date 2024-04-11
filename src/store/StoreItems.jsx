@@ -39,7 +39,7 @@ export const useItems = create((set, get) => ({
           Authorization: `Bearer ${token}`,
         },
       });
-      set({ itemData: response.data.data });
+      set({ itemData: response.data.data, isEmptyItem: false });
     } catch (error) {
       if (error.response.status) {
         set({ isEmptyItem: true });
