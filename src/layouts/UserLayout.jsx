@@ -6,7 +6,7 @@ export const UserLayout = () => {
     <>
       <Sidebar />
 
-      <main className="container mx-auto px-4 pt-12 bg-gray-500 dark:bg-gray-800 h-screen md:full">
+      <main className="container mx-auto px-4 pt-12 bg-white dark:bg-darker max-w-full min-h-screen">
         <Outlet />
       </main>
     </>
