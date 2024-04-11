@@ -49,11 +49,16 @@ export const useItems = create((set, get) => ({
   restoreUserTrashedItem: async (itemId) => {
     try {
       const response = await AxiosInstance.post(`item/${itemId}/user/restore`);
-      set({
-        itemTrashedData: get().itemTrashedData.filter(
-          (item) => item.id !== itemId
-        ),
-        itemData: [...get().itemData, response.data.data],
+      set((state) => {
+        const restoredItem = state.itemTrashedData.find(
+          (item) => item.id === itemId
+        );
+        return {
+          itemData: [...state.itemData, restoredItem].filter(Boolean),
+          itemTrashedData: state.itemTrashedData.filter(
+            (item) => item.id !== itemId
+          ),
+        };
       });
       toast.success("Item restored successfully");
       return response;
