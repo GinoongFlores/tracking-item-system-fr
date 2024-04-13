@@ -12,16 +12,20 @@ export const useItems = create((set, get) => ({
       const response = await AxiosInstance.post("item/add", {
         ...values,
       });
-      set({
-        itemData: [...get().itemData, response.data.data],
+      set((state) => ({
+        itemData: [...state.itemData, response.data.data],
         itemAdded: true,
-      });
+      }));
       toast.success("Item added successfully");
     } catch (error) {
       console.log(error.response);
-      // toast.error(error.response.data.message.error, {
-      //   position: "top-center",
-      // });
+
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
+        });
+      }
     }
   },
 
@@ -37,6 +41,28 @@ export const useItems = create((set, get) => ({
         set({ itemAdded: false });
         toast.error("No items yet on this user.", {
           id: "no-item",
+        });
+      }
+    }
+  },
+
+  updateUserItem: async (itemId, values) => {
+    try {
+      const response = await AxiosInstance.post(`item/${itemId}/user/update`, {
+        ...values,
+      });
+      set((state) => ({
+        itemData: state.itemData.map((item) =>
+          item.id === itemId ? response.data.data : item
+        ),
+      }));
+      toast.success("Item updated successfully");
+    } catch (error) {
+      // console.log(error.response);
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
         });
       }
     }
@@ -76,7 +102,9 @@ export const useItems = create((set, get) => ({
   deleteUserItem: async (itemId) => {
     try {
       const response = await AxiosInstance.delete(`item/${itemId}/delete`);
-      set({ itemData: get().itemData.filter((item) => item.id !== itemId) });
+      set((state) => ({
+        itemData: state.itemData.filter((item) => item.id !== itemId),
+      }));
       toast.success("Item deleted successfully");
       return response;
     } catch (error) {
