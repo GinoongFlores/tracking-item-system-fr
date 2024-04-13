@@ -4,6 +4,7 @@ import { UserRole } from "../../hooks/UserRole";
 import { UserToken } from "../../hooks/UserToken";
 import { useCompany } from "../../store/StoreCompany";
 import { useNavigate } from "react-router-dom";
+import { InputField } from "../../components";
 
 export const AddCompanyPage = () => {
   const userRole = UserRole();
@@ -48,12 +49,11 @@ export const AddCompanyPage = () => {
                         >
                           Company name
                         </label>
-                        <Field
-                          type="text"
-                          id="company_name"
-                          name="company_name"
-                          placeholder="Hustle Hard LLC"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <InputField
+                          type={"text"}
+                          id={"company_name"}
+                          name={"company_name"}
+                          placeholder={"Company name"}
                         />
                         {errors.company_name && touched.company_name ? (
                           <div className="text-red-800 dark:text-red-400 text-sm">

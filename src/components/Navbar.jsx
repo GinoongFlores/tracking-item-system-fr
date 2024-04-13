@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../store/StoreAuth";
+import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 
 export const Navbar = ({ toggleOpen }) => {
   const userFirstName = useAuth((state) => state.userFirstName);
@@ -9,7 +10,7 @@ export const Navbar = ({ toggleOpen }) => {
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-darker dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end gap-4">
@@ -39,6 +40,7 @@ export const Navbar = ({ toggleOpen }) => {
             <div className="flex gap-4 items-center">
               <div className="rounded-full w-8 h-8 bg-slate-600" />
               <h2 className="text-gray-800 dark:text-white">Tracker</h2>
+              <ThemeSwitcher />
             </div>
           </div>
           {/* profile */}

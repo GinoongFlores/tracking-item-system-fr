@@ -5,7 +5,7 @@ import { useFormik, Field, Form, Formik } from "formik";
 import { useAuth } from "../store/StoreAuth";
 import { useUtils } from "../store/StoreUtils";
 import { UserToken } from "../hooks/UserToken";
-import { LoginSchema } from "../utils/LoginSchema";
+import { LoginSchema } from "../utils/YupSchema";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -60,7 +60,10 @@ const Login = () => {
                         required=""
                       />
                       {errors.email && touched.email ? (
-                        <div className="dark:text-red-400"> {errors.email}</div>
+                        <div className="text-red-600 dark:text-red-400 text-sm">
+                          {" "}
+                          {errors.email}
+                        </div>
                       ) : null}
                     </div>
                     <div>
@@ -79,7 +82,7 @@ const Login = () => {
                         required=""
                       />
                       {errors.password && touched.password ? (
-                        <div className="dark:text-red-400 text-sm">
+                        <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.password}
                         </div>
                       ) : null}
@@ -92,7 +95,7 @@ const Login = () => {
                     >
                       Sign in
                     </button>
-                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                    <p className="text-sm font-light text-black dark:text-gray-500">
                       Don't have an account? {""}
                       <Link
                         to={"/register"}

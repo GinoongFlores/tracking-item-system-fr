@@ -78,7 +78,7 @@ const Register = () => {
                         placeholder="John Doe"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
-                      {errors.first_name && errors.first_name ? (
+                      {errors.first_name && touched.first_name ? (
                         <div className="dark:text-red-400 text-sm">
                           {errors.first_name}
                         </div>
@@ -99,7 +99,7 @@ const Register = () => {
                         placeholder="John Doe"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
-                      {errors.last_name && errors.last_name ? (
+                      {errors.last_name && touched.last_name ? (
                         <div className="dark:text-red-400 text-sm">
                           {errors.last_name}
                         </div>

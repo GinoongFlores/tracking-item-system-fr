@@ -22,22 +22,37 @@ export const Sidebar = () => {
   const toggleOpen = useUtils((state) => state.toggleOpen);
 
   const sidebarLinks = [
-    {
-      name: "Home",
-      icon: <FaHome size={20} />,
-      link: "/",
-    },
-    ...(!users
+    ...(users
       ? [
           {
-            name: "Users",
-            icon: <FaUsers />,
-            link: "/users",
+            name: "Home",
+            icon: <FaHome size={20} />,
+            link: "/",
+          },
+          {
+            name: "Items",
+            icon: (
+              <svg
+                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 18 20"
+              >
+                <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+              </svg>
+            ),
+            link: "/items",
           },
         ]
       : []),
     ...(superAdmin
       ? [
+          {
+            name: "Home",
+            icon: <FaHome size={20} />,
+            link: "/",
+          },
           {
             name: "Admin",
             icon: <MdAdminPanelSettings size={20} />,
@@ -48,23 +63,29 @@ export const Sidebar = () => {
             icon: <FaBuilding />,
             link: "/company",
           },
+          {
+            name: "Users",
+            icon: <FaUsers />,
+            link: "/users",
+          },
+          {
+            name: "Items",
+            icon: (
+              <svg
+                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 18 20"
+              >
+                <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+              </svg>
+            ),
+            link: "/items",
+          },
         ]
       : []),
-    {
-      name: "Items",
-      icon: (
-        <svg
-          className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 18 20"
-        >
-          <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-        </svg>
-      ),
-      link: "/items",
-    },
+
     {
       name: "logout",
       icon: <BiLogOut />,
@@ -79,12 +100,12 @@ export const Sidebar = () => {
       </header>
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-36 md:w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 ${
+        className={`fixed top-0 left-0 z-40 w-36 md:w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-darker dark:border-gray-700 ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div className="h-full px-3 pb-4 overflow-y-auto">
           <ul className="pb-4 mb-4 space-y-2 font-medium border-b border-gray-200 dark:border-gray-700">
             <li>
               <h2 className="text-sm md:text-lg dark:text-gray-400 text-center">

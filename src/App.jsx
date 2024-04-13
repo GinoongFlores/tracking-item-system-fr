@@ -3,8 +3,20 @@ import { Routes, Route } from "react-router-dom";
 import { useAuthRedirect } from "./hooks/UseAuthRedirect";
 
 // components
-import { SuperAdminLayout, CompanyLayout } from "./layouts";
+import {
+  SuperAdminLayout,
+  CompanyLayout,
+  UserLayout,
+  ItemsLayout,
+} from "./layouts";
 import { Admin, Users, Home, Items } from "./pages/super_admin";
+import {
+  AddItem,
+  UserHome,
+  UserItems,
+  UserProfile,
+  TrashedItems,
+} from "./pages/user";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import {
@@ -13,8 +25,13 @@ import {
   EditCompanyPage,
 } from "./pages/company";
 import { AuthWrapper } from "./utils/AuthWrapper";
+import { UserRole } from "./hooks/UserRole";
 
 function App() {
+  const userRole = UserRole();
+  const superAdmin = userRole === "super_admin";
+  const admin = userRole === "admin";
+  const users = userRole === "user";
   useAuthRedirect();
 
   return (
@@ -22,25 +39,47 @@ function App() {
       <div>
         <Toaster position="bottom-center" reverseOrder={false} />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <AuthWrapper>
-                <SuperAdminLayout />
-              </AuthWrapper>
-            }
-          >
-            <Route path="/" element={<Home />} />
-            <Route path="/items" element={<Items />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/admin" element={<Admin />} />
-            {/* <Route path="/test-zustand" element={<TestZustand />} /> */}
-            <Route path="/company" element={<CompanyLayout />}>
-              <Route path="/company" element={<ViewCompanyPage />} />
-              <Route path="add" element={<AddCompanyPage />} />
-              <Route path="edit" element={<EditCompanyPage />} />
+          {superAdmin && (
+            <Route
+              path="/"
+              element={
+                <AuthWrapper>
+                  <SuperAdminLayout />
+                </AuthWrapper>
+              }
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="items" element={<Items />} />
+              <Route path="users" element={<Users />} />
+              <Route path="admin" element={<Admin />} />
+              {/* <Route path="/test-zustand" element={<TestZustand />} /> */}
+              <Route path="company" element={<CompanyLayout />}>
+                <Route path="/company" element={<ViewCompanyPage />} />
+                <Route path="add" element={<AddCompanyPage />} />
+                <Route path="edit" element={<EditCompanyPage />} />
+              </Route>
             </Route>
-          </Route>
+          )}
+
+          {users && (
+            <Route
+              path="/"
+              element={
+                <AuthWrapper>
+                  <UserLayout />
+                </AuthWrapper>
+              }
+            >
+              <Route path="/" element={<UserHome />} />
+              <Route path="/items" element={<ItemsLayout />}>
+                <Route path="/items" element={<UserItems />} />
+                <Route path="add" element={<AddItem />} />
+                <Route path="trashed" element={<TrashedItems />} />
+              </Route>
+              <Route path="/profile" element={<UserProfile />} />
+            </Route>
+          )}
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

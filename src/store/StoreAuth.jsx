@@ -15,15 +15,7 @@ export const useAuth = create((set, get) => ({
   getUser: async () => {
     set({ loading: true });
     try {
-      const token = localStorage.getItem("token");
-
-      set({ token });
-
-      const response = await AxiosInstance.get("user/current", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await AxiosInstance.get("user/current");
 
       const userStatus = response.data.data.is_activated;
       set({
@@ -70,9 +62,10 @@ export const useAuth = create((set, get) => ({
     } catch (error) {
       set({ loading: true });
       localStorage.removeItem("token");
-      const unauthorized = error.response.data.message;
-      const generalError = "An error occurred while logging in";
-      toast.error(unauthorized ? unauthorized : generalError);
+      console.log(error);
+      // const unauthorized = error.response.data.message;
+      // const generalError = "An error occurred while logging in";
+      // toast.error(unauthorized ? unauthorized : generalError);
       set({ token: null, loading: false });
     }
   },
@@ -80,15 +73,7 @@ export const useAuth = create((set, get) => ({
   logout: async () => {
     set({ loading: true });
     try {
-      await AxiosInstance.post(
-        "/user/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      await AxiosInstance.post("/user/logout");
       // console.log(get().token);
       localStorage.removeItem("token");
       localStorage.removeItem("auth-storage");
