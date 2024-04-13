@@ -10,7 +10,13 @@ import {
   ItemsLayout,
 } from "./layouts";
 import { Admin, Users, Home, Items } from "./pages/super_admin";
-import { AddItem, UserHome, UserItems, UserProfile } from "./pages/user";
+import {
+  AddItem,
+  UserHome,
+  UserItems,
+  UserProfile,
+  TrashedItems,
+} from "./pages/user";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import {
@@ -68,6 +74,7 @@ function App() {
               <Route path="/items" element={<ItemsLayout />}>
                 <Route path="/items" element={<UserItems />} />
                 <Route path="add" element={<AddItem />} />
+                <Route path="trashed" element={<TrashedItems />} />
               </Route>
               <Route path="/profile" element={<UserProfile />} />
             </Route>

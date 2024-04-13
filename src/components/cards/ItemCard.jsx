@@ -1,20 +1,34 @@
 import { CiImageOn } from "react-icons/ci";
-import { FaArrowAltCircleDown } from "react-icons/fa";
-import { FaArrowAltCircleUp } from "react-icons/fa";
+import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { useState } from "react";
 import { useItems } from "../../store/StoreItems";
+import { ButtonActions } from "../buttons/ButtonActions";
+import { EditItem } from "../../components/modal/EditItem";
 
-export const ItemCard = ({ id, name, description, quantity }) => {
+export const ItemCard = ({
+  id,
+  name,
+  description,
+  quantity,
+  isEdit,
+  isDelete,
+  isRestore,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const deleteUserItem = useItems((state) => state.deleteUserItem);
+  const restoreUserTrashedItem = useItems(
+    (state) => state.restoreUserTrashedItem
+  );
 
-  const handleDelete = async () => {
-    console.log(id);
-    await deleteUserItem(id);
-  };
+  const item = { id, name, description, quantity };
+
+  // const handleDelete = async () => {
+  //   console.log(id);
+  //   await deleteUserItem(id);
+  // };
 
   return (
-    <div className="max-w-3xl px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
       <div className="grid grid-cols-3 grid-flow-row-dense w-full relative">
         <div className="flex gap-4 col-span-2">
           <div className="flex flex-col place-self-center">
@@ -31,10 +45,10 @@ export const ItemCard = ({ id, name, description, quantity }) => {
               {name || "Item name"}
             </h5>
             <span className="text-sm">{`${
-              !quantity ? "Quantity: 0" : `Quantity ${quantity}`
+              !quantity ? "Quantity: 0" : `Quantity: ${quantity}`
             }`}</span>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {description || "lorem10 asdasdasadjfhaj hdfajh dfjahkjd"}
+              {description || "description"}
             </p>
           </div>
         </div>
@@ -51,29 +65,31 @@ export const ItemCard = ({ id, name, description, quantity }) => {
       {/* actions */}
       {isExpanded && (
         <div
-          className={`gap-4 flex w-full justify-end transition-all duration-300 ease-in-out  ${
-            isExpanded
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-2"
+          className={`gap-4 flex w-full justify-end transition-all duration-300 ease-in-out ${
+            isExpanded ? "opacity-100 " : "opacity-0 "
           }`}
         >
-          <div>
-            <button
-              onClick={handleDelete}
-              type="button"
-              className="w-full py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-darker rounded-lg border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-100"
-            >
-              Delete
-            </button>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="w-full py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-darker rounded-lg border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-100"
-            >
-              Edit
-            </button>
-          </div>
+          {isDelete && (
+            <div>
+              <ButtonActions
+                action={() => deleteUserItem(id)}
+                name={"Delete"}
+              />
+            </div>
+          )}
+          {isEdit && (
+            <div>
+              <EditItem item={item} />
+            </div>
+          )}
+          {isRestore && (
+            <div>
+              <ButtonActions
+                action={() => restoreUserTrashedItem(id)}
+                name={"Restore"}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
