@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
-import { UserToken } from "../hooks/UserToken";
+import { UserToken } from "../hooks/userToken";
 
 export const useUser = create((set, get) => ({
   users: [],
@@ -25,14 +25,9 @@ export const useUser = create((set, get) => ({
   },
 
   fetchUsers: async (page = 1) => {
-    const token = UserToken();
     // console.log("fetchUser ", token);
     try {
-      const response = await AxiosInstance.get(`/user/list?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await AxiosInstance.get(`/user/list?page=${page}`);
       set({ users: response.data.data, totalPages: response.data.last_page });
       return response;
     } catch (error) {
@@ -47,19 +42,10 @@ export const useUser = create((set, get) => ({
   },
 
   attachRole: async (userId, role) => {
-    const token = UserToken();
     try {
-      const response = await AxiosInstance.post(
-        `/user/${userId}/assign-role`,
-        {
-          role,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
+        role,
+      });
       return response;
     } catch (error) {
       console.log(error.response);
@@ -67,17 +53,8 @@ export const useUser = create((set, get) => ({
   },
 
   toggleActivation: async (userId) => {
-    const token = UserToken();
     try {
-      const response = await AxiosInstance.post(
-        `/user/${userId}/activation`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await AxiosInstance.post(`/user/${userId}/activation`);
       const activation = response.data.data.is_activated;
       activation
         ? toast.success("User activated")
@@ -114,15 +91,9 @@ export const useUser = create((set, get) => ({
   },
 
   filterUsers: async (search) => {
-    const token = UserToken();
     try {
       const response = await AxiosInstance.get(
-        `/user/list?search=${encodeURIComponent(search)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `/user/list?search=${encodeURIComponent(search)}`
       );
       set({
         users: response.data.data,

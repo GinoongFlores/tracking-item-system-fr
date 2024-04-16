@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { ItemCard, SearchBar, ButtonLink } from "../../../components";
-import { useItems } from "../../../store/StoreItems";
+import { SearchBar } from "../../../components";
+import { ButtonLink } from "../../../components/buttons";
+import { ItemCard } from "../../../components/cards";
+import { useItems } from "../../../store";
 import { useEffect, useState } from "react";
 
 export const TrashedItems = () => {

@@ -1,25 +1,10 @@
-import { useEffect, useState } from "react";
-import { UsersCards } from "../../components/UsersCards";
-import { Tabs } from "../../components/Tabs";
-import { useUser } from "../../store/StoreUser";
-import { SearchBar } from "../../components/SearchBar";
-import { Paginate } from "../../components/Paginate";
+import { useEffect } from "react";
+import { UsersCards } from "../../components/cards";
+import { useUser } from "../../store";
+import { SearchBar } from "../../components/";
+import { UsersLinks } from "../../utils/";
+import { Paginate, BreadCrumbs } from "../../components/navigation";
 import { UsersToggleModal } from "../../components/modal/UsersToggleModal";
-
-const usersLists = [
-  {
-    name: "All Users",
-    link: "/users",
-  },
-  {
-    name: "Add",
-    link: "/users/add",
-  },
-  {
-    name: "Inactive",
-    link: "/users/inactive",
-  },
-];
 
 export const Users = () => {
   // destructure
@@ -45,9 +30,9 @@ export const Users = () => {
 
   return (
     <>
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col items-center justify-stretch">
+        <BreadCrumbs crumbs={UsersLinks} />
         <SearchBar onSearch={handleSearch} />
-        <Tabs tabsList={usersLists} />
       </div>
       <div className="flex flex-wrap gap-4">
         {users.map((user) => (

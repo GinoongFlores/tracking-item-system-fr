@@ -4,10 +4,9 @@ import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 
-import { UserRole } from "../hooks/UserRole";
-import { Navbar } from "./Navbar";
-import { useAuth } from "../store/StoreAuth";
-import { useUtils } from "../store/StoreUtils";
+import { UserRole } from "../../hooks";
+import { Navbar } from "../navigation";
+import { useAuth, useUtils } from "../../store";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();

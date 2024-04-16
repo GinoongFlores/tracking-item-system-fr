@@ -1,6 +1,14 @@
-export const SearchBar = () => {
+import { useState } from "react";
+
+export const SearchBar = ({ onSearch }) => {
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+    onSearch(event.target.value);
+  };
   return (
-    <div className="w-11/12 md:w-3/4 lg:max-w-3xl m-auto">
+    <div className="w-11/12 md:w-3/4 lg:max-w-3xl m-auto my-4">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -28,7 +36,8 @@ export const SearchBar = () => {
 
         <input
           type="text"
-          defaultValue=""
+          onChange={handleSearch}
+          value={search}
           className="bg-white dark:bg-darker mt-2 shadow-xl focus:outline-none rounded-full py-3 px-6 block w-full p-4 ps-10"
           placeholder="Search"
           required

@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
-import { useAuthRedirect } from "./hooks/UseAuthRedirect";
+import { useAuthRedirect } from "./hooks";
 
 // components
 import {
@@ -9,7 +9,7 @@ import {
   UserLayout,
   ItemsLayout,
 } from "./layouts";
-import { Admin, Users, Home, Items } from "./pages/super_admin";
+import { Admin, Users, Home, Items, Company } from "./pages/super_admin";
 import {
   AddItem,
   UserHome,
@@ -17,15 +17,16 @@ import {
   UserProfile,
   TrashedItems,
 } from "./pages/user";
-import Login from "./components/Login";
-import Register from "./components/Register";
+
+import { Login, Register } from "./components/forms";
+
 import {
   AddCompanyPage,
   ViewCompanyPage,
   EditCompanyPage,
 } from "./pages/company";
-import { AuthWrapper } from "./utils/AuthWrapper";
-import { UserRole } from "./hooks/UserRole";
+import { AuthWrapper } from "./utils";
+import { UserRole } from "./hooks";
 
 function App() {
   const userRole = UserRole();
@@ -53,8 +54,8 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="admin" element={<Admin />} />
               {/* <Route path="/test-zustand" element={<TestZustand />} /> */}
-              <Route path="company" element={<CompanyLayout />}>
-                <Route path="/company" element={<ViewCompanyPage />} />
+              <Route path="/company" element={<CompanyLayout />}>
+                <Route index element={<Company />} />
                 <Route path="add" element={<AddCompanyPage />} />
                 <Route path="edit" element={<EditCompanyPage />} />
               </Route>

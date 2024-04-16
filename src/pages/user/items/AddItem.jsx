@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { InputField } from "../../../components";
-import { ItemSchema } from "../../../utils/YupSchema";
-import { useItems } from "../../../store/StoreItems";
+import { ItemSchema } from "../../../utils";
+import { useItems } from "../../../store";
 
 export const AddItem = () => {
   const addItem = useItems((state) => state.addItem);

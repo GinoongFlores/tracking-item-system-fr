@@ -5,7 +5,7 @@ import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 
 import { useAuthContext } from "../context/AuthContext";
-import { UserRole } from "../hooks/UserRole";
+import { UserRole } from "../hooks";
 import { CgProfile } from "react-icons/cg";
 
 const TestSidebar = () => {

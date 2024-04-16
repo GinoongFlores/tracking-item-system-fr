@@ -1,9 +1,9 @@
 import { CiImageOn } from "react-icons/ci";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { useState } from "react";
-import { useItems } from "../../store/StoreItems";
-import { ButtonActions } from "../buttons/ButtonActions";
-import { EditItem } from "../../components/modal/EditItem";
+import { useItems } from "../../store";
+import { ButtonActions } from "../buttons";
+import { EditItem } from "../../components/modal";
 
 export const ItemCard = ({
   id,

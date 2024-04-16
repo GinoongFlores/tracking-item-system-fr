@@ -3,7 +3,6 @@ import { useContext, createContext } from "react";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
 import { useAuthContext } from "./AuthContext";
-import { UserRole } from "../hooks/UserRole";
 
 const UsersDataContext = createContext();
 

@@ -1,4 +1,4 @@
-import { useUser } from "../../store/StoreUser";
+import { useUser } from "../../store";
 
 export const SelectRole = () => {
   const { selectedRole, handleRoleChange } = useUser();
