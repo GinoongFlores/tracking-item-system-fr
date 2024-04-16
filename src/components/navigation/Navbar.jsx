@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
-import { useAuth } from "../../store/StoreAuth";
+import { useAuth } from "../../store";
 import { ThemeSwitcher } from "../../utils/ThemeSwitcher";
 
 export const Navbar = ({ toggleOpen }) => {

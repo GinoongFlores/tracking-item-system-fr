@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import { ItemSchema } from "../../utils/YupSchema";
 import { InputField } from "../../components";
 import { ButtonActions, ButtonModal } from "../buttons";
-import { useItems } from "../../store/StoreItems";
+import { useItems } from "../../store";
 
 export const EditItem = ({ item }) => {
   const initialValues = {

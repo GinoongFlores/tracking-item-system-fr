@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { DefaultCard } from "../../../components/cards";
-import { useCompany } from "../../../store/StoreCompany";
+import { useCompany } from "../../../store";
 
 export const ViewCompany = () => {
   const companies = useCompany((state) => state.companies);

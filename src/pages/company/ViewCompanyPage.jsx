@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { DefaultCard } from "../../components/cards";
-import { useCompany } from "../../store/StoreCompany";
+import { useCompany } from "../../store";
 
 export const ViewCompanyPage = () => {
   // prevent destructuring to avoid performance issues

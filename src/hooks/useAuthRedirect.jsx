@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { useAuth } from "../store/StoreAuth";
+import { useAuth } from "../store";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";

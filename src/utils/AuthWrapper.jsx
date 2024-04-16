@@ -1,4 +1,4 @@
-import { useAuth } from "../store/StoreAuth";
+import { useAuth } from "../store";
 import PulseLoader from "react-spinners/PulseLoader";
 import { UserToken } from "../hooks/userToken";
 

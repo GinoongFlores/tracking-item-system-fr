@@ -1,8 +1,8 @@
 import { FaUser } from "react-icons/fa";
-import { useUser } from "../../store/StoreUser";
+import { useUser } from "../../store";
 import { useState } from "react";
 import { UsersToggleModal } from "../modal/UsersToggleModal";
-import { useAuth } from "../../store/StoreAuth";
+import { useAuth } from "../../store";
 
 export const UsersCards = ({ name, email, isActivated, id, viewUser }) => {
   const users = useUser((state) => state.users);

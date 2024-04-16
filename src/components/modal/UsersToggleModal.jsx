@@ -1,5 +1,5 @@
 import { FaUser } from "react-icons/fa";
-import { useUser } from "../../store/StoreUser";
+import { useUser } from "../../store";
 import { SelectRole } from "../select/SelectRole";
 import { useModal } from "../../hooks";
 import { ButtonActions } from "../buttons";

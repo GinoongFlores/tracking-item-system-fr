@@ -1,7 +1,7 @@
 import { SearchBar } from "../../../components";
 import { ButtonLink } from "../../../components/buttons";
 import { ItemCard } from "../../../components/cards";
-import { useItems } from "../../../store/StoreItems";
+import { useItems } from "../../../store";
 import { useEffect } from "react";
 import { EditItem } from "../../../components/modal";
 

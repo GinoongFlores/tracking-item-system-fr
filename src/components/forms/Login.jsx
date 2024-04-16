@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import { useFormik, Field, Form, Formik } from "formik";
 import { useAuth } from "../../store/StoreAuth";
-import { useUtils } from "../../store/StoreUtils";
+import { useUtils } from "../../store";
 import { UserToken } from "../../hooks/userToken";
 import { LoginSchema } from "../../utils/YupSchema";
 

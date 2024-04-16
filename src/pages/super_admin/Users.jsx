@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { UsersCards } from "../../components/cards";
-import { useUser } from "../../store/StoreUser";
+import { useUser } from "../../store";
 import { SearchBar } from "../../components/";
 import { UsersLinks } from "../../utils/";
 import { Paginate, BreadCrumbs } from "../../components/navigation";

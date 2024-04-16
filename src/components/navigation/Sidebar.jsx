@@ -6,8 +6,7 @@ import { BiLogOut } from "react-icons/bi";
 
 import { UserRole } from "../../hooks";
 import { Navbar } from "../navigation";
-import { useAuth } from "../../store/StoreAuth";
-import { useUtils } from "../../store/StoreUtils";
+import { useAuth, useUtils } from "../../store";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();
