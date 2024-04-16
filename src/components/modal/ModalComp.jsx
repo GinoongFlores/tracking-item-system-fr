@@ -1,20 +1,9 @@
 import { Modal } from "flowbite";
 import { useEffect, useRef } from "react";
+import { useModal } from "../../hooks/useModal";
 
 export const ModalComp = () => {
-  const modalRef = useRef(null);
-  const modal = useRef(null);
-
-  useEffect(() => {
-    const options = {
-      placement: "bottom-right",
-      backdrop: "dynamic",
-      backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
-      closable: true,
-    };
-
-    modal.current = new Modal(modalRef.current, options);
-  }, []);
+  const { modal, modalRef } = useModal();
 
   return (
     <>
