@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { InputField } from "../../../components";
-import { ItemSchema } from "../../../utils/YupSchema";
+import { ItemSchema } from "../../../utils";
 import { useItems } from "../../../store";
 
 export const AddItem = () => {

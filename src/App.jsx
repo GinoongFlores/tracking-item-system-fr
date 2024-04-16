@@ -25,7 +25,7 @@ import {
   ViewCompanyPage,
   EditCompanyPage,
 } from "./pages/company";
-import { AuthWrapper } from "./utils/AuthWrapper";
+import { AuthWrapper } from "./utils";
 import { UserRole } from "./hooks";
 
 function App() {

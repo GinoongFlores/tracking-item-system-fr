@@ -1,5 +1,5 @@
 import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
-import { BreadCrumbsArrow } from "../../../public";
+import { BreadCrumbsArrow } from "../../public";
 
 export const UsersLinks = [
   {
