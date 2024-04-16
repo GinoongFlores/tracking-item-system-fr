@@ -4,7 +4,7 @@ import { useAuth } from "../store/StoreAuth";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import PulseLoader from "react-spinners/PulseLoader";
-import { UserToken } from "./UserToken";
+import { UserToken } from "./userToken";
 
 export const useAuthRedirect = () => {
   const token = UserToken();

@@ -1,6 +1,6 @@
 import { Modal } from "flowbite";
 import { useEffect, useRef } from "react";
-import { useModal } from "../../hooks/useModal";
+import { useModal } from "../../hooks";
 
 export const ModalComp = () => {
   const { modal, modalRef } = useModal();

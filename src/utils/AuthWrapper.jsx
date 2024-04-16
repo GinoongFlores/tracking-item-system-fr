@@ -1,6 +1,6 @@
 import { useAuth } from "../store/StoreAuth";
 import PulseLoader from "react-spinners/PulseLoader";
-import { UserToken } from "../hooks/UserToken";
+import { UserToken } from "../hooks/userToken";
 
 export const AuthWrapper = ({ children }) => {
   // const { getUser, userStatus, loading } = useAuth();

@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
-import { useAuthRedirect } from "./hooks/UseAuthRedirect";
+import { useAuthRedirect } from "./hooks";
 
 // components
 import {
@@ -26,7 +26,7 @@ import {
   EditCompanyPage,
 } from "./pages/company";
 import { AuthWrapper } from "./utils/AuthWrapper";
-import { UserRole } from "./hooks/UserRole";
+import { UserRole } from "./hooks";
 
 function App() {
   const userRole = UserRole();

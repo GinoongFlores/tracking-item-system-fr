@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
-import { UserToken } from "../hooks/UserToken";
+import { UserToken } from "../hooks/userToken";
 
 export const useUser = create((set, get) => ({
   users: [],
