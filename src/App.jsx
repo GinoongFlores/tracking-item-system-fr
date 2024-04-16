@@ -17,8 +17,9 @@ import {
   UserProfile,
   TrashedItems,
 } from "./pages/user";
-import Login from "./components/Login";
-import Register from "./components/Register";
+
+import { Login, Register } from "./components/forms";
+
 import {
   AddCompanyPage,
   ViewCompanyPage,

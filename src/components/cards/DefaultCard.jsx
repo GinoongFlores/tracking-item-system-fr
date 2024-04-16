@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
-import { ButtonActions } from "../buttons/ButtonActions";
+import { ButtonActions } from "../buttons";
 
 export const DefaultCard = ({
   defaultActions,

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { DefaultCard } from "../../../components";
+import { DefaultCard } from "../../../components/cards";
 import { useCompany } from "../../../store/StoreCompany";
 
 export const ViewCompany = () => {

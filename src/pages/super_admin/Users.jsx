@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { UsersCards } from "../../components/UsersCards";
+import { UsersCards } from "../../components/cards";
 import { useUser } from "../../store/StoreUser";
-import { SearchBar, BreadCrumbs } from "../../components/";
+import { SearchBar } from "../../components/";
 import { UsersLinks } from "../../utils/";
-import { Paginate } from "../../components/Paginate";
+import { Paginate, BreadCrumbs } from "../../components/navigation";
 import { UsersToggleModal } from "../../components/modal/UsersToggleModal";
 
 export const Users = () => {

@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { useUser } from "../../store/StoreUser";
 import { SelectRole } from "../select/SelectRole";
 import { useModal } from "../../hooks/useModal";
-import { ButtonActions } from "../buttons/ButtonActions";
+import { ButtonActions } from "../buttons";
 
 export const UsersToggleModal = ({
   fullName,

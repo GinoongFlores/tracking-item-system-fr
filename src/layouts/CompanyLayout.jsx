@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { BreadCrumbs } from "../components";
+import { BreadCrumbs } from "../components/navigation";
 import { CompanyLinks } from "../utils";
 
 export const CompanyLayout = () => {

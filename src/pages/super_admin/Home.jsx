@@ -1,4 +1,4 @@
-import CountCard from "../../components/CountCard";
+import CountCard from "../../components/cards/CountCard";
 
 export const Home = () => {
   const cards = [

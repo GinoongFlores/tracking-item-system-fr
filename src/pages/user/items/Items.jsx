@@ -1,7 +1,9 @@
-import { ItemCard, SearchBar, ButtonLink } from "../../../components";
+import { SearchBar } from "../../../components";
+import { ButtonLink } from "../../../components/buttons";
+import { ItemCard } from "../../../components/cards";
 import { useItems } from "../../../store/StoreItems";
 import { useEffect } from "react";
-import { EditItem } from "../../../components";
+import { EditItem } from "../../../components/modal";
 
 export const UserItems = () => {
   const items = useItems((state) => state.itemData);

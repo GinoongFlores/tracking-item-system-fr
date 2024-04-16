@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Form, Formik } from "formik";
 import { ItemSchema } from "../../utils/YupSchema";
-import { ButtonActions, InputField, ButtonModal } from "../../components";
+import { InputField } from "../../components";
+import { ButtonActions, ButtonModal } from "../buttons";
 import { useItems } from "../../store/StoreItems";
 
 export const EditItem = ({ item }) => {

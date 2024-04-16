@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import AxiosInstance from "../api/Axios";
+import AxiosInstance from "../../api/Axios";
 import { useEffect, useState } from "react";
-import { InputField } from "./fields/InputField";
+import { InputField } from "../fields/InputField";
 
-const Register = () => {
+export const Register = () => {
   const { register } = useAuthContext();
   const [companies, setCompanies] = useState([]);
 
@@ -228,5 +228,3 @@ const Register = () => {
     </>
   );
 };
-
-export default Register;

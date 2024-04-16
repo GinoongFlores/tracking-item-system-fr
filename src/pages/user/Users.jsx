@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UsersCards } from "../../components/UsersCards";
+import { UsersCards } from "../../components/cards";
 // import { useUserContext } from "../../context/UsersContext";
 import { useUserContext } from "../../context/UsersContext";
 import { Tabs } from "../../components/Tabs";

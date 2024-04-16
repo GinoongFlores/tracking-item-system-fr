@@ -1,5 +1,5 @@
 import { useUser } from "../../../store/StoreUser";
-import { UsersCards } from "../../../components/UsersCards";
+import { UsersCards } from "../../../components/cards";
 import { UsersToggleModal } from "../../../components/modal/UsersToggleModal";
 
 export const ViewUsers = () => {

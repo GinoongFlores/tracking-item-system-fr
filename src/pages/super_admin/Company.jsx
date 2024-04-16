@@ -1,5 +1,4 @@
-import { BreadCrumbs, SearchBar } from "../../components";
-import { CompanyLinks } from "../../utils";
+import { SearchBar } from "../../components";
 import { ViewCompany } from "../super_admin";
 
 export const Company = () => {

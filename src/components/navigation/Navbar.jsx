@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { CgProfile } from "react-icons/cg";
-import { useAuth } from "../store/StoreAuth";
-import { ThemeSwitcher } from "../utils/ThemeSwitcher";
+import { useAuth } from "../../store/StoreAuth";
+import { ThemeSwitcher } from "../../utils/ThemeSwitcher";
 
 export const Navbar = ({ toggleOpen }) => {
   const userFirstName = useAuth((state) => state.userFirstName);
