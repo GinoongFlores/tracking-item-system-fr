@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { DefaultCard } from "../../components";
-import { useCompany } from "../../store/StoreCompany";
+import { DefaultCard } from "../../../components";
+import { useCompany } from "../../../store/StoreCompany";
 
-export const ViewCompanyPage = () => {
-  // prevent destructuring to avoid performance issues
-  // const { companies, fetchCompany } = useCompany();
+export const ViewCompany = () => {
   const companies = useCompany((state) => state.companies);
   const fetchCompany = useCompany((state) => state.fetchCompany);
 

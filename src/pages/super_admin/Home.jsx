@@ -16,12 +16,10 @@ export const Home = () => {
     },
   ];
   return (
-    <div className="h-screen">
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        {cards.map((card, index) => (
-          <CountCard key={index} title={card.title} count={card.count} />
-        ))}
-      </div>
+    <div className="flex flex-wrap items-center justify-center gap-4">
+      {cards.map((card, index) => (
+        <CountCard key={index} title={card.title} count={card.count} />
+      ))}
     </div>
   );
 };
