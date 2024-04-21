@@ -1,4 +1,4 @@
-import { useItems, useUtils } from "../../../store";
+import { useItems, useUtils } from "../../store";
 import { useState, useCallback } from "react";
 import { debounce } from "lodash";
 import { Field } from "formik";
