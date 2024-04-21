@@ -4,13 +4,9 @@ import { toast } from "react-hot-toast";
 
 export const useCompany = create((set, get) => ({
   companies: [],
-  fetchCompany: async (token) => {
+  fetchCompany: async () => {
     try {
-      const response = await AxiosInstance.get("/company/list", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await AxiosInstance.get("/company/list");
       set({ companies: response.data.data });
     } catch (error) {
       console.log(error);
@@ -23,19 +19,11 @@ export const useCompany = create((set, get) => ({
     }
   },
 
-  addCompany: async (values, token) => {
+  addCompany: async (values) => {
     try {
-      const response = await AxiosInstance.post(
-        "/company/add",
-        {
-          ...values,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await AxiosInstance.post("/company/add", {
+        ...values,
+      });
       set({ companies: [...get().companies, response.data.data] });
       toast.success("Company added successfully", {
         position: "top-center",
@@ -48,13 +36,9 @@ export const useCompany = create((set, get) => ({
     }
   },
 
-  deleteCompany: async (id, token) => {
+  deleteCompany: async (id) => {
     try {
-      await AxiosInstance.delete(`/company/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await AxiosInstance.delete(`/company/${id}`, {});
 
       // after deleting a company, update the companies list
       set({

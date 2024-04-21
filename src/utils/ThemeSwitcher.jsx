@@ -1,10 +1,10 @@
 import { CiDark } from "react-icons/ci";
 import { CiLight } from "react-icons/ci";
-import { UseDarkMode } from "../hooks/UseDarkMode";
+import { useDarkMode } from "../hooks";
 import { useState } from "react";
 
 export const ThemeSwitcher = () => {
-  const [colorTheme, setTheme] = UseDarkMode();
+  const [colorTheme, setTheme] = useDarkMode();
   const [darkMode, setDarkMode] = useState(
     colorTheme === "light" ? false : true
   );

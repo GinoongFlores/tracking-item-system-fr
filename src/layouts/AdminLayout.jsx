@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "../components/Sidebar";
+import { Sidebar } from "../components/navigation";
 
 export const AdminLayout = () => {
   return (
     <>
       <Sidebar />
 
-      <main className="container mx-auto px-4 bg-gray-500 dark:bg-black-800 pt-12 h-screen md:full">
+      <main className="container mx-auto px-4 bg-white dark:bg-darker pt-12 min-h-screen md:full text-dark dark:text-white">
         <Outlet />
       </main>
     </>

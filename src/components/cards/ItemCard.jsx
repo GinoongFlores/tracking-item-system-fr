@@ -1,9 +1,9 @@
 import { CiImageOn } from "react-icons/ci";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { useState } from "react";
-import { useItems } from "../../store/StoreItems";
-import { ButtonActions } from "../buttons/ButtonActions";
-import { EditItem } from "../../components/modal/EditItem";
+import { useItems } from "../../store";
+import { ButtonActions } from "../buttons";
+import { EditItem } from "../../components/modal";
 
 export const ItemCard = ({
   id,
@@ -21,11 +21,6 @@ export const ItemCard = ({
   );
 
   const item = { id, name, description, quantity };
-
-  // const handleDelete = async () => {
-  //   console.log(id);
-  //   await deleteUserItem(id);
-  // };
 
   return (
     <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">

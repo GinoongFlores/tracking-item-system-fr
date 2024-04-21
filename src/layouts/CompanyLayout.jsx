@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { Company } from "../pages/super_admin";
+import { BreadCrumbs } from "../components/navigation";
+import { CompanyLinks } from "../utils";
 
 export const CompanyLayout = () => {
   return (
     <>
       <div className="">
-        <Company />
-        {/* <ViewCompanyPage /> */}
+        <div className="flex flex-col items-center justify-stretch">
+          <BreadCrumbs crumbs={CompanyLinks} />
+        </div>
         <main className="container mx-auto">
           <Outlet />
         </main>

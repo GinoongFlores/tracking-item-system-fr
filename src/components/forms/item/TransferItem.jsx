@@ -1,35 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
-import { InputField } from "../../../components";
-import { ItemSchema } from "../../../utils/YupSchema";
-import { useItems } from "../../../store/StoreItems";
+import { InputField } from "../..";
+import { TransferItemSchema } from "../../../utils";
+import { InputSearch } from "../../fields";
 
-export const AddItem = () => {
-  const addItem = useItems((state) => state.addItem);
-  const navigate = useNavigate();
-
+export const TransferItem = ({ item }) => {
+  const initialValues = {
+    id: "",
+    name: "",
+    quantity: "",
+    description: "",
+    receiver_name: "",
+    number: "",
+  };
   return (
     <>
-      <section className="relative h-screen">
+      <section className="relative min-h-screen">
         <div className="flex flex-col px-6 py-8 lg:py-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
-              Add an Item
+              Transfer an Item
             </h1>
             <Formik
-              initialValues={{
-                image: "",
-                name: "",
-                description: "",
-                quantity: "",
-              }}
-              validationSchema={ItemSchema}
+              initialValues={initialValues}
+              validationSchema={TransferItemSchema}
               onSubmit={(values) => {
-                addItem(values);
-                navigate("/items");
+                // addItem(values);
+                // navigate("/items");
               }}
             >
-              {({ errors, touched }) => {
+              {({ errors, touched, setFieldValue }) => {
                 return (
                   <Form action="#" className="space-y-4 md:space-y-6">
                     <div>
@@ -89,6 +89,25 @@ export const AddItem = () => {
                       {errors.description && touched.description ? (
                         <div className="text-red-400 text-sm">
                           {errors.description}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="receiver_name"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Receiver's Name
+                      </label>
+                      <InputSearch
+                        name={"receiver_name"}
+                        setFieldValue={setFieldValue}
+                      />
+
+                      {errors.receiver_name && touched.receiver_name ? (
+                        <div className="text-red-400 text-sm">
+                          {errors.receiver_name}
                         </div>
                       ) : null}
                     </div>

@@ -3,17 +3,21 @@ import { useState, useEffect } from "react";
 import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+// import { GrTransaction } from "react-icons/gr";
+import { BiTransferAlt } from "react-icons/bi";
 
-import { UserRole } from "../hooks/UserRole";
-import { Navbar } from "./Navbar";
-import { useAuth } from "../store/StoreAuth";
-import { useUtils } from "../store/StoreUtils";
+import { UserRole } from "../../hooks";
+import { Navbar } from "../navigation";
+import { useAuth, useUtils } from "../../store";
+import { Items } from "../../../public";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();
   const userRole = UserRole();
   const navigate = useNavigate();
   const logout = useAuth((state) => state.logout);
+  const currentUser = useAuth((state) => state.currentUser);
   const superAdmin = userRole === "super_admin";
   const admin = userRole === "admin";
   const users = userRole === "user";
@@ -31,18 +35,43 @@ export const Sidebar = () => {
           },
           {
             name: "Items",
-            icon: (
-              <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 18 20"
-              >
-                <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-              </svg>
-            ),
+            icon: <Items />,
             link: "/items",
+          },
+          {
+            name: "profile",
+            icon: <CgProfile size={20} />,
+            link: "/profile",
+          },
+          {
+            name: "Transaction",
+            icon: <BiTransferAlt size={20} />,
+            link: "/transaction",
+          },
+        ]
+      : []),
+
+    ...(admin
+      ? [
+          {
+            name: "Home",
+            icon: <FaHome size={20} />,
+            link: "/",
+          },
+          {
+            name: "Users",
+            icon: <FaUsers size={20} />,
+            link: "/users",
+          },
+          {
+            name: "Profile",
+            icon: <CgProfile size={20} />,
+            link: "/profile",
+          },
+          {
+            name: "Transaction",
+            icon: <BiTransferAlt size={20} />,
+            link: "/transaction",
           },
         ]
       : []),
@@ -70,17 +99,7 @@ export const Sidebar = () => {
           },
           {
             name: "Items",
-            icon: (
-              <svg
-                className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 18 20"
-              >
-                <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-              </svg>
-            ),
+            icon: <Items />,
             link: "/items",
           },
         ]
@@ -100,7 +119,7 @@ export const Sidebar = () => {
       </header>
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-36 md:w-64 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-darker dark:border-gray-700 ${
+        className={`text-black dark:text-gray-400 fixed top-0 left-0 z-40 w-40 md:w-48 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-darker dark:border-gray-700 ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
@@ -134,6 +153,13 @@ export const Sidebar = () => {
                 </Link>
               </li>
             ))}
+            <li className="fixed bottom-0 border-t border-gray-200 dark:border-gray-700 flex items-center justify-center">
+              <div className="relative">
+                <h2 className="text-sm md:text-lg dark:text-gray-100 text-center">
+                  {currentUser?.company}
+                </h2>
+              </div>
+            </li>
           </ul>
         </div>
       </aside>

@@ -2,10 +2,12 @@ import { create } from "zustand";
 import { toast } from "react-hot-toast";
 import AxiosInstance from "../api/Axios";
 
-export const useItems = create((set, get) => ({
+export const useItems = create((set) => ({
   itemData: [],
   itemTrashedData: [],
+  totalItems: 0,
   itemAdded: false,
+  isLoading: true,
 
   addItem: async (values) => {
     try {
@@ -35,6 +37,7 @@ export const useItems = create((set, get) => ({
       set({
         itemData: response.data.data,
         itemAdded: true,
+        totalItems: response.data.data.length,
       });
     } catch (error) {
       if (error.response.status) {

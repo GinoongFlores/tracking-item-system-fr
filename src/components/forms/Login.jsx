@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { useFormik, Field, Form, Formik } from "formik";
-import { useAuth } from "../store/StoreAuth";
-import { useUtils } from "../store/StoreUtils";
-import { UserToken } from "../hooks/UserToken";
-import { LoginSchema } from "../utils/YupSchema";
+import { useAuth } from "../../store/StoreAuth";
+import { useUtils } from "../../store";
+import { UserToken } from "../../hooks/userToken";
+import { LoginSchema } from "../../utils";
 
-const Login = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const token = UserToken();
   const login = useAuth((state) => state.login);
@@ -116,5 +116,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;

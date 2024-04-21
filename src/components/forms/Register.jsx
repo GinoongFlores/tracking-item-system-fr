@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
-import { useFormik, Field, Form, Formik } from "formik";
+import { useAuthContext } from "../../context/AuthContext";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import AxiosInstance from "../api/Axios";
+import AxiosInstance from "../../api/Axios";
 import { useEffect, useState } from "react";
+import { InputField } from "../fields/InputField";
 
-const Register = () => {
+export const Register = () => {
   const { register } = useAuthContext();
   const [companies, setCompanies] = useState([]);
 
@@ -71,15 +72,14 @@ const Register = () => {
                       >
                         First Name
                       </label>
-                      <Field
-                        type="text"
-                        id="first_name"
+                      <InputField
+                        fieldType={"input"}
+                        type={"text"}
                         name="first_name"
-                        placeholder="John Doe"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="John"
                       />
                       {errors.first_name && touched.first_name ? (
-                        <div className="dark:text-red-400 text-sm">
+                        <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.first_name}
                         </div>
                       ) : null}
@@ -99,8 +99,8 @@ const Register = () => {
                         placeholder="John Doe"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
-                      {errors.last_name && touched.last_name ? (
-                        <div className="dark:text-red-400 text-sm">
+                      {errors.last_Name && touched.last_name ? (
+                        <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.last_name}
                         </div>
                       ) : null}
@@ -228,5 +228,3 @@ const Register = () => {
     </>
   );
 };
-
-export default Register;
