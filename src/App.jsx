@@ -8,6 +8,7 @@ import {
   CompanyLayout,
   UserLayout,
   ItemsLayout,
+  AdminLayout,
 } from "./layouts";
 import { Admin, Users, Home, Items, Company } from "./pages/super_admin";
 import {
@@ -16,7 +17,15 @@ import {
   UserItems,
   UserProfile,
   TrashedItems,
+  TransferItem,
 } from "./pages/user";
+import {
+  AdminHome,
+  AdminItems,
+  ViewUsers,
+  AdminProfile,
+  AdminTransaction,
+} from "./pages/admin";
 
 import { Login, Register } from "./components/forms";
 
@@ -62,6 +71,23 @@ function App() {
             </Route>
           )}
 
+          {admin && (
+            <Route
+              path="/"
+              element={
+                <AuthWrapper>
+                  <AdminLayout />
+                </AuthWrapper>
+              }
+            >
+              <Route path="/" element={<AdminHome />} />
+              <Route path="users" element={<ViewUsers />} />
+              <Route path="items" element={<AdminItems />} />
+              <Route path="profile" element={<AdminProfile />} />
+              <Route path="transaction" element={<AdminTransaction />} />
+            </Route>
+          )}
+
           {users && (
             <Route
               path="/"
@@ -73,9 +99,10 @@ function App() {
             >
               <Route path="/" element={<UserHome />} />
               <Route path="/items" element={<ItemsLayout />}>
-                <Route path="/items" element={<UserItems />} />
+                <Route index element={<UserItems />} />
                 <Route path="add" element={<AddItem />} />
                 <Route path="trashed" element={<TrashedItems />} />
+                <Route path="transfer" element={<TransferItem />} />
               </Route>
               <Route path="/profile" element={<UserProfile />} />
             </Route>

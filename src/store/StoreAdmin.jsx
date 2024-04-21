@@ -25,26 +25,21 @@ export const useAdmin = create((set, get) => ({
       activation
         ? toast.success("User activated")
         : toast.error("User deactivated");
-      return response;
-    } catch (error) {
-      console.log(error.response);
-    }
-  },
 
-  handleToggleActivation: async (userId) => {
-    const response = await get().toggleActivation(userId);
-
-    if (response.status === 200) {
-      set({
-        users: get().users.map((user) =>
+      // update user in users array
+      set((state) => ({
+        users: state.users.map((user) =>
           user.id === userId
             ? {
                 ...user,
-                is_activated: +!user.is_activated,
+                is_activated: activation,
               }
             : user
         ),
-      });
+      }));
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 }));

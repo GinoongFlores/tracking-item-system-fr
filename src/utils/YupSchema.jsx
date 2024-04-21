@@ -16,3 +16,15 @@ export const ItemSchema = Yup.object().shape({
     .min(1)
     .typeError("Quantity must be a number"),
 });
+
+export const TransferItemSchema = Yup.object().shape({
+  image: Yup.string().nullable(), // image is optional
+  name: Yup.string().required("Item name is required"),
+  description: Yup.string().required("Item description is required"),
+  receiver_name: Yup.string().required("Receiver name is required"),
+  number: Yup.string().required("Receiver number is required").min(11).max(11),
+  quantity: Yup.number()
+    .required("Item quantity is required")
+    .min(1)
+    .typeError("Quantity must be a number"),
+});

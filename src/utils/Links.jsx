@@ -36,3 +36,10 @@ export const CompanyLinks = [
     icon: <BreadCrumbsArrow />,
   },
 ];
+
+export const userTransferItems = [
+  {
+    name: "Trashed",
+    path: "/items/trashed",
+  },
+];

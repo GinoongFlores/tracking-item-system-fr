@@ -1,4 +1,5 @@
 import CountCard from "../../components/cards/CountCard";
+import { useItems } from "../../store";
 
 export const Home = () => {
   const cards = [
@@ -15,6 +16,7 @@ export const Home = () => {
       title: "Admins",
     },
   ];
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-4">
       {cards.map((card, index) => (

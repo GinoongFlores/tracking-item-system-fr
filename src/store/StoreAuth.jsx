@@ -30,7 +30,14 @@ export const useAuth = create((set, get) => ({
       return response.data;
     } catch (error) {
       console.log(error.response);
-      toast.error("An error occurred while fetching user data");
+      // toast.error("An error occurred while fetching user data");
+      const errors = error.response.data.message.error;
+      console.log(errors);
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
+        });
+      }
       set({ loading: false });
     }
   },
@@ -63,9 +70,9 @@ export const useAuth = create((set, get) => ({
       set({ loading: true });
       localStorage.removeItem("token");
       console.log(error);
-      // const unauthorized = error.response.data.message;
-      // const generalError = "An error occurred while logging in";
-      // toast.error(unauthorized ? unauthorized : generalError);
+      const unauthorized = error.response.data.message;
+      const generalError = "An error occurred while logging in";
+      toast.error(unauthorized ? unauthorized : generalError);
       set({ token: null, loading: false });
     }
   },

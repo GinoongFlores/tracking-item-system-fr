@@ -1,77 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik } from "formik";
 import { InputField } from "../..";
-import { ItemSchema } from "../../../utils";
-import { useItems, useUtils } from "../../../store";
-import { useState, useCallback } from "react";
-import { debounce } from "lodash";
-
-export const InputSearch = () => {
-  const [value, setValue] = useState("");
-  const { searchUser, filteredNames } = useUtils((state) => ({
-    searchUser: state.searchUser,
-    filteredNames: state.filteredNames,
-  }));
-
-  /* replace with this (previous code)
-  const debouncedSearchUser = useCallback(
-    debounce((value) => {
-      searchUser(value);
-    }, 300),
-    [searchUser]
-  );
-
-  const handleOnChange = (e) => {
-    setValue(e.target.value);
-    debouncedSearchUser(e.target.value);
-  };
-  */
-  const debouncedSearch = debounce(searchUser, 300);
-
-  const handleOnChange = useCallback(
-    (e) => {
-      setValue(e.target.value);
-      debouncedSearch(e.target.value);
-    },
-    [debouncedSearch]
-  );
-
-  const handleOnClick = (receiver) => {
-    setValue(receiver.first_name + " " + receiver.last_name);
-    console.log(receiver);
-    searchUser("");
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={value}
-        onChange={handleOnChange}
-        placeholder="search name"
-        className="bg-gray-50 border border-gray-400 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-      />
-      {/* dropdown of names */}
-      {value && filteredNames.length > 0 && (
-        <div className="mt-2 bg-white shadow rounded-lg dark:bg-darker">
-          {filteredNames.map((receiver, index) => (
-            <div
-              key={index}
-              className="flex justify-between border-b border-gray-200 p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <button
-                onClick={() => handleOnClick(receiver)}
-                className="text-blue-500"
-              >
-                <p>{receiver.first_name + " " + receiver.last_name}</p>
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+import { TransferItemSchema } from "../../../utils";
+import { InputSearch } from "../../fields";
 
 export const TransferItem = ({ item }) => {
   const initialValues = {
@@ -92,13 +23,13 @@ export const TransferItem = ({ item }) => {
             </h1>
             <Formik
               initialValues={initialValues}
-              validationSchema={ItemSchema}
+              validationSchema={TransferItemSchema}
               onSubmit={(values) => {
                 // addItem(values);
                 // navigate("/items");
               }}
             >
-              {({ errors, touched }) => {
+              {({ errors, touched, setFieldValue }) => {
                 return (
                   <Form action="#" className="space-y-4 md:space-y-6">
                     <div>
@@ -164,18 +95,21 @@ export const TransferItem = ({ item }) => {
 
                     <div>
                       <label
-                        htmlFor="quantity"
+                        htmlFor="receiver_name"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         Receiver's Name
                       </label>
-                      <InputSearch />
-                      {/*
-                      {errors.quantity && touched.quantity ? (
+                      <InputSearch
+                        name={"receiver_name"}
+                        setFieldValue={setFieldValue}
+                      />
+
+                      {errors.receiver_name && touched.receiver_name ? (
                         <div className="text-red-400 text-sm">
-                          {errors.quantity}
+                          {errors.receiver_name}
                         </div>
-                      ) : null} */}
+                      ) : null}
                     </div>
 
                     <button

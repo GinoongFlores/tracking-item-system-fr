@@ -3,3 +3,4 @@ export * from "./StoreCompany";
 export * from "./StoreItems";
 export * from "./StoreUser";
 export * from "./StoreUtils";
+export * from "./StoreAdmin";

@@ -22,40 +22,43 @@ export const UserItems = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-4 text-darker dark:text-white">
-        <div className="w-full">
-          <SearchBar />
-        </div>
+      <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white">
         <div className="flex items-center justify-end">
           <ButtonLink name={"Archive"} redirect={"/items/trashed"} />
           <ButtonLink name={"Add Item"} redirect={"/items/add"} />
+          <ButtonLink name={"Transfer Item"} redirect={"/items/transfer"} />
+        </div>
+        <div className="w-full">
+          <SearchBar />
         </div>
 
-        {itemAdded ? (
-          items.map((item) => (
-            <ItemCard
-              id={item.id}
-              key={item.id}
-              name={item.name}
-              quantity={item.quantity}
-              description={item.description}
-              isEdit={true}
-              isDelete={true}
-            />
-          ))
-        ) : (
-          <div
-            className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white h-screen
+        <div className="flex flex-col gap-4">
+          {itemAdded ? (
+            items.map((item) => (
+              <ItemCard
+                id={item.id}
+                key={item.id}
+                name={item.name}
+                quantity={item.quantity}
+                description={item.description}
+                isEdit={true}
+                isDelete={true}
+              />
+            ))
+          ) : (
+            <div
+              className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white h-screen
         }`}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <span className="mb-4">No items yet...</span>
-              <div>
-                <ButtonLink name={"Add Item"} redirect={"/items/add"} />
+            >
+              <div className="flex flex-col items-center justify-center">
+                <span className="mb-4">No items yet...</span>
+                <div>
+                  <ButtonLink name={"Add Item"} redirect={"/items/add"} />
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </section>
     </>
   );
