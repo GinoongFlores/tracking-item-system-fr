@@ -1,30 +1,25 @@
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
 import { Field, Form, Formik } from "formik";
-import * as Yup from "yup";
 import AxiosInstance from "../../api/Axios";
 import { useEffect, useState } from "react";
-import { InputField } from "../fields/InputField";
+import { useNavigate } from "react-router-dom";
+import { InputField } from "../fields";
+import { RegisterSchema } from "../../utils/YupSchema";
+import { useAuth } from "../../store";
 
 export const Register = () => {
-  const { register } = useAuthContext();
+  const navigate = useNavigate();
+  const register = useAuth((state) => state.register);
+  const initialValues = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    company_name: "",
+    password: "",
+    confirm_password: "",
+  };
+  // const { register } = useAuthContext();
   const [companies, setCompanies] = useState([]);
-
-  const RegisterSchema = Yup.object().shape({
-    first_name: Yup.string().required("First Name Required"),
-    last_name: Yup.string().required("Last Name Required"),
-    company_name: Yup.string().required("Company Required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email Required"),
-    password: Yup.string()
-      .max(10, "Must be 10 characters only")
-      .min(6, "Minimum of 8 characters only")
-      .required("password required"),
-    confirm_password: Yup.string()
-      .oneOf([Yup.ref("password")], "Password must match")
-      .required("Confirm Password is required"),
-  });
 
   useEffect(() => {
     const fetchCompanyData = async () => {
@@ -50,17 +45,12 @@ export const Register = () => {
                 Register your Account
               </h1>
               <Formik
-                initialValues={{
-                  first_name: "",
-                  last_name: "",
-                  email: "",
-                  company_name: "",
-                  password: "",
-                  confirm_password: "",
-                }}
+                initialValues={initialValues}
                 validationSchema={RegisterSchema}
                 onSubmit={(values) => {
                   register(values);
+                  localStorage.removeItem("token");
+                  navigate("/login");
                 }}
               >
                 {({ errors, touched }) => (
@@ -72,12 +62,7 @@ export const Register = () => {
                       >
                         First Name
                       </label>
-                      <InputField
-                        fieldType={"input"}
-                        type={"text"}
-                        name="first_name"
-                        placeholder="John"
-                      />
+                      <InputField name="first_name" placeholder="John" />
                       {errors.first_name && touched.first_name ? (
                         <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.first_name}
@@ -92,14 +77,9 @@ export const Register = () => {
                       >
                         Last Name
                       </label>
-                      <Field
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        placeholder="John Doe"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      />
-                      {errors.last_Name && touched.last_name ? (
+                      <InputField name="last_name" placeholder="Flores" />
+
+                      {errors.last_name && touched.last_name ? (
                         <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.last_name}
                         </div>
@@ -113,15 +93,18 @@ export const Register = () => {
                       >
                         Email
                       </label>
-                      <Field
-                        type="email"
+
+                      <InputField
+                        type={"email"}
                         name="email"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="name@company.com"
-                        required=""
+                        placeholder="user@company_email.com"
                       />
+
                       {errors.email && touched.email ? (
-                        <div className="dark:text-red-400"> {errors.email}</div>
+                        <div className="text-red-600 dark:text-red-400">
+                          {" "}
+                          {errors.email}
+                        </div>
                       ) : null}
                     </div>
 
@@ -132,22 +115,17 @@ export const Register = () => {
                       >
                         Select Your Company
                       </label>
-                      <Field
-                        as="select"
-                        id="company_name"
-                        name="company_name"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
+                      <InputField fieldType={"select"} name={"company_name"}>
                         <option value="">Choose a company</option>
                         {companies.map((company) => (
                           <option key={company.id} value={company.company_name}>
                             {company.company_name}
                           </option>
                         ))}
-                      </Field>
+                      </InputField>
                       {errors.company_name && touched.company_name ? (
                         <div
-                          className="dark:text-red-400
+                          className="text-red-600 dark:text-red-400
                            text-sm"
                         >
                           {errors.company_name}
@@ -162,17 +140,14 @@ export const Register = () => {
                       >
                         Password
                       </label>
-                      <Field
-                        type="password"
-                        name="password"
-                        id="password"
+                      <InputField
+                        type={"password"}
+                        name={"password"}
                         placeholder="•••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required=""
                       />
 
                       {errors.password && touched.password ? (
-                        <div className="dark:text-red-400 text-sm">
+                        <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.password}
                         </div>
                       ) : null}
@@ -185,17 +160,15 @@ export const Register = () => {
                       >
                         Confirm Password
                       </label>
-                      <Field
-                        type="password"
-                        name="confirm_password"
-                        id="confirm_password"
+
+                      <InputField
+                        type={"password"}
+                        name={"confirm_password"}
                         placeholder="•••••••••"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required=""
                       />
 
                       {errors.confirm_password && touched.confirm_password ? (
-                        <div className="dark:text-red-400 text-sm">
+                        <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.confirm_password}
                         </div>
                       ) : null}
@@ -207,7 +180,7 @@ export const Register = () => {
                     >
                       Register
                     </button>
-                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                    <p className="text-sm font-light text-gray-900 dark:text-gray-400">
                       Already have an account? {""}
                       <Link
                         to={"/"}

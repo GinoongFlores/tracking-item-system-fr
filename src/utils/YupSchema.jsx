@@ -7,6 +7,20 @@ export const LoginSchema = Yup.object().shape({
     .required("password required"),
 });
 
+export const RegisterSchema = Yup.object().shape({
+  first_name: Yup.string().required("First Name Required"),
+  last_name: Yup.string().required("Last Name Required"),
+  company_name: Yup.string().required("Company Required"),
+  email: Yup.string().email("Invalid email address").required("Email Required"),
+  password: Yup.string()
+    .max(10, "Must be 10 characters only")
+    .min(6, "Minimum of 8 characters only")
+    .required("password required"),
+  confirm_password: Yup.string()
+    .oneOf([Yup.ref("password")], "Password must match")
+    .required("Confirm Password is required"),
+});
+
 export const ItemSchema = Yup.object().shape({
   image: Yup.string().nullable(), // image is optional
   name: Yup.string().required("Item name is required"),

@@ -77,6 +77,23 @@ export const useAuth = create((set, get) => ({
     }
   },
 
+  register: async ({ ...data }) => {
+    set({ loading: true });
+    try {
+      await AxiosInstance.post("/register", {
+        ...data,
+      });
+      // const userToken = response.data.token;
+      // localStorage.setItem("token", userToken);
+      set({ loading: false });
+      toast.success("Account created, Please wait for activation", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  },
+
   logout: async () => {
     set({ loading: true });
     try {
