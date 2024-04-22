@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { debounce } from "lodash";
 import { Field } from "formik";
 
-export const InputSearch = ({ name, setFieldValue }) => {
+export const InputSearchUser = ({ name, setFieldValue }) => {
   const [selectedId, setSelectedId] = useState(null);
   const { searchUser, filteredNames } = useUtils((state) => ({
     searchUser: state.searchUser,
