@@ -1,32 +1,62 @@
-import { useItems, useUtils } from "../../store";
-import { useState, useCallback } from "react";
+import { useUtils, useItems } from "../../store";
+import { useState, useCallback, useEffect } from "react";
 import { debounce } from "lodash";
 import { Field } from "formik";
 
 export const InputSearchItem = ({ name, setFieldValue, values }) => {
   const [selectedId, setSelectedId] = useState(null);
+  const { itemData } = useItems();
   const { searchItem, filteredItems } = useUtils((state) => ({
     searchItem: state.searchItem,
     filteredItems: state.filteredItems,
   }));
 
-  const debouncedSearch = debounce(searchItem, 300);
-
-  const handleOnChange = useCallback(
-    (e) => {
-      setFieldValue("name", e.target.value);
-      debouncedSearch(e.target.value);
-    },
-    [debouncedSearch, setFieldValue]
+  const debouncedSearch = useCallback(
+    (...args) => debounce(searchItem, 300)(...args),
+    [searchItem]
   );
 
+  const handleOnChange = (e) => {
+    const inputValue = e.target.value;
+    setFieldValue(name, inputValue);
+    // split the items by comma to allow multiple items
+    const items = inputValue.split(",").map((item) => item.trim());
+    const lastItem = items[items.length - 1];
+    if (lastItem) {
+      debouncedSearch(lastItem);
+    }
+
+    // Update item_ids based on current items in search input. This clear the values of item_ids if the item is removed from the search input
+    const currentItemIds = itemData
+      .filter((item) => items.includes(item.name))
+      .map((item) => item.id);
+    setFieldValue("item_ids", currentItemIds);
+  };
+
+  // use this to check the items in the search input
+  // useEffect(() => {
+  //   console.log("items ", values.item_ids);
+  // }, [values.item_ids]);
+
   const handleOnClick = (item) => {
-    // setValue(receiver.first_name + " " + receiver.last_name);
     const itemName = item.name;
-    setFieldValue(name, itemName);
+    let currentValues = values[name]
+      ? values[name].split(",").map((v) => v.trim())
+      : [];
+    let updatedValues = currentValues.map((v) =>
+      itemName.toLowerCase().includes(v.toLowerCase()) ? itemName : v
+    );
+    if (!updatedValues.includes(itemName)) {
+      // if the item is not in the list, add it
+      updatedValues.push(itemName);
+    }
+    setFieldValue(name, updatedValues.join(", "));
     setSelectedId(item.id);
-    setFieldValue("item_ids", [...(values.item_ids || []), item.id]);
-    console.log(item);
+
+    if (!(values.item_ids || []).includes(item.id)) {
+      setFieldValue("item_ids", [...(values.item_ids || []), item.id]);
+    }
+
     searchItem("");
   };
 
@@ -36,7 +66,7 @@ export const InputSearchItem = ({ name, setFieldValue, values }) => {
         type="text"
         name={name}
         onChange={handleOnChange}
-        placeholder="search name"
+        placeholder="e.g., macbook, printer, book"
         className="bg-gray-50 border border-gray-400 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
       />
       {/* dropdown of names */}
