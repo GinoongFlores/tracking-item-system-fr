@@ -1,2 +1,3 @@
 export * from "./InputField";
-export * from "./InputSearch";
+export * from "./InputSearchUser";
+export * from "./InputSearchItem";

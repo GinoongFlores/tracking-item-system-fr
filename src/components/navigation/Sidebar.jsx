@@ -10,7 +10,7 @@ import { BiTransferAlt } from "react-icons/bi";
 import { UserRole } from "../../hooks";
 import { Navbar } from "../navigation";
 import { useAuth, useUtils } from "../../store";
-import { Items } from "../../../public";
+import { Items } from "../../../public/svg";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();

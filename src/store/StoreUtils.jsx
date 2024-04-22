@@ -3,6 +3,21 @@ import AxiosInstance from "../api/Axios";
 
 export const useUtils = create((set) => ({
   isOpen: false,
+  filteredItems: [],
+  setFilteredItems: (items) => set({ filteredItems: items }),
+  searchItem: async (value) => {
+    if (value !== "") {
+      try {
+        const response = await AxiosInstance.get(`/item/search?query=${value}`);
+        set({ filteredItems: response.data.data.slice(0, 5) });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      set({ filteredItems: [] });
+    }
+  },
+
   filteredNames: [],
   setFilteredNames: (names) => set({ filteredNames: names }),
 
