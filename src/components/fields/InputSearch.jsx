@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import { Field } from "formik";
 
 export const InputSearch = ({ name, setFieldValue }) => {
+  const [selectedId, setSelectedId] = useState(null);
   const { searchUser, filteredNames } = useUtils((state) => ({
     searchUser: state.searchUser,
     filteredNames: state.filteredNames,
@@ -36,6 +37,9 @@ export const InputSearch = ({ name, setFieldValue }) => {
     // setValue(receiver.first_name + " " + receiver.last_name);
     const fullName = receiver.first_name + " " + receiver.last_name;
     setFieldValue(name, fullName);
+    // setSelectedId is for getting the receiver's id for the form submission
+    setSelectedId(receiver.id);
+    setFieldValue("receiver_id", receiver.id);
     console.log(receiver);
     searchUser("");
   };
