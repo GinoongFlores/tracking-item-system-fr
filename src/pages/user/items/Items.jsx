@@ -24,9 +24,9 @@ export const UserItems = () => {
     <>
       <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white">
         <div className="flex items-center justify-end">
-          <ButtonLink name={"Archive"} redirect={"/items/trashed"} />
-          <ButtonLink name={"Add Item"} redirect={"/items/add"} />
-          <ButtonLink name={"Transfer Item"} redirect={"/items/transfer"} />
+          <ButtonLink name={"Archive"} redirect={"/item/trashed"} />
+          <ButtonLink name={"Add Item"} redirect={"/item/add"} />
+          <ButtonLink name={"Transfer Item"} redirect={"/item/transfer"} />
         </div>
         <div className="w-full">
           <SearchBar />
@@ -53,7 +53,7 @@ export const UserItems = () => {
               <div className="flex flex-col items-center justify-center">
                 <span className="mb-4">No items yet...</span>
                 <div>
-                  <ButtonLink name={"Add Item"} redirect={"/items/add"} />
+                  <ButtonLink name={"Add Item"} redirect={"/item/add"} />
                 </div>
               </div>
             </div>

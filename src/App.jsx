@@ -18,6 +18,7 @@ import {
   UserProfile,
   TrashedItems,
   TransferItem,
+  Transaction,
 } from "./pages/user";
 import {
   AdminHome,
@@ -98,11 +99,12 @@ function App() {
               }
             >
               <Route path="/" element={<UserHome />} />
-              <Route path="/items" element={<ItemsLayout />}>
+              <Route path="/item" element={<ItemsLayout />}>
                 <Route index element={<UserItems />} />
                 <Route path="add" element={<AddItem />} />
                 <Route path="trashed" element={<TrashedItems />} />
                 <Route path="transfer" element={<TransferItem />} />
+                <Route path="transaction" element={<Transaction />} />
               </Route>
               <Route path="/profile" element={<UserProfile />} />
             </Route>

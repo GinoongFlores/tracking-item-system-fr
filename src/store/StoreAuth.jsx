@@ -85,12 +85,13 @@ export const useAuth = create((set, get) => ({
       });
       // const userToken = response.data.token;
       // localStorage.setItem("token", userToken);
-      set({ loading: false });
       toast.success("Account created, Please wait for activation", {
         position: "top-center",
       });
+      set({ loading: false });
     } catch (error) {
       console.log(error.response);
+      set({ loading: false });
     }
   },
 
