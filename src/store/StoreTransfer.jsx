@@ -33,11 +33,17 @@ export const useTransfer = create((set) => ({
       const newTransactions = response.data.data; // array of transactions
       // console.log("transactions ", newTransactions);
       set((state) => {
-        // Filter out any existing transactions that are also in the newTransactions Array to prevent duplicates
+        // Filter out any existing transactions that are also in the newTransactions Array to prevent duplicates. Yet fetching items with the same transaction ID
         const filteredTransactions = state.transactions.filter(
           (transaction) =>
             !newTransactions.some(
-              (newTransaction) => newTransaction.id === transaction.id
+              (newTransaction) =>
+                newTransaction.id === transaction.id &&
+                newTransaction.items.every((newItem) =>
+                  transaction.items.some(
+                    (item) => item.transaction_id === newItem.transaction_id
+                  )
+                )
             )
         );
 
