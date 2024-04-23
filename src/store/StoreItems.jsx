@@ -5,9 +5,11 @@ import AxiosInstance from "../api/Axios";
 export const useItems = create((set) => ({
   itemData: [],
   itemTrashedData: [],
+  clearItems: () => set(() => ({ itemData: [], itemTrashedData: [] })),
   totalItems: 0,
   itemAdded: false,
-  loading: true,
+  loading: false,
+  setLoading: (loading) => set(() => ({ loading })),
 
   addItem: async (values) => {
     set({ loading: true, itemAdded: false });
@@ -89,7 +91,7 @@ export const useItems = create((set) => ({
       });
     } catch (error) {
       console.log(error.response);
-      set({ itemAdded: false });
+      set({ itemAdded: false, loading: true });
     }
   },
 

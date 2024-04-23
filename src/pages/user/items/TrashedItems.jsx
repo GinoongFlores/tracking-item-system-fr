@@ -21,8 +21,8 @@ export const TrashedItems = () => {
         <SearchBar />
       </div>
       <div className="flex items-center justify-end">
-        <ButtonLink redirect={"/items/trashed"} name={"Archive"} />
-        <ButtonLink redirect={"/items/"} name={"Items"} />
+        <ButtonLink redirect={"/item/trashed"} name={"Archive"} />
+        <ButtonLink redirect={"/item/"} name={"Items"} />
       </div>
 
       {isEmpty ? (

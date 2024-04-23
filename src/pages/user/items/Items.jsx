@@ -4,21 +4,19 @@ import { ItemCard } from "../../../components/cards";
 import { useItems } from "../../../store";
 import { useEffect } from "react";
 import { EditItem } from "../../../components/modal";
+import { Loader } from "../../../utils";
 
 export const UserItems = () => {
   const items = useItems((state) => state.itemData);
-  const { fetchUserItem, itemAdded } = useItems();
+  const { fetchUserItem, itemAdded, loading } = useItems();
 
   useEffect(() => {
     fetchUserItem();
   }, [fetchUserItem, itemAdded]);
 
-  /*
- ? TODO
- * include the items on the `isEmptyItem` condition - done
- * Archive page - done
- * Breadcrumbs
-*/
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -35,15 +33,7 @@ export const UserItems = () => {
         <div className="flex flex-col gap-4">
           {itemAdded ? (
             items.map((item) => (
-              <ItemCard
-                id={item.id}
-                key={item.id}
-                name={item.name}
-                quantity={item.quantity}
-                description={item.description}
-                isEdit={true}
-                isDelete={true}
-              />
+              <ItemCard key={item.id} {...item} isEdit={true} isDelete={true} />
             ))
           ) : (
             <div
