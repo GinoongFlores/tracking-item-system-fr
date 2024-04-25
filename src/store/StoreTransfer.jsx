@@ -26,10 +26,11 @@ export const useTransfer = create((set) => ({
     }
   },
 
-  fetchUserTransferItems: async () => {
-    set({ loading: true });
+  fetchUserTransferItems: async (page = 1) => {
     try {
-      const response = await AxiosInstance.get("item/user/view-transactions");
+      const response = await AxiosInstance.get(
+        `item/user/view-transactions?page${page}`
+      );
       const newTransactions = response.data.data; // array of transactions
       // console.log("transactions ", newTransactions);
       set((state) => {
@@ -50,12 +51,33 @@ export const useTransfer = create((set) => ({
         // Concatenate the new data onto the filtered array
         return {
           transactions: filteredTransactions.concat(newTransactions),
-          loading: false,
         };
       });
     } catch (error) {
-      set({ loading: false });
       toast.error("There was an error while fetching a data");
+      console.log(error);
+    }
+  },
+
+  filterUserTransferItems: async (search) => {
+    try {
+      const response = await AxiosInstance.get(
+        `item/user/view-transactions?search=${encodeURIComponent(search)}`
+      );
+      let newTransactions = response.data.data;
+
+      // ensure that the 'items' property of each transaction is an Array. This prevents the error of `transactions.items.map is not a function` in the ViewTransaction component. This error happens when we search an item that has the same transaction id with another item.
+      newTransactions = newTransactions.map((transaction) => ({
+        ...transaction,
+        items: Array.isArray(transaction.items) ? transaction.items : [],
+      }));
+
+      set(() => {
+        return {
+          transactions: newTransactions,
+        };
+      });
+    } catch (error) {
       console.log(error);
     }
   },

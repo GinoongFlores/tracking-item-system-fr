@@ -5,6 +5,7 @@ import { UserToken } from "../hooks/userToken";
 
 export const useUser = create((set, get) => ({
   users: [],
+  // pagination
   totalPages: 0,
   search: "",
   currentPage: 1,

@@ -35,23 +35,40 @@ export const useItems = create((set) => ({
     }
   },
 
-  fetchUserItem: async () => {
+  fetchUserItem: async (page = 1) => {
     set({ loading: true });
     try {
-      const response = await AxiosInstance.get(`item/list`);
+      const response = await AxiosInstance.get(`item/list?page${page}`);
       set({
         itemData: response.data.data,
         itemAdded: true,
-        loading: false,
         totalItems: response.data.data.length,
       });
     } catch (error) {
       if (error.response.status) {
-        set({ itemAdded: false, loading: false });
+        set({ itemAdded: false });
         toast.error("No items yet on this user.", {
           id: "no-item",
         });
       }
+    }
+  },
+
+  filterUserItem: async (search) => {
+    // set({ loading: true });
+    try {
+      const response = await AxiosInstance.get(
+        `/item/list?search=${encodeURIComponent(search)}`
+      );
+
+      set({
+        itemData: response.data.data,
+        totalPages: response.data.last_page,
+        loading: false,
+      });
+    } catch (error) {
+      set({ loading: false });
+      console.log(error.response);
     }
   },
 

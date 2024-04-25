@@ -2,14 +2,25 @@ import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
 
-export const useCompany = create((set, get) => ({
+export const useCompany = create((set) => ({
   companies: [],
-  fetchCompany: async () => {
+  totalPages: 0,
+  currentPage: 1,
+  search: "",
+  loading: false,
+  skeletonLoading: false,
+
+  fetchCompany: async (page = 1) => {
+    set({ loading: true });
     try {
-      const response = await AxiosInstance.get("/company/list");
-      set({ companies: response.data.data });
+      const response = await AxiosInstance.get(`/company/list?page=${page}`);
+      set({
+        companies: response.data.data,
+        loading: false,
+      });
     } catch (error) {
       console.log(error);
+      set({ loading: false });
       const errorMessage = error.response.data.message.error;
       toast.error(
         typeof errorMessage === "object"
@@ -19,20 +30,41 @@ export const useCompany = create((set, get) => ({
     }
   },
 
+  filterCompany: async (search) => {
+    set({ skeletonLoading: true });
+    try {
+      const response = await AxiosInstance.get(
+        `/company/list?search=${encodeURIComponent(search)}`
+      );
+      set({
+        companies: response.data.data,
+        totalPages: response.data.last_page,
+        skeletonLoading: false,
+      });
+    } catch (error) {
+      set({ skeletonLoading: false });
+      console.log(error.response);
+    }
+  },
+
   addCompany: async (values) => {
     try {
       const response = await AxiosInstance.post("/company/add", {
         ...values,
       });
-      set({ companies: [...get().companies, response.data.data] });
+      set((state) => ({
+        companies: [...state.companies, response.data.data],
+      }));
       toast.success("Company added successfully", {
         position: "top-center",
       });
     } catch (error) {
-      console.log(error.response);
-      toast.error(error.response.data.message.error, {
-        position: "top-center",
-      });
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
+        });
+      }
     }
   },
 
@@ -40,10 +72,9 @@ export const useCompany = create((set, get) => ({
     try {
       await AxiosInstance.delete(`/company/${id}`, {});
 
-      // after deleting a company, update the companies list
-      set({
-        companies: get().companies.filter((company) => company.id !== id),
-      });
+      set((state) => ({
+        companies: [...state.companies.filter((company) => company.id !== id)],
+      }));
     } catch (error) {
       console.log(error.response);
       toast.error(error.response.data.message.error, {
@@ -52,28 +83,3 @@ export const useCompany = create((set, get) => ({
     }
   },
 }));
-
-// export const useAddCompany = create((set) => ({
-//   addCompany: async (values, token) => {
-//     try {
-//       const response = await AxiosInstance.post(
-//         "/company/add",
-//         {
-//           ...values,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-//       toast.success(response.data.message, {
-//         position: "top-center",
-//       });
-//     } catch (error) {
-//       toast.error(error.response.data.message.error, {
-//         position: "top-center",
-//       });
-//     }
-//   },
-// }));
