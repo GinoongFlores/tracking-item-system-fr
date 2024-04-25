@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import { InputField } from "../..";
 import { ItemSchema } from "../../../utils";
 import { useItems } from "../../../store";
+import { Widget } from "@uploadcare/react-widget";
 
 export const AddItem = () => {
   const addItem = useItems((state) => state.addItem);
@@ -10,7 +11,7 @@ export const AddItem = () => {
 
   return (
     <>
-      <section className="relative h-screen">
+      <section className="relative">
         <div className="flex flex-col px-6 py-8 lg:py-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
@@ -26,10 +27,10 @@ export const AddItem = () => {
               validationSchema={ItemSchema}
               onSubmit={(values) => {
                 addItem(values);
-                navigate("/items");
+                navigate("/item");
               }}
             >
-              {({ errors, touched }) => {
+              {({ errors, touched, setFieldValue, isSubmitting }) => {
                 return (
                   <Form action="#" className="space-y-4 md:space-y-6">
                     <div>
@@ -83,7 +84,31 @@ export const AddItem = () => {
                       ) : null}
                     </div>
 
+                    <div>
+                      <label
+                        htmlFor="image"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Upload image
+                      </label>
+
+                      <Widget
+                        publicKey={
+                          import.meta.env.VITE_REACT_APP_UPLOADCARE_PUBLIC_KEY
+                        }
+                        onChange={(fileInfo) => {
+                          if (fileInfo) {
+                            const uuid = fileInfo.uuid;
+                            setFieldValue("image", uuid);
+                            console.log("uuid ", uuid);
+                          }
+                        }}
+                        // onChange={console.log}
+                      />
+                    </div>
+
                     <button
+                      disabled={isSubmitting}
                       type="submit"
                       className="w-full py-2.5 rounded-lg px-5 me-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-darker border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-100"
                     >
