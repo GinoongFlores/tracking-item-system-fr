@@ -18,7 +18,7 @@ export const useAuthRedirect = () => {
     if (token) {
       getUser();
     }
-  }, [getUser, token]);
+  }, [getUser, token, userStatus]);
 
   useEffect(() => {
     if (!token && location.pathname !== "/register") {
