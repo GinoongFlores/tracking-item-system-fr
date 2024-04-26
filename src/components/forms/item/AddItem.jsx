@@ -3,10 +3,13 @@ import { Form, Formik } from "formik";
 import { InputField } from "../..";
 import { ItemSchema } from "../../../utils";
 import { useItems } from "../../../store";
-import { Widget } from "@uploadcare/react-widget";
+// import { Widget } from "@uploadcare/react-widget";
+import { useState, useEffect } from "react";
+import { ImageUploader } from "../../uploader/ImageUploader";
 
 export const AddItem = () => {
   const addItem = useItems((state) => state.addItem);
+  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -92,18 +95,12 @@ export const AddItem = () => {
                         Upload image
                       </label>
 
-                      <Widget
-                        publicKey={
-                          import.meta.env.VITE_REACT_APP_UPLOADCARE_PUBLIC_KEY
-                        }
-                        onChange={(fileInfo) => {
-                          if (fileInfo) {
-                            const uuid = fileInfo.uuid;
-                            setFieldValue("image", uuid);
-                            console.log("uuid ", uuid);
-                          }
+                      <ImageUploader
+                        onUpload={(uuids) => {
+                          const uuidString = uuids.join(",");
+                          setFieldValue("image", uuidString);
+                          console.log(uuidString);
                         }}
-                        // onChange={console.log}
                       />
                     </div>
 
