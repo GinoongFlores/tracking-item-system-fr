@@ -11,6 +11,11 @@ export const useItems = create((set) => ({
   loading: false,
   setLoading: (loading) => set(() => ({ loading })),
 
+  // paginate
+  totalPages: 0,
+  currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
+
   addItem: async (values) => {
     set({ loading: true, itemAdded: false });
     try {
@@ -43,6 +48,7 @@ export const useItems = create((set) => ({
         itemData: response.data.data,
         itemAdded: true,
         totalItems: response.data.data.length,
+        loading: false,
       });
     } catch (error) {
       if (error.response.status) {
@@ -55,12 +61,17 @@ export const useItems = create((set) => ({
   },
 
   filterUserItem: async (search) => {
-    // set({ loading: true });
+    set({ loading: true });
     try {
-      const response = await AxiosInstance.get(
-        `/item/list?search=${encodeURIComponent(search)}`
-      );
+      let response;
 
+      if (search) {
+        response = await AxiosInstance.get(
+          `/item/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/item/list");
+      }
       set({
         itemData: response.data.data,
         totalPages: response.data.last_page,

@@ -7,6 +7,10 @@ export const useTransfer = create((set) => ({
   loading: false,
   setLoading: (loading) => set(() => ({ loading })),
   clearTransactions: () => set(() => ({ transactions: [] })),
+  // paginate
+  totalPages: 0,
+  currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
 
   transferItem: async (data) => {
     set({ loading: true });
@@ -27,6 +31,7 @@ export const useTransfer = create((set) => ({
   },
 
   fetchUserTransferItems: async (page = 1) => {
+    set({ loading: true });
     try {
       const response = await AxiosInstance.get(
         `item/user/view-transactions?page${page}`
@@ -51,19 +56,29 @@ export const useTransfer = create((set) => ({
         // Concatenate the new data onto the filtered array
         return {
           transactions: filteredTransactions.concat(newTransactions),
+          loading: false,
         };
       });
     } catch (error) {
+      set({ loading: false });
       toast.error("There was an error while fetching a data");
       console.log(error);
     }
   },
 
   filterUserTransferItems: async (search) => {
+    // set({ loading: true });
     try {
-      const response = await AxiosInstance.get(
-        `item/user/view-transactions?search=${encodeURIComponent(search)}`
-      );
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `item/user/view-transactions?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get(`item/user/view-transactions`);
+      }
+
       let newTransactions = response.data.data;
 
       // ensure that the 'items' property of each transaction is an Array. This prevents the error of `transactions.items.map is not a function` in the ViewTransaction component. This error happens when we search an item that has the same transaction id with another item.
@@ -75,10 +90,12 @@ export const useTransfer = create((set) => ({
       set(() => {
         return {
           transactions: newTransactions,
+          loading: false,
         };
       });
     } catch (error) {
       console.log(error);
+      set({ loading: false });
     }
   },
 }));

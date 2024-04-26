@@ -9,11 +9,15 @@ export const useUser = create((set, get) => ({
   totalPages: 0,
   search: "",
   currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
   // attach role to user
   selectedRole: "",
+  loading: false,
+
   handleRoleChange: (event) => {
     set({ selectedRole: event.target.value });
   },
+
   submitRole: async (userId, role) => {
     const response = await get().attachRole(userId, role);
     console.log(response);
@@ -26,12 +30,17 @@ export const useUser = create((set, get) => ({
   },
 
   fetchUsers: async (page = 1) => {
-    // console.log("fetchUser ", token);
+    set({ loading: true });
     try {
       const response = await AxiosInstance.get(`/user/list?page=${page}`);
-      set({ users: response.data.data, totalPages: response.data.last_page });
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+        loading: false,
+      });
       return response;
     } catch (error) {
+      set({ loading: false });
       console.log(error);
       const errorMessage = error.response.data.message.error;
       toast.error(
@@ -39,6 +48,27 @@ export const useUser = create((set, get) => ({
           ? JSON.stringify(errorMessage)
           : errorMessage
       );
+    }
+  },
+
+  filterUsers: async (search) => {
+    try {
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `/user/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/user/list");
+      }
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+      });
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 
@@ -81,34 +111,5 @@ export const useUser = create((set, get) => ({
         ),
       });
     }
-  },
-
-  handleSearch: (search) => {
-    set({ search });
-  },
-
-  setCurrentPage: (page) => {
-    set({ currentPage: page });
-  },
-
-  filterUsers: async (search) => {
-    try {
-      const response = await AxiosInstance.get(
-        `/user/list?search=${encodeURIComponent(search)}`
-      );
-      set({
-        users: response.data.data,
-        totalPages: response.data.last_page,
-      });
-      return response;
-    } catch (error) {
-      console.log(error.response);
-      set({ loading: false });
-    }
-    // return get().users.filter(
-    //   (user) =>
-    //     user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-    //     user.last_name.toLowerCase().includes(search.toLowerCase())
-    // );
   },
 }));

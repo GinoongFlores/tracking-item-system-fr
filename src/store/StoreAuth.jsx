@@ -15,22 +15,28 @@ export const useAuth = create((set, get) => ({
   getUser: async () => {
     set({ loading: true });
     try {
-      const response = await AxiosInstance.get("user/current");
+      const response = await AxiosInstance.get("/user/current");
 
-      const userStatus = response.data.data.is_activated;
-      set({
-        currentUser: userStatus ? response.data.data : null,
-        userStatus,
-        userFirstName: response.data.data.first_name,
-        userEmail: response.data.data.email,
-        userRole: response.data.data.role,
-        loading: false,
-      });
+      if (response.data && response.data.data) {
+        const { data } = response.data;
+        const userStatus = data.is_activated;
+        set({
+          currentUser: userStatus ? data : null,
+          userStatus,
+          userFirstName: data.first_name,
+          userEmail: data.email,
+          userRole: data.role,
+          loading: false,
+        });
+      } else {
+        console.log("Unexpected response structure");
+        set({ loading: false });
+      }
 
       return response.data;
     } catch (error) {
-      console.log(error.response);
-      // toast.error("An error occurred while fetching user data");
+      console.log(error);
+      toast.error("An error occurred while fetching user data");
       const errors = error.response.data.message.error;
       console.log(errors);
       for (const field in errors) {
@@ -48,6 +54,7 @@ export const useAuth = create((set, get) => ({
       const response = await AxiosInstance.post("/login", {
         ...data,
       });
+      console.log("api ", response.data);
       const userToken = response.data.token;
       localStorage.setItem("token", userToken);
 
@@ -69,10 +76,10 @@ export const useAuth = create((set, get) => ({
     } catch (error) {
       set({ loading: true });
       localStorage.removeItem("token");
-      console.log(error);
-      const unauthorized = error.response.data.message;
-      const generalError = "An error occurred while logging in";
-      toast.error(unauthorized ? unauthorized : generalError);
+      // console.log(error);
+      // const unauthorized = error.response.data.message;
+      // const generalError = "An error occurred while logging in";
+      // toast.error(unauthorized ? unauthorized : generalError);
       set({ token: null, loading: false });
     }
   },

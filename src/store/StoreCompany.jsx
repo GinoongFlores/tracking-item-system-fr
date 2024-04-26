@@ -6,9 +6,10 @@ export const useCompany = create((set) => ({
   companies: [],
   totalPages: 0,
   currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
   search: "",
   loading: false,
-  skeletonLoading: false,
+  // skeletonLoading: false,
 
   fetchCompany: async (page = 1) => {
     set({ loading: true });
@@ -31,18 +32,24 @@ export const useCompany = create((set) => ({
   },
 
   filterCompany: async (search) => {
-    set({ skeletonLoading: true });
+    // set({ loading: true });
     try {
-      const response = await AxiosInstance.get(
-        `/company/list?search=${encodeURIComponent(search)}`
-      );
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `/company/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/company/list"); // fetch all companies
+      }
       set({
         companies: response.data.data,
         totalPages: response.data.last_page,
-        skeletonLoading: false,
+        // loading: false,
       });
     } catch (error) {
-      set({ skeletonLoading: false });
+      // set({ loading: false });
       console.log(error.response);
     }
   },
