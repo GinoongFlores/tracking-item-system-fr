@@ -2,30 +2,40 @@ import { SearchBar } from "../../components";
 import { ViewCompany } from "../super_admin";
 import { useCompany } from "../../store";
 import { useEffect, useState } from "react";
-import { debounce } from "lodash";
 import { Loader } from "../../utils";
+import { Paginate } from "../../components/navigation";
 
 export const Company = () => {
-  const { filterCompany, loading, companies } = useCompany();
-  const [search, setSearch] = useState("");
+  const {
+    filterCompany,
+    fetchCompany,
+    loading,
+    companies,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+  } = useCompany();
 
+  // paginate
   useEffect(() => {
-    const debouncedFilterCompany = debounce(filterCompany, 500);
-    debouncedFilterCompany(search);
-  }, [search, filterCompany]);
+    fetchCompany(currentPage);
+  }, [fetchCompany, currentPage]);
 
   return (
     <>
-      {loading && <Loader />}
-      <div className="flex flex-col items-center justify-stretch">
-        <SearchBar
-          onSearch={(search) => {
-            setSearch(search);
-          }}
+      <section className="relative pb-20">
+        {loading && <Loader />}
+        <div className="flex flex-col items-center justify-stretch">
+          <SearchBar onSearch={filterCompany} />
+        </div>
+        {companies.length === 0 && <p>No item found</p>}
+        <ViewCompany />
+        <Paginate
+          currentPages={currentPage}
+          totalPages={totalPages}
+          onPageChanges={setCurrentPage}
         />
-      </div>
-      {companies.length === 0 && <p>No item found</p>}
-      <ViewCompany />
+      </section>
     </>
   );
 };

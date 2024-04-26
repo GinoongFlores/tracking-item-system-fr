@@ -1,39 +1,34 @@
 import { SearchBar } from "../../../components";
 import { ButtonLink } from "../../../components/buttons";
 import { ViewItems } from "./ViewItems";
-import { useState, useEffect } from "react";
 import { useItems } from "../../../store";
 import { Loader } from "../../../utils";
-import { debounce } from "lodash";
+import { Paginate } from "../../../components/navigation";
 
 export const UserItems = () => {
-  const { filterUserItem } = useItems();
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    const debouncedFilterUserItem = debounce(filterUserItem, 500);
-    debouncedFilterUserItem(search);
-  }, [search, filterUserItem]);
+  const { filterUserItem, loading, setCurrentPage, totalPages, currentPage } =
+    useItems();
 
   return (
     <>
-      {/* {loading && <Loader />} */}
-      <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white">
+      {loading && <Loader />}
+      <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white pb-20">
         <div className="flex items-center justify-end">
           <ButtonLink name={"Archive"} redirect={"/item/trashed"} />
           <ButtonLink name={"Add Item"} redirect={"/item/add"} />
           <ButtonLink name={"Transfer Item"} redirect={"/item/transfer"} />
         </div>
         <div className="w-full">
-          <SearchBar
-            onSearch={(search) => {
-              setSearch(search);
-            }}
-          />
+          <SearchBar onSearch={filterUserItem} />
         </div>
         {/* card items */}
+        <ViewItems />
+        <Paginate
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChanges={setCurrentPage}
+        />
       </section>
-      <ViewItems />
     </>
   );
 };

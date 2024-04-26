@@ -17,9 +17,7 @@ export const TrashedItems = () => {
   }, [fetchTrashedItem]);
   return (
     <section className="flex flex-col gap-4 text-darker dark:text-white">
-      <div className="w-full">
-        <SearchBar />
-      </div>
+      <div className="w-full">{/* <SearchBar /> */}</div>
       <div className="flex items-center justify-end">
         <ButtonLink redirect={"/item/trashed"} name={"Archive"} />
         <ButtonLink redirect={"/item/"} name={"Items"} />

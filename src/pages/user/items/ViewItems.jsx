@@ -6,17 +6,13 @@ import { useEffect } from "react";
 import { Loader } from "../../../utils";
 
 export const ViewItems = () => {
-  const { fetchUserItem, itemData, loading } = useItems();
+  const { fetchUserItem, itemData } = useItems();
 
   useEffect(() => {
     if (itemData.length === 0) {
       fetchUserItem();
     }
   }, [fetchUserItem, itemData]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <div className="flex flex-col gap-4">

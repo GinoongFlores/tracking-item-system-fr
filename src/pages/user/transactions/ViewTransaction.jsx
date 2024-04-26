@@ -4,22 +4,17 @@ import { CiImageOn } from "react-icons/ci";
 import { useState, useEffect } from "react";
 
 export const ViewTransaction = () => {
-  //   const { fetchUserTransferItems, transactions } = useTransfer();
-
-  const { transactions, fetchUserTransferItems, loading } = useTransfer(
-    (state) => ({
-      transactions: state.transactions,
-      fetchUserTransferItems: state.fetchUserTransferItems,
-      loading: state.loading,
-    })
-  );
+  const { transactions, fetchUserTransferItems } = useTransfer((state) => ({
+    transactions: state.transactions,
+    fetchUserTransferItems: state.fetchUserTransferItems,
+    loading: state.loading,
+  }));
 
   useEffect(() => {
     if (transactions.length === 0) {
       fetchUserTransferItems();
     }
   }, [fetchUserTransferItems, transactions]);
-
 
   return (
     <div className="flex flex-col gap-4 md:grid md:grid-cols-4">
