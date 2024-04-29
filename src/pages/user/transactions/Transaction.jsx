@@ -13,12 +13,9 @@ export const Transaction = () => {
     filterUserTransferItems,
   } = useTransfer();
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <section className="container mx-auto pb-20">
+      {loading && <Loader />}
       <div className="w-full">
         <SearchBar onSearch={filterUserTransferItems} />
       </div>

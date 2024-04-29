@@ -25,7 +25,7 @@ import {
 import {
   AdminHome,
   AdminItems,
-  ViewUsers,
+  AdminUsers,
   AdminProfile,
   AdminTransaction,
 } from "./pages/admin";
@@ -83,8 +83,8 @@ function App() {
                   </AuthWrapper>
                 }
               >
-                <Route path="/" element={<AdminHome />} />
-                <Route path="users" element={<ViewUsers />} />
+                <Route index element={<AdminHome />} />
+                <Route path="users" element={<AdminUsers />} />
                 <Route path="items" element={<AdminItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
