@@ -17,6 +17,8 @@ export const useAuth = create((set, get) => ({
     try {
       const response = await AxiosInstance.get("/user/current");
 
+      console.log("response", response);
+
       if (response.data && response.data.data) {
         const { data } = response.data;
         const userStatus = data.is_activated;
@@ -75,10 +77,9 @@ export const useAuth = create((set, get) => ({
     } catch (error) {
       set({ loading: true });
       localStorage.removeItem("token");
-      // console.log(error);
-      // const unauthorized = error.response.data.message;
-      // const generalError = "An error occurred while logging in";
-      // toast.error(unauthorized ? unauthorized : generalError);
+      const unauthorized = error.response.data.message;
+      const generalError = "An error occurred while logging in";
+      toast.error(unauthorized ? unauthorized : generalError);
       set({ token: null, loading: false });
     }
   },
