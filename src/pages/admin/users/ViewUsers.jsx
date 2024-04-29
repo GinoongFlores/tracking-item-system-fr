@@ -1,20 +1,11 @@
-import { useAdmin } from "../../../store";
-import { useEffect, useCallback } from "react";
 import { AdminUser } from "../../../components/cards/AdminUser";
+import { useAdmin } from "../../../store";
 import { FaUser } from "react-icons/fa";
 import { debounce } from "lodash";
 
 export const ViewUsers = () => {
-  const { users, toggleActivation, fetchUsers } = useAdmin();
-
-  const debouncedFetchUsers = useCallback(() => {
-    const debounced = debounce(fetchUsers, 500);
-    debounced();
-  }, [fetchUsers]);
-
-  useEffect(() => {
-    debouncedFetchUsers();
-  }, [debouncedFetchUsers]);
+  const users = useAdmin((state) => state.users);
+  const toggleActivation = useAdmin((state) => state.toggleActivation);
 
   return (
     <div className="flex flex-wrap gap-4">

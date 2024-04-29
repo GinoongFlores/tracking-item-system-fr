@@ -48,7 +48,7 @@ export const Sidebar = () => {
           {
             name: "Transaction",
             icon: <BiTransferAlt size={20} />,
-            link: "/item/transaction",
+            link: "item/transaction",
           },
         ]
       : []),
@@ -73,7 +73,7 @@ export const Sidebar = () => {
           {
             name: "Transaction",
             icon: <BiTransferAlt size={20} />,
-            link: "/item/transaction",
+            link: "/transaction",
           },
         ]
       : []),

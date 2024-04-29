@@ -4,18 +4,16 @@ import { toast } from "react-hot-toast";
 
 export const useAdmin = create((set) => ({
   users: [],
-  loading: false,
-  // paginate & search
-  search: "",
   totalPages: 0,
   currentPage: 1,
   setCurrentPage: (page) => set({ currentPage: page }),
+  search: "",
+  loading: false,
 
   fetchUsers: async (page = 1) => {
     set({ loading: true });
     try {
       const response = await AxiosInstance.get(`/user/admin/list?page=${page}`);
-
       set({
         users: response.data.data,
         totalPages: response.data.last_page,
@@ -36,7 +34,6 @@ export const useAdmin = create((set) => ({
         response = await AxiosInstance.get(
           `/user/admin/list?search=${encodeURIComponent(search)}`
         );
-        console.log("filter user ", response.data.data);
       } else {
         response = await AxiosInstance.get("/user/admin/list");
       }
@@ -44,8 +41,9 @@ export const useAdmin = create((set) => ({
         users: response.data.data,
         totalPages: response.data.last_page,
       });
+      return response;
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   },
 
