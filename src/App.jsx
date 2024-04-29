@@ -25,7 +25,7 @@ import {
 import {
   AdminHome,
   AdminItems,
-  ViewUsers,
+  CompanyUsers,
   AdminProfile,
   AdminTransaction,
 } from "./pages/admin";
@@ -84,7 +84,7 @@ function App() {
                 }
               >
                 <Route path="/" element={<AdminHome />} />
-                <Route path="users" element={<ViewUsers />} />
+                <Route path="users" element={<CompanyUsers />} />
                 <Route path="items" element={<AdminItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
