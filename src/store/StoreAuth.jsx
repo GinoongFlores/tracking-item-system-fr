@@ -61,13 +61,13 @@ export const useAuth = create((set, get) => ({
       // get user data through the getUser method
       const userData = await get().getUser();
       if (userData && userData.data.is_activated && userData.data.role) {
-        toast.success("Login successful", {
+        toast.success("Login successfully", {
           position: "top-center",
           id: "login-toast",
         });
       } else {
         localStorage.removeItem("token");
-        toast.error("Account activation is pending");
+        toast.error("Your account is pending for activation");
         set({ token: null });
       }
       set({ loading: false });
@@ -77,9 +77,9 @@ export const useAuth = create((set, get) => ({
       set({ loading: true });
       localStorage.removeItem("token");
       // console.log(error);
-      // const unauthorized = error.response.data.message;
-      // const generalError = "An error occurred while logging in";
-      // toast.error(unauthorized ? unauthorized : generalError);
+      const unauthorized = error.response.data.message;
+      const generalError = "An error occurred while logging in";
+      toast.error(unauthorized ? unauthorized : generalError);
       set({ token: null, loading: false });
     }
   },
