@@ -8,6 +8,7 @@ export const TransactionCard = ({
   transaction_num,
   status,
   receiver,
+  sender,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -42,8 +43,9 @@ export const TransactionCard = ({
                 </span>
               </div>
             </div>
-
             <span>
+              {sender && <p>{`Sender: ${sender || "N/A"}`}</p>}
+
               <p>{`Receiver: ${receiver || "N/A"}`}</p>
               <p>{"Date"}</p>
             </span>
