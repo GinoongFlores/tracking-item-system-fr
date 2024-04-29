@@ -54,7 +54,6 @@ export const useAuth = create((set, get) => ({
       const response = await AxiosInstance.post("/login", {
         ...data,
       });
-      console.log("api ", response.data);
       const userToken = response.data.token;
       localStorage.setItem("token", userToken);
 
