@@ -2,7 +2,7 @@ import { TransactionCard } from "../../../components/cards";
 import { useTransfer } from "../../../store";
 import { CiImageOn } from "react-icons/ci";
 
-export const ViewTransaction = () => {
+export const AdminViewTransactions = () => {
   const transactions = useTransfer((state) => state.transactions);
 
   return (
@@ -15,6 +15,7 @@ export const ViewTransaction = () => {
             status={item.status}
             name={item.name}
             transaction_num={item.transaction_id}
+            sender={transaction.sender_full_name}
             receiver={transaction.receiver_full_name}
           />
         ))
