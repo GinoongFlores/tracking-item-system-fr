@@ -45,11 +45,16 @@ export const TransactionCard = ({
                 </span>
               </div>
             </div>
-            <span className="text-sm">
-              {sender && <p>{`Sender: ${sender || "N/A"}`}</p>}
+            <span className="text-sm leading-relaxed">
+              {sender && (
+                <>
+                  <span className="font-semibold">Sender</span>:{" "}
+                  {`${sender || "N/A"}`}
+                </>
+              )}
 
               <p>{`Receiver: ${receiver || "N/A"}`}</p>
-              <p>{useFormatDate(date) || "Date"}</p>
+              <p className="">{useFormatDate(date) || "Date"}</p>
             </span>
           </div>
         </div>
@@ -60,11 +65,11 @@ export const TransactionCard = ({
               <BreadCrumbsArrow />
             </button>
           </div>
-          <div className="relative top-4">
+          {/* <div className="relative top-4">
             <p className="text-sm leading-normal">
               {`Transaction id: ${transaction_num || "N/A"}`}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* actions */}

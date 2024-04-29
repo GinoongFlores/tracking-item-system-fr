@@ -1,4 +1,5 @@
 // import CountCard from "../../components/CountCard";
+import { CountCard } from "../../components/cards";
 
 export const AdminHome = () => {
   const cards = [
@@ -17,7 +18,7 @@ export const AdminHome = () => {
   ];
   return (
     <>
-      <div>Hello World</div>
+      <CountCard />
     </>
   );
 };
