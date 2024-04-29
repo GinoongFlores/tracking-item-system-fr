@@ -14,6 +14,7 @@ export const ViewTransaction = () => {
             Image={CiImageOn}
             status={item.status}
             name={item.name}
+            date={item.updated_at}
             transaction_num={item.transaction_id}
             receiver={transaction.receiver_full_name}
           />

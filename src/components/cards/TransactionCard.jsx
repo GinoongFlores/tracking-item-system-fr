@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BreadCrumbsArrow } from "../../../public/svg";
 import { useTransfer } from "../../store";
+import { useFormatDate } from "../../hooks";
 
 export const TransactionCard = ({
   Image,
@@ -9,6 +10,7 @@ export const TransactionCard = ({
   status,
   receiver,
   sender,
+  date,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -43,11 +45,11 @@ export const TransactionCard = ({
                 </span>
               </div>
             </div>
-            <span>
+            <span className="text-sm">
               {sender && <p>{`Sender: ${sender || "N/A"}`}</p>}
 
               <p>{`Receiver: ${receiver || "N/A"}`}</p>
-              <p>{"Date"}</p>
+              <p>{useFormatDate(date) || "Date"}</p>
             </span>
           </div>
         </div>
