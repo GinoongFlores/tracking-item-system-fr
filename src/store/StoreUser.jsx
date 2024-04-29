@@ -14,8 +14,9 @@ export const useUser = create((set, get) => ({
   selectedRole: "",
   loading: false,
 
-  handleRoleChange: (event) => {
-    set({ selectedRole: event.target.value });
+  handleRoleChange: (userId, role) => {
+    set({ selectedRole: role });
+    console.log("user Id ", userId);
   },
 
   submitRole: async (userId, role) => {
@@ -29,13 +30,24 @@ export const useUser = create((set, get) => ({
     }
   },
 
+  attachRole: async (userId, role) => {
+    try {
+      const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
+        role,
+      });
+      return response;
+    } catch (error) {
+      console.log(error.response);
+    }
+  },
+
   fetchUsers: async (page = 1) => {
     set({ loading: true });
     try {
       const response = await AxiosInstance.get(`/user/list?page=${page}`);
+      console.log(response.data);
       set({
         users: response.data.data,
-        totalPages: response.data.last_page,
         loading: false,
       });
       return response;
@@ -72,17 +84,6 @@ export const useUser = create((set, get) => ({
     }
   },
 
-  attachRole: async (userId, role) => {
-    try {
-      const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
-        role,
-      });
-      return response;
-    } catch (error) {
-      console.log(error.response);
-    }
-  },
-
   toggleActivation: async (userId) => {
     try {
       const response = await AxiosInstance.post(`/user/${userId}/activation`);
@@ -90,26 +91,21 @@ export const useUser = create((set, get) => ({
       activation
         ? toast.success("User activated")
         : toast.error("User deactivated");
-      return response;
-    } catch (error) {
-      console.log(error.response);
-    }
-  },
 
-  handleToggleActivation: async (userId) => {
-    const response = await get().toggleActivation(userId);
-
-    if (response.status === 200) {
-      set({
-        users: get().users.map((user) =>
+      // update user in users array
+      set((state) => ({
+        users: state.users.map((user) =>
           user.id === userId
             ? {
                 ...user,
-                is_activated: +!user.is_activated,
+                is_activated: activation,
               }
             : user
         ),
-      });
+      }));
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 }));
