@@ -1,5 +1,3 @@
-import { useModal } from "../../hooks";
-import { SelectRole } from "../select/SelectRole";
 import { Modal } from "flowbite";
 import { useEffect, useRef, useState } from "react";
 import { ButtonModal } from "../buttons";

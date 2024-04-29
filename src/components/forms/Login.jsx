@@ -70,6 +70,7 @@ export const Login = () => {
                       <InputField
                         type={"password"}
                         name={"password"}
+                        autoComplete={"current-password"}
                         placeholder="•••••••••"
                       />
                       {errors.password && touched.password ? (

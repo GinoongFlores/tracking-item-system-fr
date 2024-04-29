@@ -35,7 +35,7 @@ export const Register = () => {
 
   return (
     <>
-      <section className="bg-gray-50 dark:bg-gray-900 relative">
+      <section className="bg-gray-50 dark:bg-gray-900 relative min-h-screen">
         {/* create an div with rounded corners */}
         <div className="w-full h-[400px] md:h-[250px] mb-10 bg-gray-800 rounded-b-[50px] absolute"></div>
         <div className="flex flex-col justify-center items-center mx-auto px-6 py-8 h-full lg:py-0">
