@@ -1,9 +1,8 @@
 import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
-import { UserToken } from "../hooks/userToken";
 
-export const useUser = create((set, get) => ({
+export const useUser = create((set) => ({
   users: [],
   // pagination
   totalPages: 0,
@@ -16,18 +15,6 @@ export const useUser = create((set, get) => ({
 
   handleRoleChange: (userId, role) => {
     set({ selectedRole: role });
-    console.log("user Id ", userId);
-  },
-
-  submitRole: async (userId, role) => {
-    const response = await get().attachRole(userId, role);
-    console.log(response);
-
-    if (response.status === 200) {
-      toast.success("Role assigned successfully");
-    } else {
-      toast.error("Role assignment failed");
-    }
   },
 
   attachRole: async (userId, role) => {
@@ -35,6 +22,17 @@ export const useUser = create((set, get) => ({
       const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
         role,
       });
+      if (response && response.status === 200) {
+        toast.success("Role assigned successfully");
+        set((state) => {
+          const users = state.users.map((user) =>
+            user.id === userId ? { ...user, role: role } : user
+          );
+          return { users: users, selectedRole: "" };
+        });
+      } else {
+        toast.error("Role assignment failed");
+      }
       return response;
     } catch (error) {
       console.log(error.response);

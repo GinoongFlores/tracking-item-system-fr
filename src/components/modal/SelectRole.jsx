@@ -9,7 +9,7 @@ export const SelectRoleModal = ({ user }) => {
   const modal = useRef(null);
   const [selectedRole, setSelectedRole] = useState(user.role_name);
 
-  const { submitRole, handleRoleChange } = useUser();
+  const { attachRole, handleRoleChange } = useUser();
 
   useEffect(() => {
     modal.current = new Modal(modalRef.current);
@@ -18,9 +18,6 @@ export const SelectRoleModal = ({ user }) => {
   const handleChange = (event) => {
     if (event && event.target) {
       let role = event.target.value;
-      if (!user.role_name) {
-        role = "Choose a user role";
-      }
       setSelectedRole(role);
       handleRoleChange(user.id, role);
     }
@@ -108,7 +105,7 @@ export const SelectRoleModal = ({ user }) => {
                 <select
                   id="underline_select"
                   onChange={handleChange}
-                  value={selectedRole}
+                  value={selectedRole || ""}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="">Choose a user role</option>
@@ -121,7 +118,7 @@ export const SelectRoleModal = ({ user }) => {
               <div className="flex gap-4 mt-4">
                 <ButtonModal
                   onClick={async () => {
-                    await submitRole(user.id, selectedRole);
+                    await attachRole(user.id, selectedRole);
                     toggleModal();
                   }}
                   name={"Submit"}
