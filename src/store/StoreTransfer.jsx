@@ -143,6 +143,74 @@ export const useTransfer = create((set) => ({
     }
   },
 
+  fetchReceiverTransactions: async (page = 1) => {
+    set({ loading: true });
+    try {
+      const response = await AxiosInstance.get(
+        `item/received/view-transactions?page=${page}`
+      );
+
+      const newTransactions = response.data.data; // array of transactions
+      console.log("transactions ", newTransactions);
+      set((state) => {
+        const filteredTransactions = state.transactions.filter(
+          (transaction) =>
+            !newTransactions.some(
+              (newTransaction) =>
+                newTransaction.id === transaction.id &&
+                newTransaction.items.every((newItem) =>
+                  transaction.items.some(
+                    (item) => item.transaction_id === newItem.transaction_id
+                  )
+                )
+            )
+        );
+
+        // Concatenate the new data onto the filtered array
+        return {
+          transactions: filteredTransactions.concat(newTransactions),
+          totalPages: response.data.last_page,
+          loading: false,
+        };
+      });
+    } catch (error) {
+      set({ loading: false });
+      toast.error("There was an error while fetching a data");
+      console.log(error);
+    }
+  },
+
+  filterReceiverTransactions: async (search) => {
+    try {
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `item/received/view-transactions?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get(`item/received/view-transactions`);
+      }
+
+      let newTransactions = response.data.data;
+
+      newTransactions = newTransactions.map((transaction) => ({
+        ...transaction,
+        items: Array.isArray(transaction.items) ? transaction.items : [],
+      }));
+
+      set(() => {
+        return {
+          transactions: newTransactions,
+          loading: false,
+        };
+      });
+    } catch (error) {
+      console.log(error);
+      set({ loading: false });
+    }
+  },
+
   filterAdminTransferItems: async (search) => {
     try {
       let response;
