@@ -19,7 +19,7 @@ export const TransactionCard = ({
   date,
 
   isTransaction,
-  transaction_num,
+  transaction_id,
   description,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -28,7 +28,7 @@ export const TransactionCard = ({
     (state) => state.setSelectedTransaction
   );
   const transaction = {
-    transaction_num,
+    transaction_id,
     description,
     receiver_company,
     sender_company,
@@ -46,7 +46,9 @@ export const TransactionCard = ({
   return (
     <div className="shadow-xl shadow-slate-400 dark:shadow-gray-800 max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
       <div
-        className="grid grid-cols-3 grid-flow-row-dense w-full relative"
+        className={`${
+          isTransaction && `cursor-pointer`
+        } grid grid-cols-3 grid-flow-row-dense w-full relative`}
         onClick={() => {
           console.log("selected transaction: ", transaction);
           setSelectedTransaction(transaction);
@@ -74,8 +76,8 @@ export const TransactionCard = ({
                   Date & time
                 </span> */}
           </div>
-          <div className="py-4 leading-normal text-gray-900 dark:text-white">
-            <div className="flex justify-between gap-4 relative col-span-3">
+          <div className="py-4 leading-normal relative text-gray-900 dark:text-white">
+            <div className="w-full flex gap-4 col-span-3">
               <div className="self-center justify-self-center">
                 <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight">
                   {name || "Item name"}
@@ -83,7 +85,7 @@ export const TransactionCard = ({
               </div>
 
               {/* badge (status) */}
-              <div className="">
+              <div className="w-full absolute left-40">
                 <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                   {status || "N/A"}
                 </span>
