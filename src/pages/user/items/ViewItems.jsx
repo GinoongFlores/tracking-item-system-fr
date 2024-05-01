@@ -7,13 +7,12 @@ import { Loader } from "../../../utils";
 
 export const ViewItems = () => {
   const { fetchUserItem, itemData } = useItems();
-  console.log(itemData)
 
   useEffect(() => {
     if (itemData.length === 0) {
       fetchUserItem();
     }
-  }, [fetchUserItem, itemData]);
+  }, [fetchUserItem, itemData.length]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -23,7 +22,7 @@ export const ViewItems = () => {
         ))
       ) : (
         <div
-          className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white h-screen
+          className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white min-h-screen
         }`}
         >
           <div className="flex flex-col items-center justify-center">
