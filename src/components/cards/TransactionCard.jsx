@@ -78,14 +78,14 @@ export const TransactionCard = ({
           </div>
           <div className="py-4 leading-normal relative text-gray-900 dark:text-white">
             <div className="w-full flex gap-4 col-span-3">
-              <div className="self-center justify-self-center">
+              <div className="justify-self-start">
                 <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight">
                   {name || "Item name"}
                 </h5>
               </div>
 
               {/* badge (status) */}
-              <div className="w-full absolute left-40">
+              <div className="justify-self-end absolute left-40">
                 <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                   {status || "N/A"}
                 </span>
@@ -99,7 +99,7 @@ export const TransactionCard = ({
                 </>
               )}
 
-              <p>{`Receiver: ${receiver || "N/A"}`}</p>
+              {receiver && <p>{`Receiver: ${receiver || "N/A"}`}</p>}
               <p className="">{useFormatDate(date) || "Date"}</p>
             </span>
           </div>

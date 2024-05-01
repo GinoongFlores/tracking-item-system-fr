@@ -18,7 +18,7 @@ export const Admin = () => {
                 <p>
                   Transaction number:{" "}
                   <span>
-                    {selectedTransaction.transaction_num || "123123123"}
+                    {selectedTransaction.transaction_id || "123123123"}
                   </span>
                 </p>
               </div>
@@ -48,15 +48,23 @@ export const Admin = () => {
                 "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"}
             </p>
           </div>
-          <div className="image col-span-2 justify-self-start">
-            {
+          <div className="flex flex-wrap image col-span-2 justify-self-start">
+            {selectedTransaction.image ? (
+              <img
+                src={`https://ucarecdn.com/${
+                  selectedTransaction.image.split(",")[0]
+                }/-/resize/400x400/`}
+                alt="image"
+                className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+              />
+            ) : (
               <div className="item">
                 <CiImageOn
                   className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                   alt=" image"
                 />
               </div>
-            }
+            )}
           </div>
 
           <div className="col-span-2 text-sm my-4 rounded-md bg-sky-200 dark:bg-gray-700 p-4">
@@ -135,12 +143,22 @@ export const Admin = () => {
               </p>
             </div>
           </div>
-
-          <div className="col-span-2 w-full mb-6">
-            {/* <ButtonActions name={"Reject"} />
+          {selectedTransaction.status === "received" ? (
+            <div className="col-span-2 w-full mt-6">
+              <p>
+                The item is already received by {selectedTransaction?.receiver}
+              </p>
+            </div>
+          ) : (
+            <div className="col-span-2 w-full">
+              {/* <ButtonActions name={"Reject"} />
             <ButtonActions name={"Approve"} /> */}
-            <TransactionStatus />
-          </div>
+              <TransactionStatus
+                status={selectedTransaction.status}
+                transactionId={selectedTransaction.transaction_id}
+              />
+            </div>
+          )}
         </div>
       </section>
     </>
