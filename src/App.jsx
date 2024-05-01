@@ -30,7 +30,7 @@ import {
   AdminTransaction,
 } from "./pages/admin";
 
-import { Login, Register } from "./components/forms";
+import { Login, Register, Admin as AdminTransactions } from "./components/forms";
 import {
   AddCompanyPage,
   ViewCompanyPage,
@@ -88,6 +88,7 @@ function App() {
                 <Route path="items" element={<AdminItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
+                <Route path="admin/transaction" element={<AdminTransactions />} />
               </Route>
             )}
 

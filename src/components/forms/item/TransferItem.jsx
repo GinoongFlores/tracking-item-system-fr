@@ -4,7 +4,6 @@ import { InputField } from "../..";
 import { TransferItemSchema } from "../../../utils";
 import { InputSearchUser, InputSearchItem } from "../../fields";
 import { useTransfer } from "../../../store";
-import { toast } from "react-hot-toast";
 
 export const TransferItem = ({ item }) => {
   const transferItem = useTransfer((state) => state.transferItem);
@@ -44,7 +43,7 @@ export const TransferItem = ({ item }) => {
                 setSubmitting(true);
                 transferItem(dataToSend)
                   .then(() => {
-                    navigate("/items");
+                    navigate("/item");
                   })
                   .finally(() => {
                     setSubmitting(false);

@@ -12,6 +12,27 @@ export const useTransfer = create((set) => ({
   currentPage: 1,
   setCurrentPage: (page) => set({ currentPage: page }),
 
+  // selectedTransaction
+  selectedTransaction: null,
+  setSelectedTransaction: (transaction) =>
+    set(() => ({ selectedTransaction: transaction })),
+
+  // status
+  transactionStatus: "",
+  handleTransactionChange: (transactionId, status) => {
+    set({ transactionStatus: status });
+  },
+
+  attachTransactionStatus: async (transactionId, status) => {
+    try {
+      const response = await AxiosInstance.post(
+        `/item/transfer/${transactionId}/status`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   transferItem: async (data) => {
     set({ loading: true });
     try {
@@ -74,7 +95,6 @@ export const useTransfer = create((set) => ({
       const response = await AxiosInstance.get(
         `item/admin/view-transactions?page=${page}`
       );
-      console.log("admin transfers: ", response.data);
 
       const newTransactions = response.data.data; // array of transactions
       // console.log("transactions ", newTransactions);

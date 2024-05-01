@@ -2,25 +2,69 @@ import { useState, useEffect } from "react";
 import { BreadCrumbsArrow } from "../../../public/svg";
 import { useTransfer } from "../../store";
 import { useFormatDate } from "../../hooks";
+import { CiImageOn } from "react-icons/ci";
+import { Admin as AdminTransaction } from "../forms";
+import { useNavigate } from "react-router-dom";
 
 export const TransactionCard = ({
-  Image,
+  image,
   name,
-  transaction_num,
+  receiver_company,
+  sender_company,
+  receiver_phone,
+  sender_phone,
   status,
   receiver,
   sender,
   date,
+
+  isTransaction,
+  transaction_num,
+  description,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
+  const setSelectedTransaction = useTransfer(
+    (state) => state.setSelectedTransaction
+  );
+  const transaction = {
+    transaction_num,
+    description,
+    receiver_company,
+    sender_company,
+    receiver_phone,
+    sender_phone,
+    // for cards
+    image,
+    name,
+    status,
+    receiver,
+    sender,
+    date,
+  };
 
   return (
     <div className="shadow-xl shadow-slate-400 dark:shadow-gray-800 max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
-      <div className="grid grid-cols-3 grid-flow-row-dense w-full relative">
+      <div
+        className="grid grid-cols-3 grid-flow-row-dense w-full relative"
+        onClick={() => {
+          console.log("selected transaction: ", transaction);
+          setSelectedTransaction(transaction);
+          isTransaction ? navigate("/admin/transaction") : null;
+        }}
+      >
         <div className="flex gap-4 col-span-2">
           <div className="flex flex-col place-self-center">
-            {Image && (
-              <Image
+            {image ? (
+              <img
+                src={`https://ucarecdn.com/${
+                  image.split(",")[0]
+                }/-/resize/400x400/`}
+                alt="item image"
+                className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+              />
+            ) : (
+              <CiImageOn
                 className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                 alt="item image"
               />
@@ -31,7 +75,7 @@ export const TransactionCard = ({
                 </span> */}
           </div>
           <div className="py-4 leading-normal text-gray-900 dark:text-white">
-            <div className="flex justify-between gap-4 relative">
+            <div className="flex justify-between gap-4 relative col-span-3">
               <div className="self-center justify-self-center">
                 <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight">
                   {name || "Item name"}

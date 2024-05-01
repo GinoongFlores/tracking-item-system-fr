@@ -11,6 +11,7 @@ export const Transaction = () => {
     setCurrentPage,
     loading,
     filterUserTransferItems,
+    transactions,
   } = useTransfer();
 
   return (
@@ -19,6 +20,13 @@ export const Transaction = () => {
       <div className="w-full">
         <SearchBar onSearch={filterUserTransferItems} />
       </div>
+      {transactions.length === 0 && (
+        <div className="min-h-screen flex items-center justify-center">
+          <div>
+            <p>No transactions yet</p>
+          </div>
+        </div>
+      )}
       <ViewTransaction />
       <Paginate
         currentPage={currentPage}

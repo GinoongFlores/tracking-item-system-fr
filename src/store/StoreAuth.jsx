@@ -37,15 +37,15 @@ export const useAuth = create((set, get) => ({
 
       return response.data;
     } catch (error) {
-      console.log(error);
-      toast.error("An error occurred while fetching user data");
-      const errors = error.response.data.message.error;
-      console.log(errors);
-      for (const field in errors) {
-        errors[field].forEach((errorMessage) => {
-          toast.error(`${errorMessage}`);
-        });
-      }
+      // console.log(error);
+      // toast.error("An error occurred while fetching user data");
+      // const errors = error.response.data.message.error;
+      // console.log(errors);
+      // for (const field in errors) {
+      //   errors[field].forEach((errorMessage) => {
+      //     toast.error(`${errorMessage}`);
+      //   });
+      // }
       set({ loading: false });
     }
   },

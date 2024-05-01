@@ -7,6 +7,7 @@ import { Loader } from "../../../utils";
 
 export const ViewItems = () => {
   const { fetchUserItem, itemData } = useItems();
+  console.log(itemData)
 
   useEffect(() => {
     if (itemData.length === 0) {

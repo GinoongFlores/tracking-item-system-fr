@@ -1,6 +1,5 @@
 import { TransactionCard } from "../../../components/cards";
 import { useTransfer } from "../../../store";
-import { CiImageOn } from "react-icons/ci";
 
 export const ViewTransaction = () => {
   const transactions = useTransfer((state) => state.transactions);
@@ -11,7 +10,7 @@ export const ViewTransaction = () => {
         transaction.items.map((item, index) => (
           <TransactionCard
             key={index}
-            Image={CiImageOn}
+            image={item.image}
             status={item.status}
             name={item.name}
             date={item.updated_at}

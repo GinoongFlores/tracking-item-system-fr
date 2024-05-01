@@ -1,17 +1,7 @@
 import { useUser } from "../../store";
-import { useEffect } from "react";
 
-export const SelectRole = ({ user }) => {
-  const { selectedRole, handleRoleChange, fetchUsers } = useUser();
-
-  // useEffect(() => {
-  //   handleRoleChange({ target: { value: currentRole } });
-  // }, [currentRole, handleRoleChange]);
-  console.log(selectedRole);
-
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [fetchUsers]);
+export const SelectRole = () => {
+  const { selectedRole, handleRoleChange } = useUser();
 
   return (
     <form className="max-w-md mx-auto">

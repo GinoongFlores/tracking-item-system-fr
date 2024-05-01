@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useItems } from "../../store";
 import { ButtonActions } from "../buttons";
 import { EditItem } from "../../components/modal";
+import { useFormatDate } from "../../hooks/useFormatDate";
 
 export const ItemCard = ({
   id,
@@ -14,6 +15,7 @@ export const ItemCard = ({
   isEdit,
   isDelete,
   isRestore,
+  updated_at,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const deleteUserItem = useItems((state) => state.deleteUserItem);
@@ -42,9 +44,11 @@ export const ItemCard = ({
                 alt="item image"
               />
             )}
-            <span className="text-center text-sm text-black dark:text-white">
-              Date & time
-            </span>
+            <div>
+              <span className="text-center text-sm text-black dark:text-white">
+                {useFormatDate(updated_at) || "Date & time"}
+              </span>
+            </div>
           </div>
           <div className="flex flex-col py-4 leading-normal">
             <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
