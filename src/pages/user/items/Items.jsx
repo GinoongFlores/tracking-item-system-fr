@@ -12,7 +12,7 @@ export const UserItems = () => {
   return (
     <>
       {loading && <Loader />}
-      <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white pb-20">
+      <section className="container text-darker dark:text-white pb-20">
         <div className="flex items-center justify-end">
           <ButtonLink name={"Archive"} redirect={"/item/trashed"} />
           <ButtonLink name={"Add Item"} redirect={"/item/add"} />
