@@ -26,8 +26,25 @@ export const useTransfer = create((set) => ({
   attachTransactionStatus: async (transactionId, status) => {
     try {
       const response = await AxiosInstance.post(
-        `/item/transfer/${transactionId}/status`
+        `/item/transfer/${transactionId}/status`,
+        {
+          status,
+        }
       );
+      if (response && response.status === 200) {
+        toast.success("Transaction status updated successfully");
+        set((state) => {
+          const transactions = state.transactions.map((transaction) =>
+            transaction.id === transactionId
+              ? { ...transaction, status }
+              : transaction
+          );
+          return { transactions };
+        });
+        toast.success("Transaction status updated successfully");
+      } else {
+        toast.error("Transaction status update failed");
+      }
     } catch (error) {
       console.log(error);
     }

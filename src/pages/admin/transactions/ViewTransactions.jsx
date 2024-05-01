@@ -9,8 +9,8 @@ export const AdminViewTransactions = () => {
       {transactions.map((transaction) =>
         transaction.items.map((item, index) => (
           <TransactionCard
-            key={index}
-            transaction_num={item.transaction_id}
+            key={`${transaction.id}-${index}`}
+            transaction_id={item.transaction_id}
             sender={transaction.sender_full_name}
             sender_phone={transaction.sender_phone}
             sender_company={transaction.sender_company}
