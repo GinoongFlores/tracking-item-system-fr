@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { ButtonActions } from "../buttons";
+import Skeleton from "react-loading-skeleton";
 
 export const DefaultCard = ({
   defaultActions,
@@ -9,8 +10,13 @@ export const DefaultCard = ({
   name,
   description,
   hasQuantity,
+  loading,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // if (loading) {
+  //   return <Skeleton count={3} />;
+  // }
 
   return (
     <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -28,6 +34,7 @@ export const DefaultCard = ({
               Date & time
             </span> */}
           </div>
+
           <div className="flex flex-col py-4 leading-normal text-gray-900 dark:text-white">
             <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight ">
               {name || "name"}
@@ -36,6 +43,7 @@ export const DefaultCard = ({
             <p className="mb-3 font-normal">{description || "description"}</p>
           </div>
         </div>
+
         <div className="place-self-center">
           <button onClick={() => setIsExpanded(!isExpanded)}>
             {isExpanded ? (

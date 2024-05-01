@@ -404,6 +404,11 @@
   dependencies:
     "@swc/counter" "^0.1.3"
 
+"@symbiotejs/symbiote@^1.11.7":
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/@symbiotejs/symbiote/-/symbiote-1.11.7.tgz#78a9f415d17ec3b3546de1706e464d4d72e55510"
+  integrity sha512-fUOJwzuldeApJ533YeTdrfnpp4nsA+ss1eiNBodX7RHf4LnhPB2Z9HP4fF3m2YhKYnxK0whjXaKA+wrxTRP5qA==
+
 "@types/estree@1.0.5":
   version "1.0.5"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz"
@@ -447,6 +452,28 @@
   version "1.2.0"
   resolved "https://registry.npmjs.org/@ungap/structured-clone/-/structured-clone-1.2.0.tgz"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
+
+"@uploadcare/blocks@0.38.0":
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/@uploadcare/blocks/-/blocks-0.38.0.tgz#30d34bc55e3581aee4351128a7790b4467c5a1b3"
+  integrity sha512-8qAMJipKJy7cugeLpWV/0Muf4s2DBzVzwz32kbFolJCfrNbdwuN7zl8+GHjZR7oCH1wcvsGpENvlxr7OzpQsxw==
+  dependencies:
+    "@symbiotejs/symbiote" "^1.11.7"
+    "@uploadcare/image-shrink" "^6.14.1"
+    "@uploadcare/upload-client" "^6.14.1"
+
+"@uploadcare/image-shrink@^6.14.1":
+  version "6.14.1"
+  resolved "https://registry.yarnpkg.com/@uploadcare/image-shrink/-/image-shrink-6.14.1.tgz#6153d7cd6e45997b2022d369935adf0a4cf433c3"
+  integrity sha512-r3uu+9xsgqNqL5hvBya7RDDQVPMpTF12C1MRN80O1H6ITVvWLfngtmUbP44qg7YhAraLoynDJlkmHMiHanCw0w==
+
+"@uploadcare/upload-client@^6.14.1":
+  version "6.14.1"
+  resolved "https://registry.yarnpkg.com/@uploadcare/upload-client/-/upload-client-6.14.1.tgz#1fedc2659a471e7ba2c4977435ad55e54a9e026d"
+  integrity sha512-GvXLq6GGyXHjq7tebfv3IqHFpMzuOSuNPOhwCcNPquUbwoAlTEFPLjB2Ir/EZUuCtTWowluLjo4LPDQwvHbqyA==
+  dependencies:
+    form-data "^4.0.0"
+    ws "^8.2.3"
 
 "@vitejs/plugin-react-swc@^3.5.0":
   version "3.6.0"
@@ -2227,6 +2254,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-loading-skeleton@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-loading-skeleton/-/react-loading-skeleton-3.4.0.tgz#c71a3a17259d08e4064974aa0b07f150a09dfd57"
+  integrity sha512-1oJEBc9+wn7BbkQQk7YodlYEIjgeR+GrRjD+QXkVjwZN7LGIcAFHrx4NhT7UHGBxNY1+zax3c+Fo6XQM4R7CgA==
+
 react-router-dom@^6.22.3:
   version "6.22.3"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.22.3.tgz"
@@ -2826,6 +2858,11 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
+
+ws@^8.2.3:
+  version "8.16.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.16.0.tgz#d1cd774f36fbc07165066a60e40323eab6446fd4"
+  integrity sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==
 
 yaml@^2.3.4:
   version "2.4.1"

@@ -7,6 +7,20 @@ export const LoginSchema = Yup.object().shape({
     .required("password required"),
 });
 
+export const RegisterSchema = Yup.object().shape({
+  first_name: Yup.string().required("First Name Required"),
+  last_name: Yup.string().required("Last Name Required"),
+  company_name: Yup.string().required("Company Required"),
+  email: Yup.string().email("Invalid email address").required("Email Required"),
+  password: Yup.string()
+    .max(10, "Must be 10 characters only")
+    .min(6, "Minimum of 8 characters only")
+    .required("password required"),
+  confirm_password: Yup.string()
+    .oneOf([Yup.ref("password")], "Password must match")
+    .required("Confirm Password is required"),
+});
+
 export const ItemSchema = Yup.object().shape({
   image: Yup.string().nullable(), // image is optional
   name: Yup.string().required("Item name is required"),
@@ -20,11 +34,12 @@ export const ItemSchema = Yup.object().shape({
 export const TransferItemSchema = Yup.object().shape({
   image: Yup.string().nullable(), // image is optional
   name: Yup.string().required("Item name is required"),
-  description: Yup.string().required("Item description is required"),
+  message: Yup.string().nullable("Item message is optional"),
   receiver_name: Yup.string().required("Receiver name is required"),
-  number: Yup.string().required("Receiver number is required").min(11).max(11),
-  quantity: Yup.number()
-    .required("Item quantity is required")
-    .min(1)
-    .typeError("Quantity must be a number"),
+  address_to: Yup.string().optional("Address is optional"),
+  number: Yup.string().nullable("Receiver number is required").min(11).max(11),
+  // quantity: Yup.number()
+  //   .required("Item quantity is required")
+  //   .min(1)
+  //   .typeError("Quantity must be a number"),
 });

@@ -10,11 +10,11 @@ export const AddCompanyPage = () => {
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
   const navigate = useNavigate();
-  const token = UserToken();
   // console.log(userRole);
 
   const registerCompany = Yup.object().shape({
     company_name: Yup.string().required("Company name is required"),
+    address: Yup.string().required("Company address is required"),
   });
 
   const addCompany = useCompany((state) => state.addCompany);
@@ -33,10 +33,11 @@ export const AddCompanyPage = () => {
                 <Formik
                   initialValues={{
                     company_name: "",
+                    address: "",
                   }}
                   validationSchema={registerCompany}
                   onSubmit={(values) => {
-                    addCompany(values, token);
+                    addCompany(values);
                     navigate("/company");
                   }}
                 >
@@ -58,6 +59,26 @@ export const AddCompanyPage = () => {
                         {errors.company_name && touched.company_name ? (
                           <div className="text-red-800 dark:text-red-400 text-sm">
                             {errors.company_name}
+                          </div>
+                        ) : null}
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="address"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Address
+                        </label>
+                        <InputField
+                          type={"text"}
+                          id={"address"}
+                          name={"address"}
+                          placeholder={"Company address"}
+                        />
+                        {errors.address && touched.address ? (
+                          <div className="text-red-800 dark:text-red-400 text-sm">
+                            {errors.address}
                           </div>
                         ) : null}
                       </div>

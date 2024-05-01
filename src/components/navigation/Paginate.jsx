@@ -4,73 +4,73 @@ export const Paginate = ({ totalPages, currentPages, onPageChanges }) => {
   return (
     <>
       <nav aria-label="Page navigation example">
-        <ul className="flex items-center -space-x-px h-8 text-base">
-          <li>
-            <button
-              href="#"
-              onClick={() => onPageChanges(currentPages - 1)}
-              disabled={currentPages === 1}
-              className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              <span className="sr-only">Previous</span>
-              <svg
-                className="w-2.5 h-2.5 rtl:rotate-180"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 6 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 1 1 5l4 4"
-                />
-              </svg>
-            </button>
-          </li>
-          {pages.map((page) => (
-            <li key={page}>
+        <div className="py-4 flex flex-col items-center fixed inset-x-0 bottom-0 bg-white dark:bg-darker">
+          <ul className="flex items-center gap-1 -space-x-px h-8 text-base">
+            <li>
               <button
-                onClick={() => onPageChanges(page)}
-                // className={page === currentPages ? "current" : ""}
-                className={`px-4 py-2 border rounded ${
-                  page === currentPages
-                    ? "z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                }`}
+                onClick={() => onPageChanges(currentPages - 1)}
+                disabled={currentPages === 1}
+                className="px-3 py-2 text-gray-500 bg-white rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
-                {page}
+                <span className="sr-only">Previous</span>
+                <svg
+                  className="md:w-5 md:h-5 w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
               </button>
             </li>
-          ))}
+            {pages.map((page) => (
+              <li key={page}>
+                <button
+                  onClick={() => onPageChanges(page)}
+                  className={`text-sm px-3 py-2 rounded-lg ${
+                    page === currentPages
+                      ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-700 dark:text-white"
+                      : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  }`}
+                >
+                  {page}
+                </button>
+              </li>
+            ))}
 
-          <li>
-            <button
-              onClick={() => onPageChanges(currentPages + 1)}
-              disabled={currentPages === totalPages}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              <span className="sr-only">Next</span>
-              <svg
-                className="w-2.5 h-2.5 rtl:rotate-180"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 6 10"
+            <li>
+              <button
+                onClick={() => onPageChanges(currentPages + 1)}
+                disabled={currentPages === totalPages}
+                className="px-3 py-2 text-gray-500 bg-white rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
-                <path
+                <span className="sr-only">Next</span>
+                <svg
+                  className="md:w-5 md:h-5 w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="m1 9 4-4-4-4"
-                />
-              </svg>
-            </button>
-          </li>
-        </ul>
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
       </nav>
     </>
   );

@@ -2,19 +2,48 @@ import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
 
-export const useAdmin = create((set, get) => ({
+export const useAdmin = create((set) => ({
   users: [],
   totalPages: 0,
-  currentPage: 0,
+  currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
   search: "",
+  loading: false,
 
   fetchUsers: async (page = 1) => {
+    set({ loading: true });
     try {
       const response = await AxiosInstance.get(`/user/admin/list?page=${page}`);
-      set({ users: response.data.data, totalPages: response.data.last_page });
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+        loading: false,
+      });
       return response;
     } catch (error) {
+      set({ loading: false });
       console.log(error);
+    }
+  },
+
+  filterUsers: async (search) => {
+    try {
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `/user/admin/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/user/admin/list");
+      }
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
+      });
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 

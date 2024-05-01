@@ -9,8 +9,8 @@ import { BiTransferAlt } from "react-icons/bi";
 
 import { UserRole } from "../../hooks";
 import { Navbar } from "../navigation";
-import { useAuth, useUtils } from "../../store";
-import { Items } from "../../../public";
+import { useAuth, useUtils, useTransfer, useItems } from "../../store";
+import { Items } from "../../../public/svg";
 
 export const Sidebar = () => {
   // const { logout } = useAuthContext();
@@ -24,6 +24,8 @@ export const Sidebar = () => {
 
   const isOpen = useUtils((state) => state.isOpen);
   const toggleOpen = useUtils((state) => state.toggleOpen);
+  const clearTransactions = useTransfer((state) => state.clearTransactions);
+  const clearItems = useItems((state) => state.clearItems);
 
   const sidebarLinks = [
     ...(users
@@ -36,7 +38,7 @@ export const Sidebar = () => {
           {
             name: "Items",
             icon: <Items />,
-            link: "/items",
+            link: "/item",
           },
           {
             name: "profile",
@@ -46,7 +48,7 @@ export const Sidebar = () => {
           {
             name: "Transaction",
             icon: <BiTransferAlt size={20} />,
-            link: "/transaction",
+            link: "item/transaction",
           },
         ]
       : []),
@@ -100,7 +102,7 @@ export const Sidebar = () => {
           {
             name: "Items",
             icon: <Items />,
-            link: "/items",
+            link: "/item",
           },
         ]
       : []),
@@ -140,6 +142,8 @@ export const Sidebar = () => {
                   onClick={(e) => {
                     if (link.name === "logout") {
                       e.preventDefault();
+                      clearTransactions();
+                      clearItems();
                       logout();
                       navigate("/login", { replace: true });
                     } else {

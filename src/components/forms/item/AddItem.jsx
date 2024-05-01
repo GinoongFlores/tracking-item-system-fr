@@ -3,14 +3,18 @@ import { Form, Formik } from "formik";
 import { InputField } from "../..";
 import { ItemSchema } from "../../../utils";
 import { useItems } from "../../../store";
+// import { Widget } from "@uploadcare/react-widget";
+import { useState, useEffect } from "react";
+import { ImageUploader } from "../../uploader/ImageUploader";
 
 export const AddItem = () => {
   const addItem = useItems((state) => state.addItem);
+  const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
 
   return (
     <>
-      <section className="relative h-screen">
+      <section className="relative">
         <div className="flex flex-col px-6 py-8 lg:py-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
@@ -26,10 +30,10 @@ export const AddItem = () => {
               validationSchema={ItemSchema}
               onSubmit={(values) => {
                 addItem(values);
-                navigate("/items");
+                navigate("/item");
               }}
             >
-              {({ errors, touched }) => {
+              {({ errors, touched, setFieldValue, isSubmitting }) => {
                 return (
                   <Form action="#" className="space-y-4 md:space-y-6">
                     <div>
@@ -39,12 +43,7 @@ export const AddItem = () => {
                       >
                         Item Name
                       </label>
-                      <InputField
-                        fieldType={"input"}
-                        type={"text"}
-                        name={"name"}
-                        placeholder={"Item name"}
-                      />
+                      <InputField name={"name"} placeholder={"Item name"} />
                       {errors.name && touched.name ? (
                         <div className="text-red-400 text-sm">
                           {errors.name}
@@ -59,12 +58,7 @@ export const AddItem = () => {
                       >
                         Quantity
                       </label>
-                      <InputField
-                        fieldType={"input"}
-                        type={"text"}
-                        name={"quantity"}
-                        placeholder={"2"}
-                      />
+                      <InputField name={"quantity"} placeholder={"2"} />
                       {errors.quantity && touched.quantity ? (
                         <div className="text-red-400 text-sm">
                           {errors.quantity}
@@ -74,15 +68,15 @@ export const AddItem = () => {
 
                     <div>
                       <label
-                        htmlFor="message"
+                        htmlFor="description"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         Description
                       </label>
                       <InputField
                         fieldType={"textarea"}
+                        rows="4"
                         name="description"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                         placeholder="Write your thoughts here..."
                         // defaultValue={"An Item"}
                       />
@@ -93,7 +87,25 @@ export const AddItem = () => {
                       ) : null}
                     </div>
 
+                    <div>
+                      <label
+                        htmlFor="image"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Upload image
+                      </label>
+
+                      <ImageUploader
+                        onUpload={(uuids) => {
+                          const uuidString = uuids.join(",");
+                          setFieldValue("image", uuidString);
+                          console.log(uuidString);
+                        }}
+                      />
+                    </div>
+
                     <button
+                      disabled={isSubmitting}
                       type="submit"
                       className="w-full py-2.5 rounded-lg px-5 me-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-darker border border-gray-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-100"
                     >

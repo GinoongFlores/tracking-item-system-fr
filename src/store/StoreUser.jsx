@@ -1,36 +1,56 @@
 import { create } from "zustand";
 import AxiosInstance from "../api/Axios";
 import { toast } from "react-hot-toast";
-import { UserToken } from "../hooks/userToken";
 
-export const useUser = create((set, get) => ({
+export const useUser = create((set) => ({
   users: [],
+  // pagination
   totalPages: 0,
   search: "",
   currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
   // attach role to user
   selectedRole: "",
-  handleRoleChange: (event) => {
-    set({ selectedRole: event.target.value });
-  },
-  submitRole: async (userId, role) => {
-    const response = await get().attachRole(userId, role);
-    console.log(response);
+  loading: false,
 
-    if (response.status === 200) {
-      toast.success("Role assigned successfully");
-    } else {
-      toast.error("Role assignment failed");
+  handleRoleChange: (userId, role) => {
+    set({ selectedRole: role });
+  },
+
+  attachRole: async (userId, role) => {
+    try {
+      const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
+        role,
+      });
+      if (response && response.status === 200) {
+        toast.success("Role assigned successfully");
+        set((state) => {
+          const users = state.users.map((user) =>
+            user.id === userId ? { ...user, role: role } : user
+          );
+          return { users: users, selectedRole: "" };
+        });
+      } else {
+        toast.error("Role assignment failed");
+      }
+      return response;
+    } catch (error) {
+      console.log(error.response);
     }
   },
 
   fetchUsers: async (page = 1) => {
-    // console.log("fetchUser ", token);
+    set({ loading: true });
     try {
       const response = await AxiosInstance.get(`/user/list?page=${page}`);
-      set({ users: response.data.data, totalPages: response.data.last_page });
+      console.log(response.data);
+      set({
+        users: response.data.data,
+        loading: false,
+      });
       return response;
     } catch (error) {
+      set({ loading: false });
       console.log(error);
       const errorMessage = error.response.data.message.error;
       toast.error(
@@ -41,10 +61,20 @@ export const useUser = create((set, get) => ({
     }
   },
 
-  attachRole: async (userId, role) => {
+  filterUsers: async (search) => {
     try {
-      const response = await AxiosInstance.post(`/user/${userId}/assign-role`, {
-        role,
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `/user/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/user/list");
+      }
+      set({
+        users: response.data.data,
+        totalPages: response.data.last_page,
       });
       return response;
     } catch (error) {
@@ -59,55 +89,21 @@ export const useUser = create((set, get) => ({
       activation
         ? toast.success("User activated")
         : toast.error("User deactivated");
-      return response;
-    } catch (error) {
-      console.log(error.response);
-    }
-  },
 
-  handleToggleActivation: async (userId) => {
-    const response = await get().toggleActivation(userId);
-
-    if (response.status === 200) {
-      set({
-        users: get().users.map((user) =>
+      // update user in users array
+      set((state) => ({
+        users: state.users.map((user) =>
           user.id === userId
             ? {
                 ...user,
-                is_activated: +!user.is_activated,
+                is_activated: activation,
               }
             : user
         ),
-      });
-    }
-  },
-
-  handleSearch: (search) => {
-    set({ search });
-  },
-
-  setCurrentPage: (page) => {
-    set({ currentPage: page });
-  },
-
-  filterUsers: async (search) => {
-    try {
-      const response = await AxiosInstance.get(
-        `/user/list?search=${encodeURIComponent(search)}`
-      );
-      set({
-        users: response.data.data,
-        totalPages: response.data.last_page,
-      });
+      }));
       return response;
     } catch (error) {
       console.log(error.response);
-      set({ loading: false });
     }
-    // return get().users.filter(
-    //   (user) =>
-    //     user.first_name.toLowerCase().includes(search.toLowerCase()) ||
-    //     user.last_name.toLowerCase().includes(search.toLowerCase())
-    // );
   },
 }));

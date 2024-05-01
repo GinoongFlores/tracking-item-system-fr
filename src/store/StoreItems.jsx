@@ -5,11 +5,19 @@ import AxiosInstance from "../api/Axios";
 export const useItems = create((set) => ({
   itemData: [],
   itemTrashedData: [],
+  clearItems: () => set(() => ({ itemData: [], itemTrashedData: [] })),
   totalItems: 0,
   itemAdded: false,
-  isLoading: true,
+  loading: false,
+  setLoading: (loading) => set(() => ({ loading })),
+
+  // paginate
+  totalPages: 0,
+  currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
 
   addItem: async (values) => {
+    set({ loading: true, itemAdded: false });
     try {
       const response = await AxiosInstance.post("item/add", {
         ...values,
@@ -17,11 +25,12 @@ export const useItems = create((set) => ({
       set((state) => ({
         itemData: [...state.itemData, response.data.data],
         itemAdded: true,
+        loading: false,
       }));
       toast.success("Item added successfully");
     } catch (error) {
       console.log(error.response);
-
+      set({ loading: false });
       const errors = error.response.data.message.error;
       for (const field in errors) {
         errors[field].forEach((errorMessage) => {
@@ -31,13 +40,15 @@ export const useItems = create((set) => ({
     }
   },
 
-  fetchUserItem: async () => {
+  fetchUserItem: async (page = 1) => {
+    set({ loading: true });
     try {
-      const response = await AxiosInstance.get(`item/user`);
+      const response = await AxiosInstance.get(`item/list?page${page}`);
       set({
         itemData: response.data.data,
         itemAdded: true,
         totalItems: response.data.data.length,
+        loading: false,
       });
     } catch (error) {
       if (error.response.status) {
@@ -49,7 +60,31 @@ export const useItems = create((set) => ({
     }
   },
 
+  filterUserItem: async (search) => {
+    set({ loading: true });
+    try {
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `/item/list?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get("/item/list");
+      }
+      set({
+        itemData: response.data.data,
+        totalPages: response.data.last_page,
+        loading: false,
+      });
+    } catch (error) {
+      set({ loading: false });
+      console.log(error.response);
+    }
+  },
+
   updateUserItem: async (itemId, values) => {
+    set({ loading: true });
     try {
       const response = await AxiosInstance.post(`item/${itemId}/user/update`, {
         ...values,
@@ -58,10 +93,12 @@ export const useItems = create((set) => ({
         itemData: state.itemData.map((item) =>
           item.id === itemId ? response.data.data : item
         ),
+        loading: false,
       }));
       toast.success("Item updated successfully");
     } catch (error) {
       // console.log(error.response);
+      set({ loading: false });
       const errors = error.response.data.message.error;
       for (const field in errors) {
         errors[field].forEach((errorMessage) => {
@@ -72,12 +109,17 @@ export const useItems = create((set) => ({
   },
 
   fetchTrashedItem: async () => {
+    set({ loading: true });
     try {
       const response = await AxiosInstance.get(`item/user/trashed`);
-      set({ itemTrashedData: response.data.data, itemAdded: true });
+      set({
+        itemTrashedData: response.data.data,
+        itemAdded: true,
+        loading: false,
+      });
     } catch (error) {
       console.log(error.response);
-      set({ itemAdded: false });
+      set({ itemAdded: false, loading: true });
     }
   },
 

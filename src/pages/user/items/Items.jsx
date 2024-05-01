@@ -1,64 +1,33 @@
 import { SearchBar } from "../../../components";
 import { ButtonLink } from "../../../components/buttons";
-import { ItemCard } from "../../../components/cards";
+import { ViewItems } from "./ViewItems";
 import { useItems } from "../../../store";
-import { useEffect } from "react";
-import { EditItem } from "../../../components/modal";
+import { Loader } from "../../../utils";
+import { Paginate } from "../../../components/navigation";
 
 export const UserItems = () => {
-  const items = useItems((state) => state.itemData);
-  const { fetchUserItem, itemAdded } = useItems();
-
-  useEffect(() => {
-    fetchUserItem();
-  }, [fetchUserItem, itemAdded]);
-
-  /*
- ? TODO
- * include the items on the `isEmptyItem` condition - done
- * Archive page - done
- * Breadcrumbs
-*/
+  const { filterUserItem, loading, setCurrentPage, totalPages, currentPage } =
+    useItems();
 
   return (
     <>
-      <section className="container max-w-[800px] px-4 mx-auto text-darker dark:text-white">
+      {loading && <Loader />}
+      <section className="container text-darker dark:text-white pb-20">
         <div className="flex items-center justify-end">
-          <ButtonLink name={"Archive"} redirect={"/items/trashed"} />
-          <ButtonLink name={"Add Item"} redirect={"/items/add"} />
-          <ButtonLink name={"Transfer Item"} redirect={"/items/transfer"} />
+          <ButtonLink name={"Archive"} redirect={"/item/trashed"} />
+          <ButtonLink name={"Add Item"} redirect={"/item/add"} />
+          <ButtonLink name={"Transfer Item"} redirect={"/item/transfer"} />
         </div>
         <div className="w-full">
-          <SearchBar />
+          <SearchBar onSearch={filterUserItem} />
         </div>
-
-        <div className="flex flex-col gap-4">
-          {itemAdded ? (
-            items.map((item) => (
-              <ItemCard
-                id={item.id}
-                key={item.id}
-                name={item.name}
-                quantity={item.quantity}
-                description={item.description}
-                isEdit={true}
-                isDelete={true}
-              />
-            ))
-          ) : (
-            <div
-              className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white h-screen
-        }`}
-            >
-              <div className="flex flex-col items-center justify-center">
-                <span className="mb-4">No items yet...</span>
-                <div>
-                  <ButtonLink name={"Add Item"} redirect={"/items/add"} />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        {/* card items */}
+        <ViewItems />
+        <Paginate
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChanges={setCurrentPage}
+        />
       </section>
     </>
   );

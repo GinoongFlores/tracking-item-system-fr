@@ -17,12 +17,10 @@ export const TrashedItems = () => {
   }, [fetchTrashedItem]);
   return (
     <section className="flex flex-col gap-4 text-darker dark:text-white">
-      <div className="w-full">
-        <SearchBar />
-      </div>
+      <div className="w-full">{/* <SearchBar /> */}</div>
       <div className="flex items-center justify-end">
-        <ButtonLink redirect={"/items/trashed"} name={"Archive"} />
-        <ButtonLink redirect={"/items/"} name={"Items"} />
+        <ButtonLink redirect={"/item/trashed"} name={"Archive"} />
+        <ButtonLink redirect={"/item/"} name={"Items"} />
       </div>
 
       {isEmpty ? (
@@ -35,7 +33,7 @@ export const TrashedItems = () => {
             <div>
               <button
                 type="button"
-                onClick={() => navigate("/items/add")}
+                onClick={() => navigate("/item/add")}
                 className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 dark:text-white focus:outline-none bg-white dark:bg-darker rounded-full border border-gray-500 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-gray-100"
               >
                 Add an Item

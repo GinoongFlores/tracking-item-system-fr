@@ -2,16 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { InputField } from "../..";
 import { TransferItemSchema } from "../../../utils";
-import { InputSearch } from "../../fields";
+import { InputSearchUser, InputSearchItem } from "../../fields";
+import { useTransfer } from "../../../store";
 
 export const TransferItem = ({ item }) => {
+  const transferItem = useTransfer((state) => state.transferItem);
+  const navigate = useNavigate();
+
   const initialValues = {
     id: "",
     name: "",
     quantity: "",
-    description: "",
+    message: "",
     receiver_name: "",
+    address_to: "",
     number: "",
+
+    receiver_id: "",
+    item_ids: [],
   };
   return (
     <>
@@ -24,12 +32,25 @@ export const TransferItem = ({ item }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={TransferItemSchema}
-              onSubmit={(values) => {
-                // addItem(values);
-                // navigate("/items");
+              onSubmit={(values, { setSubmitting }) => {
+                const dataToSend = {
+                  receiver_id: values.receiver_id,
+                  item_ids: values.item_ids,
+                  message: values.message,
+                  address_to: values.address_to,
+                };
+                console.log(dataToSend);
+                setSubmitting(true);
+                transferItem(dataToSend)
+                  .then(() => {
+                    navigate("/item");
+                  })
+                  .finally(() => {
+                    setSubmitting(false);
+                  });
               }}
             >
-              {({ errors, touched, setFieldValue }) => {
+              {({ errors, touched, setFieldValue, values }) => {
                 return (
                   <Form action="#" className="space-y-4 md:space-y-6">
                     <div>
@@ -39,11 +60,10 @@ export const TransferItem = ({ item }) => {
                       >
                         Item Name
                       </label>
-                      <InputField
-                        fieldType={"input"}
-                        type={"text"}
+                      <InputSearchItem
                         name={"name"}
-                        placeholder={"Item name"}
+                        values={values}
+                        setFieldValue={setFieldValue}
                       />
                       {errors.name && touched.name ? (
                         <div className="text-red-400 text-sm">
@@ -52,7 +72,7 @@ export const TransferItem = ({ item }) => {
                       ) : null}
                     </div>
 
-                    <div>
+                    {/* <div>
                       <label
                         htmlFor="quantity"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -70,25 +90,24 @@ export const TransferItem = ({ item }) => {
                           {errors.quantity}
                         </div>
                       ) : null}
-                    </div>
+                    </div> */}
 
                     <div>
                       <label
                         htmlFor="message"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                        Description
+                        Message
                       </label>
                       <InputField
                         fieldType={"textarea"}
-                        name="description"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-                        placeholder="Write your thoughts here..."
-                        // defaultValue={"An Item"}
+                        name="message"
+                        rows="4"
+                        placeholder={"Write your message here..."}
                       />
-                      {errors.description && touched.description ? (
+                      {errors.message && touched.message ? (
                         <div className="text-red-400 text-sm">
-                          {errors.description}
+                          {errors.message}
                         </div>
                       ) : null}
                     </div>
@@ -100,7 +119,7 @@ export const TransferItem = ({ item }) => {
                       >
                         Receiver's Name
                       </label>
-                      <InputSearch
+                      <InputSearchUser
                         name={"receiver_name"}
                         setFieldValue={setFieldValue}
                       />
@@ -108,6 +127,24 @@ export const TransferItem = ({ item }) => {
                       {errors.receiver_name && touched.receiver_name ? (
                         <div className="text-red-400 text-sm">
                           {errors.receiver_name}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="address_to"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Receiver's Address
+                      </label>
+                      <InputField
+                        name={"address_to"}
+                        placeholder={"We'll use the company receiver's address"}
+                      />
+                      {errors.address_to && touched.address_to ? (
+                        <div className="text-red-400 text-sm">
+                          {errors.address_to}
                         </div>
                       ) : null}
                     </div>

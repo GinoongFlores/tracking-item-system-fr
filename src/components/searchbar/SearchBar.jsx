@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const SearchBar = ({ onSearch }) => {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [search]);
+
+  useEffect(() => {
+    onSearch(debouncedSearch);
+  }, [debouncedSearch, onSearch]);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-    onSearch(event.target.value);
   };
+
   return (
     <div className="w-11/12 md:w-3/4 lg:max-w-3xl m-auto my-4">
       <label
