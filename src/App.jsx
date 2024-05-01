@@ -21,6 +21,7 @@ import {
   TrashedItems,
   TransferItem,
   Transaction,
+  Receive,
 } from "./pages/user";
 import {
   AdminHome,
@@ -30,7 +31,11 @@ import {
   AdminTransaction,
 } from "./pages/admin";
 
-import { Login, Register, Admin as AdminTransactions } from "./components/forms";
+import {
+  Login,
+  Register,
+  Admin as AdminTransactions,
+} from "./components/forms";
 import {
   AddCompanyPage,
   ViewCompanyPage,
@@ -88,7 +93,10 @@ function App() {
                 <Route path="items" element={<AdminItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
-                <Route path="admin/transaction" element={<AdminTransactions />} />
+                <Route
+                  path="admin/transaction"
+                  element={<AdminTransactions />}
+                />
               </Route>
             )}
 
@@ -108,6 +116,7 @@ function App() {
                   <Route path="trashed" element={<TrashedItems />} />
                   <Route path="transfer" element={<TransferItem />} />
                   <Route path="transaction" element={<Transaction />} />
+                  <Route path="receive" element={<Receive />} />
                 </Route>
                 <Route path="/profile" element={<UserProfile />} />
               </Route>
