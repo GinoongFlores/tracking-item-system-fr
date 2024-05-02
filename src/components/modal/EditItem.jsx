@@ -122,7 +122,7 @@ export const EditItem = ({ item }) => {
                           fieldType={"textarea"}
                           name={"description"}
                           placeholder="Write product description here"
-                          defaultValue={""}
+                          rows="4"
                         />
                         {errors.description && touched.description ? (
                           <div className="text-red-400 text-sm">
