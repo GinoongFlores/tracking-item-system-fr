@@ -35,6 +35,7 @@ import {
   Login,
   Register,
   Admin as AdminTransactions,
+  User as UserViewTransactions,
 } from "./components/forms";
 import {
   AddCompanyPage,
@@ -117,6 +118,10 @@ function App() {
                   <Route path="transfer" element={<TransferItem />} />
                   <Route path="transaction" element={<Transaction />} />
                   <Route path="receive" element={<Receive />} />
+                  <Route
+                    path="view-receive"
+                    element={<UserViewTransactions />}
+                  />
                 </Route>
                 <Route path="/profile" element={<UserProfile />} />
               </Route>
