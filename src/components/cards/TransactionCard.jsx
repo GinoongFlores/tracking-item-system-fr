@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const TransactionCard = ({
   image,
   name,
+  quantity,
   receiver_company,
   sender_company,
   receiver_phone,
@@ -19,7 +20,9 @@ export const TransactionCard = ({
   date,
 
   isTransaction,
+  isReceiver,
   transaction_id,
+  item_id,
   description,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -29,12 +32,15 @@ export const TransactionCard = ({
   );
   const transaction = {
     transaction_id,
+    item_id,
     description,
     receiver_company,
     sender_company,
     receiver_phone,
     sender_phone,
     // for cards
+
+    quantity,
     image,
     name,
     status,
@@ -53,6 +59,7 @@ export const TransactionCard = ({
           console.log("selected transaction: ", transaction);
           setSelectedTransaction(transaction);
           isTransaction ? navigate("/admin/transaction") : null;
+          isReceiver ? navigate("/item/view-receive") : null;
         }}
       >
         <div className="flex gap-4 col-span-2">
