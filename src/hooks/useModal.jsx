@@ -19,7 +19,9 @@ export const useModal = (customOptions = {}) => {
   }, [customOptions]);
 
   useEffect(() => {
-    modal.current = new Modal(modalRef.current, options);
+    if (modalRef.current) {
+      modal.current = new Modal(modalRef.current, options);
+    }
   }, [options]);
 
   // const modal = new Modal(modalRef.current, options);
