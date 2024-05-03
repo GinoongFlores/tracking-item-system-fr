@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
     "@uploadcare/blocks": "0.38.0",
     "axios": "^1.6.8",
     "flowbite": "^2.3.0",
