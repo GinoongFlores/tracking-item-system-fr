@@ -2,16 +2,26 @@ import { CiImageOn } from "react-icons/ci";
 import { useTransfer } from "../../../store";
 import { useFormatDate } from "../../../hooks";
 import { TransactionStatus } from "../../select/TransactionStatus";
+import { ArrowBack, Item } from "../../../../public/svg";
+import { useNavigate } from "react-router-dom";
 
 export const Admin = () => {
   const { selectedTransaction } = useTransfer();
-
-  // * * lack values - quantity, company (sender, receiver)
+  const navigate = useNavigate();
 
   return (
     <>
-      <section className="container mx-auto w-full px-4">
-        <div className="grid grid-cols-2 gap-4">
+      <section className="container mx-auto w-full">
+        <div className="grid grid-cols-2 gap-4 px-4">
+          <div className="header mb-8 col-span-2 border-b border-gray-500 p-4">
+            <div className="flex gap-4">
+              <button onClick={() => navigate(-1)}>
+                <ArrowBack />
+              </button>
+              <h3>View Item Transaction Details</h3>
+            </div>
+          </div>
+
           <div className="status col-span-2 place-self-end w-full">
             <div className="flex justify-between">
               <div className="transaction_num">
@@ -68,7 +78,7 @@ export const Admin = () => {
           </div>
 
           <div className="col-span-2 text-sm my-4 rounded-md bg-sky-200 dark:bg-gray-700 p-4">
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <div className="time">
                 <p>
                   {useFormatDate(selectedTransaction.date) ||
@@ -77,8 +87,8 @@ export const Admin = () => {
               </div>
 
               <div className="Image">
-                <CiImageOn
-                  className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+                <Item
+                  className="object-cover w-full h-14 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                   alt=" image"
                 />
               </div>

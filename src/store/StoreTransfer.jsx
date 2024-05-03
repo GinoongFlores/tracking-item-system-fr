@@ -23,6 +23,26 @@ export const useTransfer = create((set) => ({
     set({ transactionStatus: status });
   },
 
+  receiverReceivedStatus: "",
+  receiverReceived: async (transactionId, itemId, received) => {
+    set({ receiverReceivedStatus: "loading" });
+    try {
+      const response = await AxiosInstance.post(
+        `/item/transaction/${transactionId}/received-item/${itemId}`,
+        {
+          status: received,
+        }
+      );
+      set({ receiverReceivedStatus: "success" });
+      toast.success("Received an item successfully");
+      return response;
+    } catch (error) {
+      console.log(error.response);
+      set({ receiverReceivedStatus: "error" });
+      toast.error("There's an error occurred while receiving an item");
+    }
+  },
+
   attachTransactionStatus: async (transactionId, status) => {
     try {
       const response = await AxiosInstance.post(
@@ -32,16 +52,15 @@ export const useTransfer = create((set) => ({
         }
       );
       if (response && response.status === 200) {
-        toast.success("Transaction status updated successfully");
         set((state) => {
           const transactions = state.transactions.map((transaction) =>
             transaction.id === transactionId
               ? { ...transaction, status }
               : transaction
           );
+          toast.success(`This item is now ${status}`);
           return { transactions };
         });
-        toast.success("Transaction status updated successfully");
       } else {
         toast.error("Transaction status update failed");
       }
@@ -151,7 +170,7 @@ export const useTransfer = create((set) => ({
       );
 
       const newTransactions = response.data.data; // array of transactions
-      console.log("transactions ", newTransactions);
+      // console.log("transactions ", newTransactions);
       set((state) => {
         const filteredTransactions = state.transactions.filter(
           (transaction) =>
