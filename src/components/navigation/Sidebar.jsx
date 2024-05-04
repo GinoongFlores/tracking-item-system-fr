@@ -121,7 +121,7 @@ export const Sidebar = () => {
       </header>
       <aside
         id="logo-sidebar"
-        className={`text-black dark:text-gray-400 fixed top-0 left-0 z-40 w-40 md:w-48 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-darker dark:border-gray-700 ${
+        className={`text-black dark:text-gray-400 fixed top-0 left-0 z-40 h-screen pt-20 transition-transform bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-darker dark:border-gray-700 ${
           isOpen ? "" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
