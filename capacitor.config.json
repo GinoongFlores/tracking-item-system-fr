@@ -1,5 +1,9 @@
 {
   "appId": "com.example.app",
   "appName": "tracking-system-fr",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "url": "http://192.168.70.150:5173/",
+    "cleartext": true
+  }
 }
