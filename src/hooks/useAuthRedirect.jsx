@@ -14,19 +14,25 @@ export const useAuthRedirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      getUser();
-    }
-  }, [getUser, token, userStatus]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (!token && location.pathname !== "/register") {
-      navigate("/login");
-    } else if (!userStatus && location.pathname !== "/register") {
-      navigate("/login");
-    } else if (token && location.pathname === "/login") {
-      navigate("/");
+    if (token) {
+      getUser().finally(() => setIsInitialized(true));
+    } else {
+      isInitialized(true);
     }
-  }, [location.pathname, navigate, loading, token, userStatus]);
+  }, [getUser, token, userStatus, isInitialized]);
+
+  useEffect(() => {
+    if (isInitialized) {
+      if (!token && location.pathname !== "/register") {
+        navigate("/login");
+      } else if (!userStatus && location.pathname !== "/register") {
+        navigate("/login");
+      } else if (token && location.pathname === "/login") {
+        navigate("/");
+      }
+    }
+  }, [location.pathname, navigate, loading, token, userStatus, isInitialized]);
 };
