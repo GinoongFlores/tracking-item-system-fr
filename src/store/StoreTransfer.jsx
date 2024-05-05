@@ -23,6 +23,12 @@ export const useTransfer = create((set) => ({
     set({ transactionStatus: status });
   },
 
+  // counts
+  totalTransactions: 0,
+  totalReceivedItems: 0,
+  totalSentItems: 0,
+  totalItems: 0,
+
   receiverReceivedStatus: "",
   receiverReceived: async (transactionId, itemId, received) => {
     set({ receiverReceivedStatus: "loading" });
