@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { SearchBar } from "../../../components";
-import { ButtonLink } from "../../../components/buttons";
 import { ItemCard } from "../../../components/cards";
 import { useItems } from "../../../store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const TrashedItems = () => {
-  const [test, setTest] = useState(false);
   const trashedItems = useItems((state) => state.itemTrashedData);
   const { isEmpty, fetchTrashedItem } = useItems();
   const navigate = useNavigate();
@@ -18,11 +15,6 @@ export const TrashedItems = () => {
   return (
     <section className="flex flex-col gap-4 text-darker dark:text-white">
       <div className="w-full">{/* <SearchBar /> */}</div>
-      <div className="flex items-center justify-end">
-        <ButtonLink redirect={"/item/trashed"} name={"Archive"} />
-        <ButtonLink redirect={"/item/"} name={"Items"} />
-      </div>
-
       {isEmpty ? (
         <div
           className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white h-screen

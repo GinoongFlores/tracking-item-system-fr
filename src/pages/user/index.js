@@ -7,3 +7,4 @@ export * from "./Profile";
 export * from "./transactions/Transaction";
 export * from "./items/ViewItems";
 export * from "./receives/Receive";
+export * from "./statistics/Statistics";

@@ -1,48 +1,40 @@
 import { useTransfer } from "../../../store";
-import { Loader } from "../../../utils";
 import { ViewTransaction } from "./ViewTransaction";
 import { SearchBar } from "../../../components";
-import { Paginate } from "../../../components/navigation";
-import { ButtonLink } from "../../../components/buttons";
-import { useEffect } from "react";
+import { TabNavigation } from "../../../components/navigation";
+import { Receive } from "../receives/Receive";
+import { TransferItem } from "../../../components/forms";
+import { ViewItems } from "../items/ViewItems";
 
 export const Transaction = () => {
-  const {
-    totalPages,
-    currentPage,
-    setCurrentPage,
-    loading,
-    filterUserTransferItems,
-    fetchUserTransferItems,
-    transactions,
-  } = useTransfer();
-
-  useEffect(() => {
-    fetchUserTransferItems(currentPage);
-  }, [fetchUserTransferItems, currentPage]);
+  const filterUserTransferItems = useTransfer(
+    (state) => state.filterUserTransferItems
+  );
 
   return (
     <section className="container mx-auto pb-20">
-      {loading && <Loader />}
-      <div className="flex items-center justify-end">
-        <ButtonLink name={"Transfer Item"} redirect={"/item/transfer"} />
-        <ButtonLink name={"Receiving"} redirect={"/item/receive"} />
-      </div>
       <div className="w-full">
         <SearchBar onSearch={filterUserTransferItems} />
       </div>
-      {transactions.length === 0 && (
-        <div className="min-h-screen flex items-center justify-center">
-          <div>
-            <p>No transactions yet</p>
-          </div>
-        </div>
-      )}
-      <ViewTransaction />
-      <Paginate
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChanges={setCurrentPage}
+
+      <TabNavigation
+        tabs={[
+          {
+            title: "View Items",
+            target: "#add-item",
+            content: <ViewItems />,
+          },
+          {
+            title: "Transfer Item",
+            target: "#transfer",
+            content: <TransferItem />,
+          },
+          {
+            title: "All Transactions",
+            target: "#receiving",
+            content: <Receive />,
+          },
+        ]}
       />
     </section>
   );

@@ -4,22 +4,38 @@ import { ItemCard } from "../../../components/cards";
 import { EditItem } from "../../../components/modal";
 import { useEffect } from "react";
 import { Loader } from "../../../utils";
+import { Paginate } from "../../../components/navigation";
 
 export const ViewItems = () => {
-  const { fetchUserItem, itemData } = useItems();
+  const {
+    fetchUserItem,
+    itemData,
+    loading,
+    setCurrentPage,
+    totalPages,
+    currentPage,
+  } = useItems();
 
   useEffect(() => {
     if (itemData.length === 0) {
-      fetchUserItem();
+      fetchUserItem(currentPage);
     }
-  }, [fetchUserItem, itemData.length]);
+  }, [fetchUserItem, itemData.length, currentPage]);
 
   return (
     <div className="flex flex-col gap-4">
       {itemData.length > 0 ? (
-        itemData.map((item) => (
-          <ItemCard key={item.id} {...item} isEdit={true} isDelete={true} />
-        ))
+        <>
+          {loading && <Loader />}
+          {itemData.map((item) => (
+            <ItemCard key={item.id} {...item} isEdit={true} isDelete={true} />
+          ))}
+          <Paginate
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChanges={setCurrentPage}
+          />
+        </>
       ) : (
         <div
           className={`gap-4 flex flex-col items-center justify-center text-black dark:text-white min-h-screen

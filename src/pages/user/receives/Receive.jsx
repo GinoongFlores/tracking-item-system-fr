@@ -4,7 +4,7 @@ import { Loader } from "../../../utils";
 import { ButtonLink } from "../../../components/buttons";
 import { useTransfer } from "../../../store";
 import { ViewReceive } from "./ViewReceive";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const Receive = () => {
   const {
@@ -17,25 +17,25 @@ export const Receive = () => {
     transactions,
   } = useTransfer();
 
+  const [searchPerformed, setSearchPerformed] = useState(false);
+
   useEffect(() => {
-    fetchReceiverTransactions(currentPage);
-  }, [fetchReceiverTransactions, currentPage]);
+    const fetchTransaction = async () => {
+      const result = await fetchReceiverTransactions(currentPage);
+      setSearchPerformed(!!filterReceiverTransactions);
+      return result;
+    };
+
+    fetchTransaction();
+  }, [fetchReceiverTransactions, currentPage, filterReceiverTransactions]);
 
   return (
     <section className="container mx-auto pb-20">
       {loading && <Loader />}
-      <div className="flex items-center justify-end">
-        <ButtonLink name={"Transfer Item"} redirect={"/item/transfer"} />
-        <ButtonLink name={"Receiving"} redirect={"/item/receive"} />
-      </div>
-      <div className="w-full">
-        <SearchBar onSearch={filterReceiverTransactions} />
-      </div>
       {transactions.length === 0 && (
         <div className="min-h-screen flex items-center justify-center">
-          <div>
-            <p>No pending items yet.</p>
-          </div>
+          {searchPerformed && <p>No Items Found.</p>}
+          {!searchPerformed && <p>No pending items yet.</p>}
         </div>
       )}
       <ViewReceive />
