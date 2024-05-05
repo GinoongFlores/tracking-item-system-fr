@@ -7,7 +7,7 @@ import { ButtonActions } from "../../buttons";
 
 import { ButtonModal } from "../../buttons";
 import { useModal } from "../../../hooks";
-import { Loader } from "../../../utils";
+import { Loader, ItemStatusComponent } from "../../../utils";
 
 export const User = () => {
   const { selectedTransaction, receiverReceived, loading } = useTransfer();
@@ -16,102 +16,13 @@ export const User = () => {
   const itemStatus = selectedTransaction?.status;
   const navigate = useNavigate();
 
-  const { modal, modalRef } = useModal();
-  const toggleModal = () => {
-    if (modal.current.isVisible()) {
-      modal.current.hide();
-    } else {
-      modal.current.show();
-    }
-  };
-
-  const itemStatusComponent = {
-    delivered: (
-      <div className="col-span-2 w-full">
-        <ButtonActions name={"Received Item"} action={toggleModal} />
-
-        <div
-          ref={modalRef}
-          id="popup-modal"
-          tabIndex={-1}
-          aria-hidden="true"
-          className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-        >
-          <div className="relative p-4 w-full max-w-md max-h-full">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <button
-                onClick={toggleModal}
-                type="button"
-                className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="popup-modal"
-              >
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
-              {/* modal body */}
-              <div className="p-4 md:p-5 text-center flex flex-col justify-items-center items-center">
-                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  Are you sure want to receive this item?
-                </h3>
-
-                <div className="flex gap-4 mt-4">
-                  <ButtonModal
-                    onClick={async () => {
-                      const response = await receiverReceived(
-                        transactionId,
-                        itemId,
-                        "received"
-                      );
-                      if (response.status === 200) {
-                        toggleModal();
-                        navigate(-1);
-                      }
-                    }}
-                    name={"Yes"}
-                  ></ButtonModal>
-
-                  <ButtonModal onClick={toggleModal} name={"No"}></ButtonModal>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    pending: (
-      <div className="col-span-2 w-full mt-6">
-        <h3>Your item is waiting for admin approval</h3>
-      </div>
-    ),
-    approved: (
-      <div className="col-span-2 w-full mt-6">
-        <h3>Your item is waiting for delivery</h3>
-      </div>
-    ),
-    received: (
-      <div className="col-span-2 w-full mt-6">
-        <h3>You already received this item</h3>
-      </div>
-    ),
-    reject: (
-      <div className="col-span-2 w-full mt-6">
-        <h3>Your item is rejected by your admin</h3>
-      </div>
-    ),
+  const statusColor = {
+    pending: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+    delivered:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+    received:
+      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+    cancelled: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
   };
 
   return (
@@ -140,8 +51,12 @@ export const User = () => {
               </div>
 
               <div>
-                <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                  {selectedTransaction?.status || "status"}
+                <span
+                  className={`${
+                    statusColor[itemStatus || ""]
+                  } text-xs font-medium me-2 px-2.5 py-0.5 rounded-full`}
+                >
+                  {itemStatus || "status"}
                 </span>
               </div>
             </div>
@@ -260,7 +175,12 @@ export const User = () => {
             </div>
           </div>
           {/* item status */}
-          {itemStatusComponent[itemStatus]}
+          {/* {itemStatusComponent[itemStatus]} */}
+          <ItemStatusComponent
+            itemStatus={itemStatus}
+            transactionId={transactionId}
+            itemId={itemId}
+          />
         </div>
       </section>
     </>
