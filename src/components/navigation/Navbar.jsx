@@ -3,6 +3,9 @@ import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../../store";
 import { ThemeSwitcher } from "../../utils";
+import AppIcon from "../../assets/img/app-icon.png";
+import AppIconSVG from "../../assets/svg/app-icon-svg.svg";
+// import { Icon } from "../../assets/svg/Icon";
 
 export const Navbar = ({ toggleOpen }) => {
   const userFirstName = useAuth((state) => state.userFirstName);
@@ -11,7 +14,7 @@ export const Navbar = ({ toggleOpen }) => {
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-darker dark:border-gray-700">
-      <div className="px-3 py-3 lg:px-5 lg:pl-3">
+      <div className="px-3  lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end gap-4">
             <button
@@ -37,9 +40,13 @@ export const Navbar = ({ toggleOpen }) => {
                 />
               </svg>
             </button>
-            <div className="flex gap-4 items-center">
-              <div className="rounded-full w-8 h-8 bg-slate-600" />
-              <h2 className="text-gray-800 dark:text-white">Tracker</h2>
+            <div className="flex items-center">
+              {/* <div className="rounded-full w-8 h-8 bg-slate-600" />
+               */}
+              <div>
+                <img src={AppIconSVG} alt="icon" />
+              </div>
+              {/* <h2 className="text-gray-800 dark:text-white">Tracker</h2> */}
               <ThemeSwitcher />
             </div>
           </div>
@@ -55,12 +62,6 @@ export const Navbar = ({ toggleOpen }) => {
                   data-dropdown-toggle="dropdown-user"
                 >
                   <span className="sr-only">Open user menu</span>
-                  {/* <img
-                className="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo"
-              /> */}
-
                   <CgProfile className="w-6 h-6 text-white" />
                 </button>
               </div>

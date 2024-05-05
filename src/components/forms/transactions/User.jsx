@@ -3,14 +3,10 @@ import { useTransfer } from "../../../store";
 import { useFormatDate } from "../../../hooks";
 import { ArrowBack, Item } from "../../../../public/svg";
 import { useNavigate } from "react-router-dom";
-import { ButtonActions } from "../../buttons";
-
-import { ButtonModal } from "../../buttons";
-import { useModal } from "../../../hooks";
 import { Loader, ItemStatusComponent } from "../../../utils";
 
 export const User = () => {
-  const { selectedTransaction, receiverReceived, loading } = useTransfer();
+  const { selectedTransaction, loading } = useTransfer();
   const transactionId = selectedTransaction?.transaction_id;
   const itemId = selectedTransaction?.item_id;
   const itemStatus = selectedTransaction?.status;

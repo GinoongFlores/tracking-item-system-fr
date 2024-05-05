@@ -56,7 +56,7 @@ export const TabNavigation = ({ tabs = [] }) => {
       <div className="text-black dark:text-white">
         {tabs.map((tab) => (
           <div
-            className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${
+            className={`p-4 rounded-lg n ${
               activeTab === tab.target ? "block " : "hidden"
             }`}
             id={tab.target.slice(1)}

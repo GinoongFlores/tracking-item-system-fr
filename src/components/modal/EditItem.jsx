@@ -4,6 +4,7 @@ import { ItemSchema } from "../../utils/YupSchema";
 import { InputField } from "../../components";
 import { ButtonActions, ButtonModal } from "../buttons";
 import { useItems } from "../../store";
+import { useModal } from "../../hooks";
 
 export const EditItem = ({ item }) => {
   const initialValues = {
@@ -13,19 +14,18 @@ export const EditItem = ({ item }) => {
     description: item.description,
   };
   const updateUserItem = useItems((state) => state.updateUserItem);
-  const [open, setOpen] = useState(false);
+  const { modal, modalRef } = useModal();
   return (
     <>
       {/* Modal toggle */}
-      <ButtonActions action={() => setOpen(!open)} name={"Edit"} />
+      <ButtonActions action={() => modal.current.toggle()} name={"Edit"} />
       {/* Main modal */}
       <div
+        ref={modalRef}
         id="crud-modal"
         tabIndex={-1}
         aria-hidden="true"
-        className={`overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full ${
-          open ? "block" : "hidden"
-        }`}
+        className={`hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full flex-grow">
           {/* Modal content */}
@@ -37,7 +37,7 @@ export const EditItem = ({ item }) => {
               </h3>
               <button
                 type="button"
-                onClick={() => setOpen(!open)}
+                onClick={() => modal.current.hide()}
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 data-modal-toggle="crud-modal"
               >
@@ -65,7 +65,7 @@ export const EditItem = ({ item }) => {
               validationSchema={ItemSchema}
               onSubmit={(values) => {
                 updateUserItem(values.id, values);
-                setOpen(!open);
+                modal.current.hide();
               }}
             >
               {({ errors, touched }) => {

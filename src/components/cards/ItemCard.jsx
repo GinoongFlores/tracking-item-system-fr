@@ -5,6 +5,7 @@ import { useItems } from "../../store";
 import { ButtonActions } from "../buttons";
 import { EditItem } from "../../components/modal";
 import { useFormatDate } from "../../hooks/useFormatDate";
+import { IoArrowDownOutline, IoArrowUp } from "react-icons/io5";
 
 export const ItemCard = ({
   id,
@@ -65,9 +66,9 @@ export const ItemCard = ({
         <div className="place-self-center">
           <button onClick={() => setIsExpanded(!isExpanded)}>
             {isExpanded ? (
-              <FaArrowAltCircleUp className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+              <IoArrowUp className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
             ) : (
-              <FaArrowAltCircleDown className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+              <IoArrowDownOutline className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
             )}
           </button>
         </div>
