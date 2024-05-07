@@ -1,4 +1,4 @@
-export const CountCard = ({ card }) => {
+export const CountCard = ({ card = {} }) => {
   return (
     <>
       {/* component */}

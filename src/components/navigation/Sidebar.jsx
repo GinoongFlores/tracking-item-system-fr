@@ -85,11 +85,6 @@ export const Sidebar = () => {
             link: "/",
           },
           {
-            name: "Admin",
-            icon: <MdAdminPanelSettings size={20} />,
-            link: "/admin",
-          },
-          {
             name: "Company",
             icon: <FaBuilding />,
             link: "/company",
@@ -103,6 +98,11 @@ export const Sidebar = () => {
             name: "Items",
             icon: <Items />,
             link: "/item",
+          },
+          {
+            name: "Transaction",
+            icon: <BiTransferAlt size={20} />,
+            link: "transaction",
           },
         ]
       : []),

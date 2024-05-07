@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { ButtonActions } from "../buttons";
 import Skeleton from "react-loading-skeleton";
+import { IoArrowDownOutline, IoArrowUp } from "react-icons/io5";
 
 export const DefaultCard = ({
   defaultActions,
@@ -47,9 +48,9 @@ export const DefaultCard = ({
         <div className="place-self-center">
           <button onClick={() => setIsExpanded(!isExpanded)}>
             {isExpanded ? (
-              <FaArrowAltCircleUp className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+              <IoArrowUp className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
             ) : (
-              <FaArrowAltCircleDown className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+              <IoArrowDownOutline className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
             )}
           </button>
         </div>
