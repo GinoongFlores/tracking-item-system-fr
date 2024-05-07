@@ -7,7 +7,7 @@ export const SuperAdminLayout = () => {
     <>
       <Sidebar />
       <div>
-        <main className="container mx-auto px-4 pt-12 bg-white dark:bg-darker max-w-full min-h-screen">
+        <main className="container mx-auto px-4 pt-12 bg-white dark:bg-darker max-w-full min-h-screen text-black dark:text-white">
           <Outlet />
         </main>
       </div>
