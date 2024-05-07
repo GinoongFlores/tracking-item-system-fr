@@ -1,38 +1,43 @@
-import { useEffect } from "react";
 import { useUser } from "../../../store";
 import { SearchBar } from "../../../components";
-import { UsersLinks, Loader } from "../../../utils";
-import { Paginate, BreadCrumbs } from "../../../components/navigation";
+import { TabNavigation } from "../../../components/navigation";
 import { ViewUsers } from "./ViewUsers";
+import { AddUser } from "../../../components/forms";
 
 export const Users = () => {
   // destructure
-  const {
-    fetchUsers,
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    filterUsers,
-    loading,
-  } = useUser();
-
-  useEffect(() => {
-    fetchUsers(currentPage);
-  }, [fetchUsers, currentPage]);
+  const filterUsers = useUser((state) => state.filterUsers);
 
   return (
     <>
-      {loading && <Loader />}
-      <section className="relative pb-20">
-        <div className="mb-4 flex flex-col items-center justify-stretch">
-          <BreadCrumbs crumbs={UsersLinks} />
+      <section className="relative">
+        <div className="flex flex-col items-center justify-stretch">
           <SearchBar onSearch={filterUsers} />
         </div>
-        <ViewUsers />
-        <Paginate
-          currentPages={currentPage}
-          totalPages={totalPages}
-          onPageChanges={setCurrentPage}
+
+        <TabNavigation
+          tabs={[
+            {
+              title: "All Users",
+              target: "#add-users",
+              content: <ViewUsers />,
+            },
+            {
+              title: "Admin",
+              target: "#admin",
+              content: "admin",
+            },
+            {
+              title: "Users",
+              target: "#users",
+              content: "users",
+            },
+            {
+              title: "Add",
+              target: "#add",
+              content: <AddUser />,
+            },
+          ]}
         />
       </section>
     </>

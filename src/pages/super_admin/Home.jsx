@@ -1,27 +1,38 @@
-import CountCard from "../../components/cards/CountCard";
-import { useItems } from "../../store";
+import { CountCard } from "../../components/cards";
+import { TabNavigation } from "../../components/navigation";
 
 export const Home = () => {
-  const cards = [
-    {
-      count: 1,
-      title: "Companies",
-    },
-    {
-      count: 2,
-      title: "Users",
-    },
-    {
-      count: 3,
-      title: "Admins",
-    },
-  ];
-
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4">
-      {cards.map((card, index) => (
-        <CountCard key={index} title={card.title} count={card.count} />
-      ))}
-    </div>
+    <TabNavigation
+      tabs={[
+        {
+          title: "Overview",
+          target: "#overview",
+          content: (
+            <CountCard
+              card={{
+                users: {
+                  value: "20",
+                  title: "Users",
+                },
+                transactions: {
+                  value: "50",
+                  title: "Companies",
+                },
+                items: {
+                  value: "30",
+                  title: "Items",
+                },
+              }}
+            />
+          ),
+        },
+        {
+          title: "Statistics",
+          target: "#statistics",
+          content: "Stats",
+        },
+      ]}
+    />
   );
 };
