@@ -20,7 +20,7 @@ export const useAuthRedirect = () => {
     if (token) {
       getUser().finally(() => setIsInitialized(true));
     } else {
-      isInitialized(true);
+      setIsInitialized(true);
     }
   }, [getUser, token, userStatus, isInitialized]);
 
