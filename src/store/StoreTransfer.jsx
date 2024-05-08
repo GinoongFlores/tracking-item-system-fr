@@ -93,6 +93,42 @@ export const useTransfer = create((set) => ({
     }
   },
 
+  fetchAllTransferItems: async (page = 1) => {
+    set({ loading: true });
+
+    try {
+      const response = await AxiosInstance.get(
+        `item/view-transactions?page${page}`
+      );
+      console.log("all transactions: ", response.data);
+
+      const newTransactions = response.data.data; // array of transactions
+      set((state) => {
+        const filteredTransactions = state.transactions.filter(
+          (transaction) =>
+            !newTransactions.some(
+              (newTransaction) =>
+                newTransaction.id === transaction.id &&
+                newTransaction.items.every((newItem) =>
+                  transaction.items.some(
+                    (item) => item.transaction_id === newItem.transaction_id
+                  )
+                )
+            )
+        );
+
+        // Concatenate the new data onto the filtered array
+        return {
+          transactions: filteredTransactions.concat(newTransactions),
+          totalPages: response.data.last_page,
+          loading: false,
+        };
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  },
+
   fetchUserTransferItems: async (page = 1) => {
     set({ loading: true });
     try {
@@ -139,7 +175,7 @@ export const useTransfer = create((set) => ({
       );
 
       const newTransactions = response.data.data; // array of transactions
-      // console.log("transactions ", newTransactions);
+      console.log("transactions ", newTransactions);
       set((state) => {
         const filteredTransactions = state.transactions.filter(
           (transaction) =>
@@ -202,6 +238,37 @@ export const useTransfer = create((set) => ({
       set({ loading: false });
       toast.error("There was an error while fetching a data");
       console.log(error);
+    }
+  },
+
+  filterAllTransferItems: async (search) => {
+    try {
+      let response;
+
+      if (search) {
+        response = await AxiosInstance.get(
+          `item/view-transactions?search=${encodeURIComponent(search)}`
+        );
+      } else {
+        response = await AxiosInstance.get(`item/view-transactions`);
+      }
+
+      let newTransactions = response.data.data;
+
+      newTransactions = newTransactions.map((transaction) => ({
+        ...transaction,
+        items: Array.isArray(transaction.items) ? transaction.items : [],
+      }));
+
+      set(() => {
+        return {
+          transactions: newTransactions,
+          loading: false,
+        };
+      });
+    } catch (error) {
+      console.log(error);
+      set({ loading: false });
     }
   },
 
