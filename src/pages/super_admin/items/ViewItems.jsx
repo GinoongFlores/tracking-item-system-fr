@@ -16,8 +16,12 @@ export const ViewItems = () => {
   } = useItems();
 
   useEffect(() => {
-    fetchUserItem(currentPage);
-  }, [fetchUserItem, currentPage]);
+    if (itemData.length === 0) {
+      fetchUserItem(currentPage);
+    }
+  }, [fetchUserItem, currentPage, itemData.length]);
+
+  console.log(itemData);
 
   return (
     <>

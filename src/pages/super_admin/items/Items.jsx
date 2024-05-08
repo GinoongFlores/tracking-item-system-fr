@@ -1,7 +1,5 @@
-import React from "react";
 import { TabNavigation } from "../../../components/navigation";
 import { ViewItems } from "./ViewItems";
-import { useItems } from "../../../store";
 
 export const Items = () => {
   return (

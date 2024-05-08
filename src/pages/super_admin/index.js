@@ -4,4 +4,5 @@ export * from "./Home";
 export * from "./items/Items";
 export * from "./users/Users";
 export * from "./company/ViewCompany";
+export * from "./transactions/Transaction";
 
