@@ -66,6 +66,11 @@ export const Sidebar = () => {
             link: "/users",
           },
           {
+            name: "Items",
+            icon: <Items />,
+            link: "/items",
+          },
+          {
             name: "Profile",
             icon: <CgProfile size={20} />,
             link: "/profile",
