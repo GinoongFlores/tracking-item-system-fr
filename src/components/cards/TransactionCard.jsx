@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BreadCrumbsArrow } from "../../../public/svg";
 import { useTransfer } from "../../store";
-import { useFormatDate } from "../../hooks";
+import { useFormatDate, useStatusComponent } from "../../hooks";
 import { CiImageOn } from "react-icons/ci";
 import { Admin as AdminTransaction } from "../forms";
 import { useNavigate } from "react-router-dom";
@@ -50,6 +50,8 @@ export const TransactionCard = ({
     date,
   };
 
+  const statusColor = useStatusComponent();
+
   return (
     <div className="shadow-xl shadow-slate-400 dark:shadow-gray-800 max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
       <div
@@ -95,8 +97,12 @@ export const TransactionCard = ({
 
               {/* badge (status) */}
               <div className="justify-self-end absolute left-40">
-                <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                  {status || "N/A"}
+                <span
+                  className={`${
+                    statusColor[status || ""]
+                  } text-xs font-medium me-2 px-2.5 py-0.5 rounded-full`}
+                >
+                  {status || "status"}
                 </span>
               </div>
             </div>

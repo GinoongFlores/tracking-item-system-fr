@@ -1,6 +1,6 @@
 import { CiImageOn } from "react-icons/ci";
 import { useTransfer } from "../../../store";
-import { useFormatDate, UserRole } from "../../../hooks";
+import { useFormatDate, UserRole, useStatusComponent } from "../../../hooks";
 import { TransactionStatus } from "../../select/TransactionStatus";
 import { ArrowBack, Item } from "../../../../public/svg";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ export const Admin = () => {
 
   const userRole = UserRole();
   const superAdmin = userRole === "super_admin";
+  const statusColor = useStatusComponent();
 
   return (
     <>
@@ -38,7 +39,11 @@ export const Admin = () => {
               </div>
 
               <div>
-                <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                <span
+                  className={`${
+                    statusColor[itemStatus || ""]
+                  } text-xs font-medium me-2 px-2.5 py-0.5 rounded-full`}
+                >
                   {itemStatus || "status"}
                 </span>
               </div>
