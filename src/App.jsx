@@ -5,6 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 // components
+
 import {
   SuperAdminLayout,
   CompanyLayout,
@@ -12,7 +13,14 @@ import {
   ItemsLayout,
   AdminLayout,
 } from "./layouts";
-import { Admin, Users, Home, Items, Company } from "./pages/super_admin";
+import {
+  Admin,
+  Users,
+  Home,
+  Items,
+  Company,
+  Transactions as ViewAllTransferItems,
+} from "./pages/super_admin";
 import {
   AddItem,
   UserHome,
@@ -25,7 +33,7 @@ import {
 } from "./pages/user";
 import {
   AdminHome,
-  AdminItems,
+  UserItems as AdminViewItems,
   AdminUsers,
   AdminProfile,
   AdminTransaction,
@@ -68,9 +76,11 @@ function App() {
                 }
               >
                 <Route path="/" element={<Home />} />
-                <Route path="items" element={<Items />} />
+                <Route path="item" element={<Items />} />
                 <Route path="users" element={<Users />} />
                 <Route path="admin" element={<Admin />} />
+                <Route path="transaction" element={<ViewAllTransferItems />} />
+                <Route path="all-transaction" element={<AdminTransactions />} />
                 {/* <Route path="/test-zustand" element={<TestZustand />} /> */}
                 <Route path="/company" element={<CompanyLayout />}>
                   <Route index element={<Company />} />
@@ -91,7 +101,7 @@ function App() {
               >
                 <Route index element={<AdminHome />} />
                 <Route path="users" element={<AdminUsers />} />
-                <Route path="items" element={<AdminItems />} />
+                <Route path="items" element={<AdminViewItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
                 <Route
