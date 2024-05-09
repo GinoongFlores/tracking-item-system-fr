@@ -1,46 +1,83 @@
-import { FaBuilding } from "react-icons/fa";
+import { useState } from "react";
+import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
+import { ButtonActions } from "../buttons";
+import Skeleton from "react-loading-skeleton";
+import { IoArrowDownOutline, IoArrowUp } from "react-icons/io5";
+import { EditCompany } from "../modal";
 
-export const CompanyCard = ({ company_name }) => {
+export const CompanyCard = ({
+  defaultActions,
+  isTrashed,
+  Image,
+  name,
+  description,
+  hasQuantity,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // if (loading) {
+  //   return <Skeleton count={3} />;
+  // }
+
+  const company = { name, description };
   return (
-    <>
-      <div className="md:w-full max-w-sm px-8 py-4 mt-16 bg-white rounded-lg shadow-xl dark:bg-gray-800">
-        <div className="flex justify-center -mt-16 md:justify-end">
-          {/* <img
-                className="object-cover w-20 h-20 border-2 border-blue-500 rounded-full dark:border-blue-400"
-                alt="Testimonial avatar"
-                src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
-              /> */}
+    <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
+      <div className="grid grid-cols-3 grid-flow-row-dense w-full relative">
+        <div className="flex gap-4 col-span-2">
+          <div className="flex flex-col place-self-center">
+            {Image && (
+              <Image
+                className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+                alt="item image"
+              />
+            )}
 
-          <FaBuilding className="object-cover w-20 h-20 border-2 border-gray-800 rounded-full dark:gray-blue-400 bd-gray-800 text-gray-900" />
-        </div>
-
-        {/*
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-200">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores
-              deserunt ea doloremque natus error, rerum quas odio quaerat nam ex
-              commodi hic, suscipit in a veritatis pariatur minus consequuntur!
-            </p> */}
-
-        <div className="pt-4 flex flex-col md:flex-row flex-wrap justify-items-center items-center">
-          <h2 className="mt-2 text-xl font-semibold text-gray-800 dark:text-white md:mt-0">
-            {company_name}
-          </h2>
-          <div className="pt-4">
-            <button
-              type="button"
-              className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-            >
-              Delete
-            </button>
+            {/* <span className="text-center text-sm text-black dark:text-white">
+              Date & time
+            </span> */}
+          </div>
+          <div className="flex flex-col py-4 leading-normal text-gray-900 dark:text-white">
+            <h5 className="mb-2.5 text-md md:text-lg lg:text-2xl font-bold tracking-tight ">
+              {name || "name"}
+            </h5>
+            <p className="mb-3 font-normal">{description || "description"}</p>
           </div>
         </div>
+
+        <div className="place-self-center">
+          <button onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? (
+              <IoArrowUp className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+            ) : (
+              <IoArrowDownOutline className="w-full object-cover h-6 text-gray-500 dark:text-gray-400" />
+            )}
+          </button>
+        </div>
       </div>
-    </>
+      {/* actions */}
+      {isExpanded && (
+        <div
+          className={`gap-2 flex w-full justify-end transition-all duration-300 ease-in-out ${
+            isExpanded ? "opacity-100 " : "opacity-0 "
+          }`}
+        >
+          {defaultActions && (
+            <>
+              <ButtonActions
+                // action={() => deleteUserItem(id)}
+                name={"Delete"}
+              />
+
+              <EditCompany company={company} />
+
+              {/* <ButtonActions
+                // action={() => restoreUserTrashedItem(id)}
+                name={"View"}
+              /> */}
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 };

@@ -164,13 +164,12 @@ export const User = () => {
           </div>
           {/* item status */}
           {/* {itemStatusComponent[itemStatus]} */}
-          {!superAdmin && (
-            <ItemStatusComponent
-              itemStatus={itemStatus}
-              transactionId={transactionId}
-              itemId={itemId}
-            />
-          )}
+
+          <ItemStatusComponent
+            itemStatus={itemStatus}
+            transactionId={transactionId}
+            itemId={itemId}
+          />
         </div>
       </section>
     </>

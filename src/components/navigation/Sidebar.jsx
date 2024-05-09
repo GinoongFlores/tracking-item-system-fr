@@ -1,10 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { FaBackward, FaHome, FaUsers, FaBuilding } from "react-icons/fa";
-import { MdFullscreenExit, MdAdminPanelSettings } from "react-icons/md";
+import { useNavigate, NavLink } from "react-router-dom";
+import { FaHome, FaUsers, FaBuilding } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
-// import { GrTransaction } from "react-icons/gr";
 import { BiTransferAlt } from "react-icons/bi";
 
 import { UserRole } from "../../hooks";
@@ -40,11 +36,11 @@ export const Sidebar = () => {
             icon: <Items />,
             link: "/item",
           },
-          {
-            name: "profile",
-            icon: <CgProfile size={20} />,
-            link: "/profile",
-          },
+          // {
+          //   name: "profile",
+          //   icon: <CgProfile size={20} />,
+          //   link: "/profile",
+          // },
           {
             name: "Transaction",
             icon: <BiTransferAlt size={20} />,
@@ -142,8 +138,9 @@ export const Sidebar = () => {
           <ul className="space-y-2 font-medium">
             {sidebarLinks.map((link, index) => (
               <li key={index}>
-                <Link
+                <NavLink
                   to={link.link}
+                  end
                   onClick={(e) => {
                     if (link.name === "Logout") {
                       e.preventDefault();
@@ -155,11 +152,18 @@ export const Sidebar = () => {
                       toggleOpen();
                     }
                   }}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className={({ isActive }) =>
+                    link.name === "Logout"
+                      ? "flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      : [
+                          "flex items-center p-2 text-gray-900 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 group",
+                          isActive ? "bg-gray-100 dark:bg-gray-700" : "",
+                        ].join(" ")
+                  }
                 >
                   {link.icon}
                   <span className="ms-3">{link.name}</span>
-                </Link>
+                </NavLink>
               </li>
             ))}
             <li className="fixed bottom-0 border-t border-gray-200 dark:border-gray-700 flex items-center justify-center">

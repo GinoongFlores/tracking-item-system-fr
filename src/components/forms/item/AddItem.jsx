@@ -17,9 +17,9 @@ export const AddItem = () => {
       <section className="relative">
         <div className="flex flex-col px-6 lg:py-0">
           <div className="space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
+            {/* <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
               Add an Item
-            </h1>
+            </h1> */}
             <Formik
               initialValues={{
                 image: "",

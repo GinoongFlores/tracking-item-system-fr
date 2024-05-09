@@ -3,6 +3,7 @@ import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { ButtonActions } from "../buttons";
 import Skeleton from "react-loading-skeleton";
 import { IoArrowDownOutline, IoArrowUp } from "react-icons/io5";
+import { EditCompany } from "../modal";
 
 export const DefaultCard = ({
   defaultActions,
@@ -12,12 +13,15 @@ export const DefaultCard = ({
   description,
   hasQuantity,
   loading,
+  isCompany,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // if (loading) {
   //   return <Skeleton count={3} />;
   // }
+
+  const company = { name, description };
 
   return (
     <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -70,10 +74,11 @@ export const DefaultCard = ({
               />
 
               <ButtonActions name={"Edit"} />
-              <ButtonActions
+
+              {/* <ButtonActions
                 // action={() => restoreUserTrashedItem(id)}
                 name={"View"}
-              />
+              /> */}
             </>
           )}
         </div>

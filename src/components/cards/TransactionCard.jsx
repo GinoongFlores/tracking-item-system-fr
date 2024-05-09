@@ -102,7 +102,9 @@ export const TransactionCard = ({
                     statusColor[status || ""]
                   } text-xs font-medium me-2 px-2.5 py-0.5 rounded-full`}
                 >
-                  {status || "status"}
+                  {(status === "reject" && "cancelled") ||
+                    status ||
+                    (!status && "no status")}
                 </span>
               </div>
             </div>
