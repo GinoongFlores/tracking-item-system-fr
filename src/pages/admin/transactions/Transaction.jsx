@@ -22,7 +22,11 @@ export const AdminTransaction = () => {
   }, [fetchAdminTransferItems, currentPage]);
   return (
     <>
-      {loading && <Loader />}
+      {loading && (
+        <div className="min-h-screen flex justify-center">
+          <Loader />
+        </div>
+      )}
       <section className="container mx-auto pb-20">
         <div className="w-full">
           <SearchBar onSearch={filterAdminTransferItems} />

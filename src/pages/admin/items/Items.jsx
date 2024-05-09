@@ -23,11 +23,11 @@ export const UserItems = () => {
               target: "#all-items",
               content: <ViewItems />,
             },
-            {
-              title: "Add Item",
-              target: "#add-item",
-              content: <AddItem />,
-            },
+            // {
+            //   title: "Add Item",
+            //   target: "#add-item",
+            //   content: <AddItem />,
+            // },
             {
               title: "Archived Items",
               target: "#archived-items",

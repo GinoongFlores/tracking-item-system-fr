@@ -22,12 +22,20 @@ export const Transactions = () => {
   }, [fetchAllTransferItems, currentPage]);
   return (
     <>
-      {loading && <Loader />}
+      {loading && (
+        <div className="min-h-screen flex justify-center">
+          <Loader />
+        </div>
+      )}
       <section className="container mx-auto pb-20">
         <div className="w-full">
           <SearchBar onSearch={filterAllTransferItems} />
         </div>
-        {transactions.length === 0 && <p>No transactions yet</p>}
+        {transactions.length === 0 && (
+          <div className="min-h-screen flex justify-center">
+            <p>No transactions yet</p>
+          </div>
+        )}
         <ViewAllTransactions />
         <Paginate
           currentPages={currentPage}

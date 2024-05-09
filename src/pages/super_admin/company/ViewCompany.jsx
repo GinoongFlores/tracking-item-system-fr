@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { DefaultCard } from "../../../components/cards";
+import { CompanyCard } from "../../../components/cards";
 import { useCompany } from "../../../store";
 import { debounce } from "lodash";
 import { Paginate } from "../../../components/navigation";
@@ -30,9 +30,10 @@ export const ViewCompany = () => {
         {loading && <Loader />}
         {companies.length > 0 ? (
           companies.map((company) => (
-            <DefaultCard
+            <CompanyCard
               key={company.id}
               name={company.company_name}
+              description={company.company_description}
               defaultActions={true}
               // loading={skeletonLoading}
             />

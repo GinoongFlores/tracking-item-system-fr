@@ -1,5 +1,6 @@
 import { CountCard } from "../../components/cards";
 import { TabNavigation } from "../../components/navigation";
+import { Statistics } from "../user";
 
 export const Home = () => {
   return (
@@ -30,7 +31,7 @@ export const Home = () => {
         {
           title: "Statistics",
           target: "#statistics",
-          content: "Stats",
+          content: <Statistics />,
         },
       ]}
     />

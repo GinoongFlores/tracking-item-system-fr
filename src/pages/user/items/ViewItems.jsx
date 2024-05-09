@@ -26,7 +26,11 @@ export const ViewItems = () => {
     <div className="flex flex-col gap-4">
       {itemData.length > 0 ? (
         <>
-          {loading && <Loader />}
+          {loading && (
+            <div className="min-h-screen flex justify-center">
+              <Loader />
+            </div>
+          )}
           {itemData.map((item) => (
             <ItemCard key={item.id} {...item} isEdit={true} isDelete={true} />
           ))}

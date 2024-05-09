@@ -1,6 +1,7 @@
 // import CountCard from "../../components/CountCard";
 import { CountCard } from "../../components/cards";
 import { TabNavigation } from "../../components/navigation";
+import { Statistics } from "../user";
 
 export const AdminHome = () => {
   return (
@@ -32,7 +33,7 @@ export const AdminHome = () => {
           {
             title: "Statistics",
             target: "#statistics",
-            content: "Stats",
+            content: <Statistics />,
           },
         ]}
       />
