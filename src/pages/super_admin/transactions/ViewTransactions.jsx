@@ -1,7 +1,7 @@
 import { TransactionCard } from "../../../components/cards";
 import { useTransfer } from "../../../store";
 
-export const AdminViewTransactions = () => {
+export const ViewAllTransactions = () => {
   const transactions = useTransfer((state) => state.transactions);
 
   return (
@@ -22,7 +22,7 @@ export const AdminViewTransactions = () => {
                 receiver_phone={transaction.receiver_phone}
                 receiver_company={transaction.receiver_company}
                 status={item.status}
-                isTransaction={true}
+                isSuperAdmin={true}
                 image={item.image}
                 description={item.description}
                 name={item.name}

@@ -21,6 +21,7 @@ export const TransactionCard = ({
 
   isTransaction,
   isReceiver,
+  isSuperAdmin,
   transaction_id,
   item_id,
   description,
@@ -59,6 +60,7 @@ export const TransactionCard = ({
           console.log("selected transaction: ", transaction);
           setSelectedTransaction(transaction);
           isTransaction ? navigate("/admin/transaction") : null;
+          isSuperAdmin ? navigate("/all-transaction") : null;
           isReceiver ? navigate("/item/view-receive") : null;
         }}
       >

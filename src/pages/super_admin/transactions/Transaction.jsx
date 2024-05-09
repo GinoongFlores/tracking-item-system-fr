@@ -1,6 +1,6 @@
 import { useTransfer } from "../../../store";
 import { Loader } from "../../../utils";
-import { AdminViewTransactions } from "./ViewTransactions";
+import { ViewAllTransactions } from "./ViewTransactions";
 import { SearchBar } from "../../../components";
 import { Paginate } from "../../../components/navigation";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ export const Transactions = () => {
           <SearchBar onSearch={filterAllTransferItems} />
         </div>
         {transactions.length === 0 && <p>No transactions yet</p>}
-        <AdminViewTransactions />
+        <ViewAllTransactions />
         <Paginate
           currentPages={currentPage}
           totalPages={totalPages}

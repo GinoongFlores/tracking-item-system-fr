@@ -1,6 +1,6 @@
 import { CiImageOn } from "react-icons/ci";
 import { useTransfer } from "../../../store";
-import { useFormatDate } from "../../../hooks";
+import { useFormatDate, UserRole } from "../../../hooks";
 import { TransactionStatus } from "../../select/TransactionStatus";
 import { ArrowBack, Item } from "../../../../public/svg";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,13 @@ export const Admin = () => {
   const itemStatus = selectedTransaction?.status;
   const navigate = useNavigate();
 
+  const userRole = UserRole();
+  const superAdmin = userRole === "super_admin";
+
   return (
     <>
       <section className="container mx-auto w-full">
-        <div className="grid grid-cols-2 gap-4 px-4">
+        <div className="grid grid-cols-2 gap-4 px-4 pb-4">
           <div className="header mb-8 col-span-2 border-b border-gray-500 p-4">
             <div className="flex gap-4">
               <button onClick={() => navigate(-1)}>
@@ -154,22 +157,24 @@ export const Admin = () => {
               </p>
             </div>
           </div>
-          {selectedTransaction.status === "received" ? (
-            <div className="col-span-2 w-full mt-6">
-              <p>
-                The item is already received by {selectedTransaction?.receiver}
-              </p>
-            </div>
-          ) : (
-            <div className="col-span-2 w-full">
-              {/* <ButtonActions name={"Reject"} />
-            <ButtonActions name={"Approve"} /> */}
-              <TransactionStatus
-                status={selectedTransaction.status}
-                transactionId={selectedTransaction.transaction_id}
-              />
-            </div>
-          )}
+          {!superAdmin &&
+            (selectedTransaction.status === "received" ? (
+              <div className="col-span-2 w-full mt-6">
+                <p>
+                  The item is already received by{" "}
+                  {selectedTransaction?.receiver}
+                </p>
+              </div>
+            ) : (
+              <div className="col-span-2 w-full">
+                {/* <ButtonActions name={"Reject"} />
+                <ButtonActions name={"Approve"} /> */}
+                <TransactionStatus
+                  status={selectedTransaction.status}
+                  transactionId={selectedTransaction.transaction_id}
+                />
+              </div>
+            ))}
         </div>
       </section>
     </>

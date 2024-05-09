@@ -21,7 +21,7 @@ export const ViewItems = () => {
     }
   }, [fetchUserItem, currentPage, itemData.length]);
 
-  console.log(itemData);
+ // console.log(itemData);
 
   return (
     <>

@@ -1,19 +1,14 @@
-import { Modal } from "flowbite";
 import { useEffect, useRef, useState } from "react";
 import { ButtonModal } from "../buttons";
 import { useUser } from "../../store";
 import { GrUserAdmin } from "react-icons/gr";
+import { useModal } from "../../hooks";
 
 export const SelectRoleModal = ({ user }) => {
-  const modalRef = useRef(null);
-  const modal = useRef(null);
+  const { modal, modalRef } = useModal();
   const [selectedRole, setSelectedRole] = useState(user.role_name);
 
   const { attachRole, handleRoleChange } = useUser();
-
-  useEffect(() => {
-    modal.current = new Modal(modalRef.current);
-  }, []);
 
   const handleChange = (event) => {
     if (event && event.target) {
@@ -88,10 +83,10 @@ export const SelectRoleModal = ({ user }) => {
             </button>
             {/* modal body */}
             <div className="p-4 md:p-5 text-center flex flex-col justify-items-center items-center">
-              <GrUserAdmin className="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
+              <GrUserAdmin className="mx-auto mb-4 text-gray-400 w-6 h-6 dark:text-gray-200" />
 
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure want to change this role
+                Are you sure want to change this user role?
                 {/* {
                     from{" "}
                     {currentRole.toUpperCase().split("")[0] + currentRole.slice(1)}{" "}
