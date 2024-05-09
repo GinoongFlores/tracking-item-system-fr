@@ -147,9 +147,15 @@ export const useItems = create((set) => ({
   deleteUserItem: async (itemId) => {
     try {
       const response = await AxiosInstance.delete(`item/${itemId}/delete`);
-      set((state) => ({
-        itemData: state.itemData.filter((item) => item.id !== itemId),
-      }));
+      set((state) => {
+        const deletedItem = state.itemData.find((item) => item.id === itemId);
+        return {
+          itemData: state.itemData.filter((item) => item.id !== itemId),
+          itemTrashedData: [...state.itemTrashedData, deletedItem].filter(
+            Boolean
+          ),
+        };
+      });
       toast.success("Item deleted successfully");
       return response;
     } catch (error) {
