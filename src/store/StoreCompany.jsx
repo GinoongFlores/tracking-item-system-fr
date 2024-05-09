@@ -75,6 +75,33 @@ export const useCompany = create((set) => ({
     }
   },
 
+  updateCompany: async (values, id) => {
+    try {
+      const response = await AxiosInstance.put(`/company/${id}/update`, {
+        ...values,
+      });
+      console.log(response.data);
+
+      set((state) => ({
+        companies: [
+          ...state.companies.map((company) =>
+            company.id === id ? response.data.data : company
+          ),
+        ],
+      }));
+      toast.success("Company updated successfully", {
+        position: "top-center",
+      });
+    } catch (error) {
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
+        });
+      }
+    }
+  },
+
   deleteCompany: async (id) => {
     try {
       await AxiosInstance.delete(`/company/${id}`, {});
