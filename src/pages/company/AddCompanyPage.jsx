@@ -24,12 +24,12 @@ export const AddCompanyPage = () => {
       {superAdmin && (
         <section className="h-screen">
           {/* create an div with rounded corners */}
-          <div className="flex flex-col justify-center items-center mx-auto px-6 py-8 md:h-screen lg:py-0">
+          <div className="flex flex-col justify-center items-center mx-auto md:h-screen lg:py-0">
             <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border dark:border-gray-700 z-20">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
+                {/* <h1 className="text-1xl font-bold leading-tight tracking-tighter text-gray-900 md:text-2xl dark:text-white">
                   Add a Company
-                </h1>
+                </h1> */}
                 <Formik
                   initialValues={{
                     company_name: "",

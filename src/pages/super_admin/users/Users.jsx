@@ -22,21 +22,21 @@ export const Users = () => {
               target: "#add-users",
               content: <ViewUsers />,
             },
-            {
-              title: "Admin",
-              target: "#admin",
-              content: "admin",
-            },
-            {
-              title: "Users",
-              target: "#users",
-              content: "users",
-            },
-            {
-              title: "Add",
-              target: "#add",
-              content: <AddUser />,
-            },
+            // {
+            //   title: "Admin",
+            //   target: "#admin",
+            //   content: "admin",
+            // },
+            // {
+            //   title: "Users",
+            //   target: "#users",
+            //   content: "users",
+            // },
+            // {
+            //   title: "Add",
+            //   target: "#add",
+            //   content: <AddUser />,
+            // },
           ]}
         />
       </section>

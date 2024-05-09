@@ -70,11 +70,11 @@ export const Sidebar = () => {
             icon: <Items />,
             link: "/items",
           },
-          {
-            name: "Profile",
-            icon: <CgProfile size={20} />,
-            link: "/profile",
-          },
+          // {
+          //   name: "Profile",
+          //   icon: <CgProfile size={20} />,
+          //   link: "/profile",
+          // },
           {
             name: "Transaction",
             icon: <BiTransferAlt size={20} />,
@@ -113,7 +113,7 @@ export const Sidebar = () => {
       : []),
 
     {
-      name: "logout",
+      name: "Logout",
       icon: <BiLogOut />,
       // link: "#",
     },
@@ -145,7 +145,7 @@ export const Sidebar = () => {
                 <Link
                   to={link.link}
                   onClick={(e) => {
-                    if (link.name === "logout") {
+                    if (link.name === "Logout") {
                       e.preventDefault();
                       clearTransactions();
                       clearItems();

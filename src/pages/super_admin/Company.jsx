@@ -2,6 +2,7 @@ import { SearchBar } from "../../components";
 import { ViewCompany } from "../super_admin";
 import { useCompany } from "../../store";
 import { TabNavigation } from "../../components/navigation";
+import { AddCompanyPage } from "../company/AddCompanyPage";
 // import { AddCompanyPage } from "../../company/AddCompanyPage";
 
 export const Company = () => {
@@ -24,13 +25,13 @@ export const Company = () => {
             {
               title: "Add Company",
               target: "#add-company",
-              content: "Test add",
+              content: <AddCompanyPage />,
             },
-            {
-              title: "Trashed",
-              target: "#trashed",
-              content: "Trashed",
-            },
+            // {
+            //   title: "Trashed",
+            //   target: "#trashed",
+            //   content: "Trashed",
+            // },
           ]}
         />
       </section>
