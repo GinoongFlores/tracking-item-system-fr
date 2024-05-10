@@ -8,6 +8,32 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
  --> 
 
+
+
+# Workflow
+## Fligno -> Erudite
+
+### Fligno 
+- lor@email.com (user/sender)
+- cha@email.com (admin/approver)
+### Erudite
+- rain@email.com (user/receiver)
+- yen@email.com  (admin/approver)
+
+## Creating an account
+1. Sign up/Register
+2. Wait for super admin activation & role attachement
+
+## Sending an Item (sender) 
+1. User add Item (if none)
+2. fill transaction form (item, description, message, receiver's name & address) 
+
+## Receiving an Item (receiver)
+Sender admin -> Approved -> Delivered -> Receiver can receive
+
+
+
+
 # Enhancement
 ## Item 
 - Avoid item duplication between admin within the same company
@@ -16,3 +42,5 @@ Currently, two official plugins are available:
 - Admin can enable/disable their respective users
 ## Authentication
 - Email verification
+
+
