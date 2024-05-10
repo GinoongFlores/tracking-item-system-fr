@@ -11,6 +11,7 @@ Currently, two official plugins are available:
 # Enhancement
 ## Item 
 - Avoid item duplication between admin within the same company
+- Select card of items for multiple items use case
 ## Admin 
 - Admin can enable/disable their respective users
 ## Authentication
