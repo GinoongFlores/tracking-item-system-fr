@@ -22,23 +22,8 @@ export const UsersCards = ({
   user,
 }) => {
   const toggleActivation = useUser((state) => state.toggleActivation);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
-  const images = shuffleArray([kyle, lore, neil, me, spence, yen]);
-
-  const getNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const currentImage = images[currentImageIndex];
+  const images = [kyle, lore, neil, me, spence, yen];
 
   const getRandomImage = () => {
     return images[Math.floor(Math.random() * images.length)];
@@ -52,7 +37,7 @@ export const UsersCards = ({
         <div className="flex flex-col items-center pb-10">
           <img
             className="w-24 h-24 mb-3 rounded-full shadow-lg"
-            src={currentImage}
+            src={randomImage.current}
             alt="Bonnie image"
           />
           <div className="w-80 flex flex-col items-start">
