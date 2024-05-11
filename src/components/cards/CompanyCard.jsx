@@ -11,7 +11,9 @@ export const CompanyCard = ({
   Image,
   name,
   description,
+  address,
   hasQuantity,
+  id,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -19,7 +21,8 @@ export const CompanyCard = ({
   //   return <Skeleton count={3} />;
   // }
 
-  const company = { name, description };
+  const company = { id, name, description, address };
+  console.log("company ", company);
   return (
     <div className="shadow-xl max-w-3xl visible h-full px-4 w-full flex flex-col items-center bg-white border border-gray-200 rounded-lg md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700">
       <div className="grid grid-cols-3 grid-flow-row-dense w-full relative">
@@ -53,7 +56,12 @@ export const CompanyCard = ({
             )}
           </button>
         </div>
+
+        <div className="flex gap-4 col-span-3 px-4">
+          <p className="mb-3 text-sm">{address || "No address yet"}</p>
+        </div>
       </div>
+
       {/* actions */}
       {isExpanded && (
         <div

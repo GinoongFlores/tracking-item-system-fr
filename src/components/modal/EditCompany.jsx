@@ -1,5 +1,5 @@
 import { Form, Formik } from "formik";
-import { ItemSchema } from "../../utils/YupSchema";
+import { CompanySchema } from "../../utils/YupSchema";
 import { InputField } from "../../components";
 import { ButtonActions, ButtonModal } from "../buttons";
 import { useCompany } from "../../store";
@@ -10,10 +10,11 @@ export const EditCompany = ({ company }) => {
     id: company.id,
     company_name: company.name,
     company_description: company.description,
+    address: company.address,
   };
+
   const updateCompany = useCompany((state) => state.updateCompany);
   const { modal, modalRef } = useModal();
-  console.log(company);
   return (
     <>
       {/* Modal toggle */}
@@ -61,7 +62,7 @@ export const EditCompany = ({ company }) => {
             {/* Modal body */}
             <Formik
               initialValues={initialValues}
-              validationSchema={ItemSchema}
+              validationSchema={CompanySchema}
               onSubmit={(values) => {
                 updateCompany(values.id, values);
                 modal.current.hide();
@@ -73,7 +74,7 @@ export const EditCompany = ({ company }) => {
                     <div className="grid gap-4 mb-4 grid-cols-2">
                       <div className="col-span-2">
                         <label
-                          htmlFor="name"
+                          htmlFor="company_name"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
                           Name
@@ -96,7 +97,7 @@ export const EditCompany = ({ company }) => {
                           htmlFor="description"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Product Description
+                          Company Description
                         </label>
                         <InputField
                           fieldType={"textarea"}
@@ -108,6 +109,26 @@ export const EditCompany = ({ company }) => {
                         touched.company_description ? (
                           <div className="text-red-400 text-sm">
                             {errors.company_description}
+                          </div>
+                        ) : null}
+                      </div>
+
+                      <div className="col-span-2">
+                        <label
+                          htmlFor="description"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Company Address
+                        </label>
+                        <InputField
+                          fieldType={"textarea"}
+                          name={"address"}
+                          placeholder="Address of the Company"
+                          rows="4"
+                        />
+                        {errors.address && touched.address ? (
+                          <div className="text-red-400 text-sm">
+                            {errors.address}
                           </div>
                         ) : null}
                       </div>

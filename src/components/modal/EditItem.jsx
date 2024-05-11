@@ -13,6 +13,7 @@ export const EditItem = ({ item }) => {
     quantity: item.quantity,
     description: item.description,
   };
+  console.log("item ", item);
   const updateUserItem = useItems((state) => state.updateUserItem);
   const { modal, modalRef } = useModal();
   return (

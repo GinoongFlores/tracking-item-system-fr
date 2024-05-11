@@ -28,8 +28,9 @@ export const AddItem = () => {
                 quantity: "",
               }}
               validationSchema={ItemSchema}
-              onSubmit={(values) => {
+              onSubmit={(values, { resetForm }) => {
                 addItem(values);
+                resetForm();
                 navigate("/item");
               }}
             >

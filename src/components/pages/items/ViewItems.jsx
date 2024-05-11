@@ -5,8 +5,11 @@ import { EditItem } from "../../modal";
 import { useEffect } from "react";
 import { Loader } from "../../../utils";
 import { Paginate } from "../../navigation";
+import { UserRole } from "../../../hooks";
 
 export const ViewItems = () => {
+  const userRole = UserRole();
+  const user = userRole === "user";
   const {
     fetchUserItem,
     itemData,
@@ -43,9 +46,9 @@ export const ViewItems = () => {
         >
           <div className="flex flex-col items-center justify-center">
             <span className="mb-4">No items yet...</span>
-            <div>
-              <ButtonLink name={"Add Item"} redirect={"/item/add"} />
-            </div>
+            {/* <div>
+                <ButtonLink name={"Add Item"} redirect={"/item/add"} />
+              </div> */}
           </div>
         </div>
       )}

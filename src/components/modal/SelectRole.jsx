@@ -3,12 +3,26 @@ import { ButtonModal } from "../buttons";
 import { useUser } from "../../store";
 import { GrUserAdmin } from "react-icons/gr";
 import { useModal } from "../../hooks";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "flowbite";
 
 export const SelectRoleModal = ({ user }) => {
-  const { modal, modalRef } = useModal();
+  // const { modal, modalRef } = useModal();
   const [selectedRole, setSelectedRole] = useState(user.role_name);
-
+  const navigate = useNavigate();
   const { attachRole, handleRoleChange } = useUser();
+
+  const modalRef = useRef(null);
+  const modal = useRef(null);
+
+  useEffect(() => {
+    modal.current = new Modal(modalRef.current, {
+      placement: "bottom-right",
+      backdrop: "dynamic",
+      backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
+      closable: true,
+    });
+  }, []);
 
   const handleChange = (event) => {
     if (event && event.target) {
@@ -18,20 +32,11 @@ export const SelectRoleModal = ({ user }) => {
     }
   };
 
-  const toggleModal = () => {
-    if (modal.current.isVisible()) {
-      modal.current.hide();
-    } else {
-      modal.current.show();
-    }
-  };
   return (
     <>
       <div className="flex justify-end px-4 pt-4">
         <button
-          id="dropdownButton"
-          data-dropdown-toggle="dropdown"
-          onClick={toggleModal}
+          onClick={() => modal.current.toggle()}
           className="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5 mr-2"
           type="button"
         >
@@ -59,7 +64,7 @@ export const SelectRoleModal = ({ user }) => {
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
-              onClick={toggleModal}
+              onClick={() => modal.current.hide()}
               type="button"
               className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="popup-modal"
@@ -103,7 +108,7 @@ export const SelectRoleModal = ({ user }) => {
                   value={selectedRole || ""}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  {/* <option value="">Choose a user role</option> */}
+                  <option value="">Choose a user role</option>
                   <option value="admin">Admin</option>
                   <option value="user">User</option>
                   {/* <option value="">Choose a user role</option> */}
@@ -113,17 +118,15 @@ export const SelectRoleModal = ({ user }) => {
               <div className="flex gap-4 mt-4">
                 <ButtonModal
                   onClick={async () => {
-                    await attachRole(user.id, selectedRole);
-                    toggleModal();
+                    const response = await attachRole(user.id, selectedRole);
+                    response && modal.current.hide();
                   }}
                   name={"Submit"}
-                  data-modal-hide="popup-modal"
-                ></ButtonModal>
+                />
 
                 <ButtonModal
-                  onClick={toggleModal}
+                  onClick={() => modal.current.hide()}
                   name={"Cancel"}
-                  data-modal-hide="popup-modal"
                 ></ButtonModal>
               </div>
             </div>

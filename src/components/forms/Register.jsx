@@ -16,6 +16,7 @@ export const Register = () => {
     email: "",
     company_name: "",
     password: "",
+    phone: "",
     confirm_password: "",
   };
   // const { register } = useAuthContext();
@@ -82,6 +83,22 @@ export const Register = () => {
                       {errors.last_name && touched.last_name ? (
                         <div className="text-red-600 dark:text-red-400 text-sm">
                           {errors.last_name}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Phone number
+                      </label>
+                      <InputField name="phone" placeholder="0928232312" />
+
+                      {errors.phone && touched.phone ? (
+                        <div className="text-red-600 dark:text-red-400 text-sm">
+                          {errors.phone}
                         </div>
                       ) : null}
                     </div>

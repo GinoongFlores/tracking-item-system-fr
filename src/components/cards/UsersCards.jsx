@@ -1,8 +1,8 @@
 import { FaUser } from "react-icons/fa";
-import { useUser } from "../../store";
+import { useUser, useAdmin } from "../../store";
 import { useState, useRef } from "react";
+import { UserRole } from "../../hooks";
 
-import { FaArrowAltCircleDown, FaArrowAltCircleUp } from "react-icons/fa";
 import { ButtonActions } from "../buttons";
 import { SelectRoleModal } from "../modal/SelectRole";
 import kyle from "../../assets/img/users/kyle.png";
@@ -21,7 +21,10 @@ export const UsersCards = ({
   Image,
   user,
 }) => {
+  const userRole = UserRole();
+  const admin = userRole === "admin";
   const toggleActivation = useUser((state) => state.toggleActivation);
+  // const toggleActivation = useAdmin((state) => state.toggleActivation);
 
   const images = [kyle, lore, neil, me, spence, yen];
 
@@ -48,6 +51,10 @@ export const UsersCards = ({
               {email || "email"}
             </span>
           </div>
+
+          {/* {
+            !admin ()
+          } */}
           <div className="flex flex-col w-80 gap-4 mt-4 md:mt-6">
             <ButtonActions
               action={() => toggleActivation(user.id)}

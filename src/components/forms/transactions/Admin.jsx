@@ -94,15 +94,18 @@ export const Admin = () => {
                 "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"}
             </p>
           </div>
-          <div className="flex flex-wrap image col-span-2 justify-self-start">
+          <div className="flex gap-4 flex-wrap image col-span-2 justify-self-start">
             {selectedTransaction.image ? (
-              <img
-                src={`https://ucarecdn.com/${
-                  selectedTransaction.image.split(",")[0]
-                }/-/resize/400x400/`}
-                alt="image"
-                className="object-cover w-full h-12 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-              />
+              selectedTransaction.image
+                .split(",")
+                .map((imageUrl, index) => (
+                  <img
+                    key={index}
+                    src={`https://ucarecdn.com/${imageUrl}/-/resize/400x400/`}
+                    alt={`Transaction image ${index + 1}`}
+                    className="object-cover w-full h-16 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+                  />
+                ))
             ) : (
               <div className="item">
                 <CiImageOn

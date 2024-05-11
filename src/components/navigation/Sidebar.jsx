@@ -64,7 +64,7 @@ export const Sidebar = () => {
           {
             name: "Items",
             icon: <Items />,
-            link: "/items",
+            link: "/item",
           },
           // {
           //   name: "Profile",

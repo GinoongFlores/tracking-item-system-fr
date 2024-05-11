@@ -116,7 +116,13 @@ export const TransactionCard = ({
                 </>
               )}
 
-              {receiver && <p>{`Receiver: ${receiver || "N/A"}`}</p>}
+              {receiver && (
+                <p>
+                  {" "}
+                  <span className="font-semibold"> Receiver: </span>
+                  {`${receiver || "N/A"}`}
+                </p>
+              )}
               <p className="">{useFormatDate(date) || "Date"}</p>
             </span>
           </div>
