@@ -37,7 +37,7 @@ export const TrashedItems = () => {
           >
             <div className="flex flex-col items-center justify-center">
               <span className="mb-4">No trashed items...</span>
-              <div>
+              {/* <div>
                 <button
                   type="button"
                   onClick={() => navigate("/item/add")}
@@ -45,7 +45,7 @@ export const TrashedItems = () => {
                 >
                   Add an Item
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </>

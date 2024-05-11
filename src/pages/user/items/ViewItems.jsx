@@ -47,9 +47,9 @@ export const ViewItems = () => {
         >
           <div className="flex flex-col items-center justify-center">
             <span className="mb-4">No items yet...</span>
-            <div>
+            {/* <div>
               <ButtonLink name={"Add Item"} redirect={"/item/add"} />
-            </div>
+            </div> */}
           </div>
         </div>
       )}

@@ -27,13 +27,19 @@ export const ViewCompany = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        {loading && <Loader />}
+        {loading && (
+          <div className="min-h-screen flex justify-center">
+            <Loader />
+          </div>
+        )}
         {companies.length > 0 ? (
           companies.map((company) => (
             <CompanyCard
               key={company.id}
+              id={company.id}
               name={company.company_name}
               description={company.company_description}
+              address={company.address}
               defaultActions={true}
               // loading={skeletonLoading}
             />
@@ -41,7 +47,7 @@ export const ViewCompany = () => {
         ) : (
           <div className="min-h-screen flex items-center justify-center">
             <div>
-              <p>No transactions yet</p>
+              <p>No companies yet</p>
             </div>
           </div>
         )}

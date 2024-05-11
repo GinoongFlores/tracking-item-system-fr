@@ -23,7 +23,13 @@ export const ViewUsers = () => {
   return (
     <>
       <div className="flex items-center justify-center flex-wrap gap-4">
-        <div>{loading && <Loader />}</div>
+        <div>
+          {loading && (
+            <div className="flex min-h-screen justify-center">
+              <Loader />
+            </div>
+          )}
+        </div>
         {users.length > 0 ? (
           users.map((user) => (
             <UsersCards

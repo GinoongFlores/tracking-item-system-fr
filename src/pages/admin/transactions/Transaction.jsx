@@ -31,7 +31,10 @@ export const AdminTransaction = () => {
         <div className="w-full">
           <SearchBar onSearch={filterAdminTransferItems} />
         </div>
-        {transactions.length === 0 && <p>No transactions yet</p>}
+        {transactions.length === 0 &&
+         <div className="flex min-h-screen justify-center">
+        <p>No transactions yet</p>
+        </div>}
         <AdminViewTransactions />
         <Paginate
           currentPages={currentPage}
