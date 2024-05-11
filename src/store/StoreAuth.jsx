@@ -37,7 +37,7 @@ export const useAuth = create((set, get) => ({
 
       return response.data;
     } catch (error) {
-      // console.log(error);
+      console.log(error.response);
       // toast.error("An error occurred while fetching user data");
       // const errors = error.response.data.message.error;
       // console.log(errors);
@@ -61,11 +61,17 @@ export const useAuth = create((set, get) => ({
 
       // get user data through the getUser method
       const userData = await get().getUser();
-      if (userData && userData.data.is_activated && userData.data.role) {
-        toast.success("Login successfully", {
-          position: "top-center",
-          id: "login-toast",
-        });
+      if (userData && userData.data.is_activated) {
+        if (userData.data.role) {
+          toast.success("Login successfully", {
+            position: "top-center",
+            id: "login-toast",
+          });
+        } else {
+          localStorage.removeItem("token");
+          toast.error("Role attachment is pending.");
+          set({ token: null });
+        }
       } else {
         localStorage.removeItem("token");
         toast.error("Your account is pending for activation");
@@ -98,6 +104,12 @@ export const useAuth = create((set, get) => ({
       set({ loading: false });
     } catch (error) {
       console.log(error.response);
+      const errors = error.response.data.message.error;
+      for (const field in errors) {
+        errors[field].forEach((errorMessage) => {
+          toast.error(`${errorMessage}`);
+        });
+      }
       set({ loading: false });
     }
   },

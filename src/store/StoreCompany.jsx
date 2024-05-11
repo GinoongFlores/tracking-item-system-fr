@@ -75,9 +75,9 @@ export const useCompany = create((set) => ({
     }
   },
 
-  updateCompany: async (values, id) => {
+  updateCompany: async (id, values) => {
     try {
-      const response = await AxiosInstance.put(`/company/${id}/update`, {
+      const response = await AxiosInstance.post(`/company/${id}/update`, {
         ...values,
       });
       console.log(response.data);

@@ -199,8 +199,8 @@ export const useTransfer = create((set) => ({
       });
     } catch (error) {
       set({ loading: false });
-      toast.error("There was an error while fetching a data");
-      console.log(error);
+      // toast.error("There was an error while fetching a data");
+      console.log(error.response);
     }
   },
 
@@ -212,7 +212,7 @@ export const useTransfer = create((set) => ({
       );
 
       const newTransactions = response.data.data; // array of transactions
-      // console.log("transactions ", newTransactions);
+      console.log("transactions ", newTransactions);
       set((state) => {
         const filteredTransactions = state.transactions.filter(
           (transaction) =>
@@ -236,8 +236,9 @@ export const useTransfer = create((set) => ({
       });
     } catch (error) {
       set({ loading: false });
-      toast.error("There was an error while fetching a data");
-      console.log(error);
+      // console.log("response error", error.response);
+      // toast.error("There was an error while fetching a data");
+      // console.log(error);
     }
   },
 
