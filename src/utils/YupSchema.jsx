@@ -11,6 +11,9 @@ export const RegisterSchema = Yup.object().shape({
   first_name: Yup.string().required("First Name Required"),
   last_name: Yup.string().required("Last Name Required"),
   company_name: Yup.string().required("Company Required"),
+  phone: Yup.string()
+    .required("No Number Provided")
+    .max(11, "Number is too long! - Should be 11 characters long."),
   email: Yup.string().email("Invalid email address").required("Email Required"),
   password: Yup.string()
     .max(10, "Must be 10 characters only")
@@ -29,6 +32,12 @@ export const ItemSchema = Yup.object().shape({
     .required("Item quantity is required")
     .min(1)
     .typeError("Quantity must be a number"),
+});
+
+export const CompanySchema = Yup.object().shape({
+  company_name: Yup.string().required("Company name is required"),
+  company_description: Yup.string().nullable("Company description is required"),
+  address: Yup.string().required("Company address is required"),
 });
 
 export const TransferItemSchema = Yup.object().shape({

@@ -24,6 +24,12 @@ export const useModal = (customOptions = {}) => {
     }
   }, [options]);
 
+  const toggle = () => {
+    if (modal.current) {
+      modal.current.toggle();
+    }
+  };
+
   // const modal = new Modal(modalRef.current, options);
-  return { modal, modalRef };
+  return { modal, modalRef, toggle };
 };

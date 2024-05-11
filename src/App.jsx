@@ -101,7 +101,7 @@ function App() {
               >
                 <Route index element={<AdminHome />} />
                 <Route path="users" element={<AdminUsers />} />
-                <Route path="items" element={<AdminViewItems />} />
+                <Route path="item" element={<AdminViewItems />} />
                 <Route path="profile" element={<AdminProfile />} />
                 <Route path="transaction" element={<AdminTransaction />} />
                 <Route
