@@ -54,7 +54,7 @@ By implementing the Item Tracker Project, the company will benefit from:
 
 # Setup/Installation 💻
 >[!NOTE]
->Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your machine.
+>Ensure you have Node.js and npm installed on your machine. Back-end repo is separated on https://github.com/GinoongFlores/tracking-item-system
 
 1. Clone this repositor
    `git clone <https> or <ssh>`
